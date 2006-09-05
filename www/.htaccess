@@ -1,15 +1,2 @@
-AddType application/x-httpd-php .php
-
-DirectoryIndex index.php 
-
-php_value register_globals 1
-php_value magic_quotes_gpc 1
-php_value magic_quotes_runtime 1
-
-
-<Files "admin*">
-	AuthType basic
-	AuthName "tube admin"
-	AuthUserFile /www/a/www/swp/.htpasswd
-	require user cal
-</Files>
+RewriteEngine on
+RewriteRule	^(.*)$	http://londonbloggers2.iamcal.com/$1	[R,L]
