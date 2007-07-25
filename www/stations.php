@@ -24,7 +24,7 @@
 <?
 	$result = mysql_query("SELECT s.* FROM tube_stations AS s, tube_connections AS c WHERE c.line_id='$line' AND (c.station_id_1=s.id OR (c.station_id_2=s.id AND c.one_way=0)) GROUP BY s.id ORDER BY s.name ASC",$db);
 	while($row = mysql_fetch_array($result)){
-		echo "<b>&bull;</b> <a href=\"station.php?id=$row[id]\">$row[name]</a><br />";
+		echo "<b>&bull;</b> <a href=\"station.php?id=$row[id]\">".StripSlashes($row[name])."</a><br />";
 	}
 ?>
 
@@ -37,7 +37,7 @@
 <?
 	$result = mysql_query("SELECT w.*,s.station_id FROM tube_weblogs AS w, tube_weblog_stations AS s, tube_connections AS c WHERE w.id=s.weblog_id AND (s.station_id=c.station_id_1 OR s.station_id=c.station_id_2) AND c.line_id=$line GROUP BY w.id ORDER BY w.blog_name ASC",$db);
 	while($row = mysql_fetch_array($result)){
-		echo "<b>&bull;</b> <a href=\"weblog.php?id=$row[id]\">".htmlentities($row[blog_name])."</a><br />\n";
+		echo "<b>&bull;</b> <a href=\"weblog.php?id=$row[id]\">".htmlentities(StripSlashes($row[blog_name]))."</a><br />\n";
 	}
 	if (mysql_num_rows($result) == 0){
 		echo "<b>&bull;</b> <i>none</i><br />\n";

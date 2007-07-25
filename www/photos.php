@@ -51,8 +51,8 @@
 		preg_match('!<title>(.*?)</title>!', $match, $m);
 		$title = $m[1];
 
-		preg_match('!http://photos(.*?)_m\.jpg!', $match, $m);
-		$src = "http://photos$m[1]_s.jpg";
+		preg_match('!http://static(.*?)_m\.jpg!', $match, $m);
+		$src = "http://static$m[1]_s.jpg";
 
 		$photos[] = array(
 			"title"	=> $title,
