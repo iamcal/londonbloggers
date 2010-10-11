@@ -1,0 +1,375 @@
+<html>
+<head>
+<title></title>
+<style>
+
+#map {
+	background-color: #cccccc;
+	background-image: url(images/stripes.gif);
+}
+
+</style>
+</head>
+<body>
+
+<div id="topbar">
+
+Zoom:
+<a href="#" onclick="g_map.set_zoom_level(1); return false">1</a>
+<a href="#" onclick="g_map.set_zoom_level(2); return false">2</a>
+<a href="#" onclick="g_map.set_zoom_level(3); return false">3</a>
+<a href="#" onclick="g_map.set_zoom_level(4); return false">4</a>
+<a href="#" onclick="g_map.set_zoom_level(5); return false">5</a>
+
+</div>
+
+<div id="map" style="border: 1px solid black; width: 800px; height: 400px; position: absolute; overflow: hidden;">
+</div>
+
+<div id="sidebar">
+	woo
+</div>
+
+<script src="js/map.js"></script>
+<script>
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+//
+// This hash defines everything about the map that we need to know.
+// The 'bounds' hash tell us the outer edges of all the combined map sheets.
+// The 'zooms' hash tells us how many tiles are in each zoom level and what the composite's offset is on those tiles.
+// The 'maps' hash contains details for each individual map sheet.
+//
+// (it's now loaded from mapdata.php)
+//
+
+var g_map_data = {
+	'path' : 'tiles',
+	'zooms' : {
+		4 : [2, 2, 9, 62],
+		3 : [4, 4, 19, 123],
+		2 : [8, 7, 38, 119],
+		1 : [16, 13, 76, 110]
+	}
+};
+
+g_map_data.global_start_x = 0;
+g_map_data.global_start_y = 0;
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+var g_map = new map();
+
+var g_test = null;
+var g_test2 = null;
+var g_test3 = null;
+var g_test4 = null;
+var g_test5 = null;
+
+var g_selected_hex = null;
+
+function log(x){
+	try {
+		console.log(x);
+	}
+	catch (e){
+	}
+}
+
+window.onload = function(){
+
+
+	g_map.init(g_map_data.path, g_map_data.zooms);
+
+	g_map.create(document.getElementById('map'), 800, 400);
+	resize_map();
+
+
+	g_test = document.createElement('DIV');
+	g_test.style.position = 'absolute';
+	g_test.style.display = 'none';
+	g_test.style.left = '1658px';
+	g_test.style.top = '1632px';
+	g_test.style.width = '107px';
+	g_test.style.height = '123px';
+	//g_test.style.backgroundColor = 'red';
+	g_test.style.backgroundImage = 'url(maps/images/hex_highlight.gif)';
+	g_test.style.zIndex = 2;
+
+	g_test2 = document.createElement('DIV');
+	g_test2.style.position = 'absolute';
+	g_test2.style.display = 'none';
+	g_test2.style.left = '10px';
+	g_test2.style.top = '10px';
+	g_test2.style.width = '57px';
+	g_test2.style.height = '65px';
+	//g_test2.style.backgroundColor = 'red';
+	g_test2.style.backgroundImage = 'url(maps/images/hex2_highlight.gif)';
+	g_test2.style.zIndex = 2;
+
+	g_test3 = document.createElement('DIV');
+	g_test3.style.position = 'absolute';
+	g_test3.style.display = 'none';
+	g_test3.style.left = '10px';
+	g_test3.style.top = '10px';
+	g_test3.style.width = '32px';
+	g_test3.style.height = '36px';
+	//g_test3.style.backgroundColor = 'red';
+	g_test3.style.backgroundImage = 'url(maps/images/hex3_highlight.gif)';
+	g_test3.style.zIndex = 2;
+
+	g_test4 = document.createElement('DIV');
+	g_test4.style.position = 'absolute';
+	g_test4.style.display = 'none';
+	g_test4.style.left = '10px';
+	g_test4.style.top = '10px';
+	g_test4.style.width = '14px';
+	g_test4.style.height = '16px';
+	//g_test4.style.backgroundColor = 'red';
+	g_test4.style.backgroundImage = 'url(maps/images/hex4.gif)';
+	g_test4.style.zIndex = 2;
+
+	g_test5 = document.createElement('DIV');
+	g_test5.style.position = 'absolute';
+	g_test5.style.display = 'none';
+	g_test5.style.left = '10px';
+	g_test5.style.top = '10px';
+	g_test5.style.width = '8px';
+	g_test5.style.height = '9px';
+	//g_test5.style.backgroundColor = 'red';
+	g_test5.style.backgroundImage = 'url(maps/images/hex5.gif)';
+	g_test5.style.zIndex = 2;
+
+	g_map.get_slab().appendChild(g_test);
+	g_map.get_slab().appendChild(g_test2);
+	g_map.get_slab().appendChild(g_test3);
+	g_map.get_slab().appendChild(g_test4);
+	g_map.get_slab().appendChild(g_test5);
+
+	g_map.onpan = function(){
+	};
+
+	g_map.onzoomchange = function(){
+		// maintain selection here
+	};
+
+	g_map.onclick = function(x, y){
+
+		// process click
+	}
+}
+
+function map_point_to_hex(point){
+
+	var x = point[0];
+	var y = point[1];
+
+
+	//
+	// first, find out which map group this point
+	// belongs inside
+	//
+
+	var key = null;
+	for (var map_id in g_map_data.maps){
+
+		var map = g_map_data.maps[map_id];
+		if (x < map.global_offset_x) continue;
+		if (y < map.global_offset_y) continue;
+		if (x > map.global_offset_x + map.img_w) continue;
+		if (y > map.global_offset_y + map.img_h) continue;
+		key = map_id;
+		break;
+	}
+	if (key == null) return null;
+
+	var map = g_map_data.maps[key];
+
+
+	//
+	// is it in a special hex?
+	//
+
+	var x_map = x - map.global_offset_x;
+	var y_map = y - map.global_offset_y;
+
+	for (var i in map.extras){
+
+		var ex = map.extras[i];
+		if (x_map > ex[2] && x_map < ex[2]+100)
+		if (y_map > ex[3] && y_map < ex[3]+116)
+			return [key, ex[0], ex[1]];
+	}
+
+
+	//
+	// does is land in a standard hex?
+	//
+
+	x = x - (map.global_offset_x + map.img_offset_x);
+	y = y - (map.global_offset_y + map.img_offset_y);
+
+	var normal_hex_w = 100 * map.hex_w;
+	var normal_hex_h = (87 * map.hex_h) + 29;
+
+
+	//
+	// first stage is finding the vertical band that it's in
+	//
+
+	var h_band = Math.floor(y / 87);
+	var h_band_offset = y - (87 * h_band);
+
+	var x_offset = (is_odd(h_band)) ? 0 : map.is_offset ? -50 : 50;
+	
+	var v_band = Math.floor((x - x_offset) / 100);
+	var v_band_offset = x - (100 * v_band);
+
+	//
+	// TODO: deal with being in the triangles
+	//
+
+if (0){
+	g_hband.style.left = (normal_hex_x - g_map_data.global_start_x)+'px';
+	g_hband.style.width = '2000px';
+	g_hband.style.top = (normal_hex_y + (h_band * 87) - g_map_data.global_start_y)+'px';
+	g_hband.style.height = '87px';
+
+	g_vband.style.top = (normal_hex_y - g_map_data.global_start_y)+'px';
+	g_vband.style.height = '2000px';
+	g_vband.style.left = (normal_hex_x + x_offset + (v_band * 100) - g_map_data.global_start_x)+'px';
+	g_vband.style.width = '100px';
+}
+
+
+	var hex_x = map.hex_w - v_band;
+	var hex_y = map.hex_h - h_band;
+
+	if (hex_x < 1) return null;
+	if (hex_y < 1) return null;
+
+	if (hex_x > map.hex_w) return null;
+	if (hex_y > map.hex_h) return null;
+
+	return [key, hex_x, hex_y];
+}
+
+
+function translate_point_in(point){
+
+	var z = g_map.zoom_level;
+	var factor = Math.pow(0.5, z-1);
+	
+	var x = ((point[0] - g_map_data.bounds.x_lo) * factor) + g_map_data.zooms[z][2];
+	var y = ((point[1] - g_map_data.bounds.y_lo) * factor) + g_map_data.zooms[z][3];
+
+	return [x, y];
+}
+
+function translate_point_out(point){
+
+	var z = g_map.zoom_level;
+	var factor = Math.pow(0.5, z-1);
+
+	var x = ((point[0] - g_map_data.zooms[z][2]) / factor) + g_map_data.bounds.x_lo;
+	var y = ((point[1] - g_map_data.zooms[z][3]) / factor) + g_map_data.bounds.y_lo;
+
+	return [x, y];
+}
+
+
+
+function hex_to_point_zoomed(location){
+
+	return translate_point_in(hex_to_point(location));
+}
+
+function hex_to_point(location){
+
+	var key = location[0];
+	var cellx = location[1];
+	var celly = location[2];
+
+	//log('hex is '+cellx+','+celly);
+
+	var map = g_map_data.maps[key];
+
+	// is it an extra?
+	for (var i in map.extras){
+		if (cellx == map.extras[i][0])
+		if (celly == map.extras[i][1]){
+
+			var x = map.global_offset_x + map.extras[i][2];
+			var y = map.global_offset_y + map.extras[i][3];
+
+			return [x, y];
+		}	
+	}
+
+	var ix = map.hex_w - cellx;
+	var iy = map.hex_h - celly;
+
+	var x = (ix * 100) + map.img_offset_x;
+	var y = (iy * 87) + map.img_offset_y;
+
+	if (map.is_offset == 1){
+		if (iy % 2 == 0) x -= 50;
+	}else{
+		if (iy % 2 == 0) x += 50;
+	}
+
+	x += map.global_offset_x;
+	y += map.global_offset_y;
+
+	return [x, y];
+}
+
+
+function is_odd(x){
+	var z = x / 2;
+	return z != Math.floor(z);
+}
+
+window.onresize = function(){
+	resize_map();
+}
+
+function resize_map(){
+	return;
+
+	var d = get_window_size();
+
+	var s = document.getElementById('sidebar');
+	s.style.height = (d[1] - 30) + 'px';
+
+	g_map.resize(0, 30, d[0]-302, d[1]-32);
+}
+
+function get_window_size(){
+
+	if (typeof(window.innerWidth) == 'number'){
+		// Non-IE
+		return [window.innerWidth, window.innerHeight];
+	}
+
+	if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)){
+		// IE 6+ in 'standards compliant mode'
+		return [document.documentElement.clientWidth, document.documentElement.clientHeight];
+	}
+
+	if (document.body && (document.body.clientWidth || document.body.clientHeight)){
+		//IE 4 compatible
+		return [document.body.clientWidth, document.body.clientHeight];
+	}
+
+	return [100, 100];
+}
+
+</script>
+
