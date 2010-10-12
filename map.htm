@@ -88,6 +88,8 @@ window.onload = function(){
 	g_map.init(g_map_data.path, g_map_data.zooms);
 
 	g_map.create(document.getElementById('map'), 800, 400);
+	g_map.set_zoom_level(3);
+	g_map.center_on_pos(445, 447);
 	resize_map();
 
 
