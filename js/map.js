@@ -1,3 +1,22 @@
+//
+// This hash defines everything about the map that we need to know.
+// The 'zooms' hash tells us how many tiles are in each zoom level and what the composite's offset is on those tiles.
+//
+
+var g_map_data = {
+	'path' : 'tiles',
+	'zooms' : {
+		4 : [2, 2, 9, 62],
+		3 : [4, 4, 19, 123],
+		2 : [8, 7, 38, 119],
+		1 : [16, 13, 76, 110]
+	},
+	global_start_x: 0,
+	global_start_y: 0
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function map(){
 
 	this.tiles = {};
@@ -68,7 +87,7 @@ map.prototype.create = function(parent, w, h){
 	this.cover.style.height = this.h+'px';
 	//this.cover.style.backgroundColor = 'pink';
 	this.cover.style.zIndex = 20;
-	this.cover.style.cursor = this.cursor_open;
+	//this.cover.style.cursor = this.cursor_open;
 
 
 	//
@@ -197,8 +216,8 @@ map.prototype.onmousedown_cover = function(e){
 	this.drag.new_slab_x = this.slab.x;
 	this.drag.new_slab_y = this.slab.y;
 
-	document.documentElement.style.cursor = this.cursor_closed;
-	this.cover.style.cursor = this.cursor_closed;
+	//document.documentElement.style.cursor = this.cursor_closed;
+	//this.cover.style.cursor = this.cursor_closed;
 
 	document.onselectstart = function() { return false; };
 
@@ -241,8 +260,8 @@ map.prototype.onmouseup_cover = function(e){
 	this.slab.x = this.drag.new_slab_x;
 	this.slab.y = this.drag.new_slab_y;
 
-	document.documentElement.style.cursor = 'default';
-	this.cover.style.cursor = this.cursor_open;
+	//document.documentElement.style.cursor = 'default';
+	//this.cover.style.cursor = this.cursor_open;
 
 	document.onselectstart = function() { return true; };
 
@@ -548,6 +567,14 @@ map.prototype.center_on_pos = function(x, y){
 
 	this.recalc_visibles();
 };
+
+map.prototype.get_center = function(){
+
+	var x = (this.w/2) - this.slab.x;
+	var y = (this.h/2) - this.slab.y;
+
+	return [x, y];
+}
 
 map.prototype.onzoombar_click = function(e){
 
