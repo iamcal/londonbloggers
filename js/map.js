@@ -123,36 +123,17 @@ map.prototype.create = function(parent, w, h){
 	this.zoom.barelm = document.createElement('DIV');
 	this.zoom.barelm.style.position = 'absolute';
 	this.zoom.barelm.style.width = '19px';
-	this.zoom.barelm.style.height = '315px';
+	this.zoom.barelm.style.height = '43px';
 	this.zoom.barelm.style.left = '20px';
 	this.zoom.barelm.style.top = '20px';
-	this.zoom.barelm.style.backgroundImage = 'url(images/zoom_bar.gif)';
+	this.zoom.barelm.style.backgroundImage = 'url(images/zoom_widget.gif)';
 	//this.zoom.barelm.style.backgroundColor = 'red';
 	this.zoom.barelm.style.zIndex = 22;
 	this.zoom.barelm.style.cursor = 'pointer';
 	this.zoom.barelm.onclick = function(e){
-		var myself = self;
-		return myself.onzoombar_click(e);
+		return self.onzoombar_click(e);
 	}
 	this.parent.appendChild(this.zoom.barelm);
-
-	this.zoom.grabelm = document.createElement('DIV');
-	this.zoom.grabelm.style.position = 'absolute';
-	this.zoom.grabelm.style.width = '17px';
-	this.zoom.grabelm.style.height = '11px';
-	this.zoom.grabelm.style.left = '1px';
-	this.zoom.grabelm.style.top = '30px';
-	this.zoom.grabelm.style.backgroundImage = 'url(images/zoom_grab.gif)';
-	//this.zoom.grabelm.style.backgroundColor = 'red';
-	this.zoom.grabelm.style.zIndex = 1;
-	this.zoom.grabelm.style.cursor = this.cursor_open;
-	this.zoom.grabelm.onclick = function(e){
-		//var myself = self;
-		//return myself.onzoombar_click(e);
-	}
-	this.zoom.barelm.appendChild(this.zoom.grabelm);
-
-	this.move_zoom_handle();
 
 
 	//
@@ -534,28 +515,11 @@ map.prototype.set_zoom_level = function(z){
 
 
 	//
-	// move the grab handle
-	//
-
-	this.move_zoom_handle();
-
-
-	//
 	// tell our owner we've changed zoom levels
 	//
 
 	if (this.onzoomchange) this.onzoomchange();
 };
-
-
-map.prototype.move_zoom_handle = function(){
-
-	if (this.slab.zoom == 1) this.zoom.grabelm.style.top = '30px';
-	if (this.slab.zoom == 2) this.zoom.grabelm.style.top = '91px';
-	if (this.slab.zoom == 3) this.zoom.grabelm.style.top = '152px';
-	if (this.slab.zoom == 4) this.zoom.grabelm.style.top = '213px';
-	if (this.slab.zoom == 5) this.zoom.grabelm.style.top = '273px';
-}
 
 map.prototype.set_slab_pos = function(x, y, no_check){
 
@@ -578,30 +542,30 @@ map.prototype.get_slab = function(){
 	return this.slab.elm;
 };
 
+map.prototype.center_on_pos = function(x, y){
+
+	this.set_slab_pos((this.w/2)-x, (this.h/2)-y);
+
+	this.recalc_visibles();
+};
+
 map.prototype.onzoombar_click = function(e){
 
 	var event = e ? e : window.event;
 
 	var y = event.layerY;
 
-	if (y<=19){
+	if (y<=21){
 		if (this.slab.zoom > 1){
 			this.set_zoom_level(this.slab.zoom - 1);
 		}
 		return;
 	}
 
-	if (y >=295){
-		if (this.slab.zoom < 5){
+	if (y >=23){
+		if (this.slab.zoom < 4){
 			this.set_zoom_level(this.slab.zoom + 1);
 		}
 		return;
 	}
-
-	// y positions of zoom garb -> 20 - 283
-
-
-	var per = (y-20) / (294-20);
-
-	console.log('zoom click '+y+' -> '+per);
 };
