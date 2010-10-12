@@ -1,0 +1,86 @@
+<html>
+<head>
+<title></title>
+<style>
+
+#map {
+	background-color: #cccccc;
+	background-image: url(images/stripes.gif);
+	border: 1px solid black;
+	width: 1200px;
+	height: 800px;
+	position: relative;
+	overflow: hidden;
+}
+
+.center-marker {
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	background-color: black;
+	z-index: 2;
+	opacity: 0.5;
+}
+
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="js/map.js"></script>
+<script src="js/core.js"></script>
+<script>
+
+var g_map = new map();
+var g_markers = null;
+
+window.onload = function(){
+
+	g_map.init(g_map_data.path, g_map_data.zooms);
+	g_map.create(document.getElementById('map'), 1200, 800);
+	g_map.set_zoom_level(3);
+	g_map.center_on_pos(445, 447);
+
+	g_map.set_zoom_level(1);
+
+
+
+	g_markers = document.createElement('div');
+	g_markers.style.position = 'absolute';
+	g_map.get_slab().appendChild(g_markers);
+
+	g_map.onpan = function(){
+		// something?
+	};
+
+	g_map.onzoomchange = function(){
+		// maintain selection here
+	};
+
+	g_map.onclick = function(x, y){
+		// process click
+	}
+
+
+	api_call('get_all_centers', {}, function(o){
+
+		html = '';
+	
+		for (var i=0; i<o.centers.length; i++){
+			var cen = o.centers[i];
+
+			html += "<div class=\"center-marker\" style=\"left: "+(cen[0]-12)+"px; top: "+(cen[1]-12)+"px\"></div>";
+		}
+
+		g_markers.innerHTML = html;
+
+
+	});
+};
+
+
+</script>
+
+</body>
+</html>
