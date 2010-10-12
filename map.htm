@@ -6,6 +6,35 @@
 #map {
 	background-color: #cccccc;
 	background-image: url(images/stripes.gif);
+	border: 1px solid black;
+	width: 800px;
+	height: 400px;
+	position: relative;
+	overflow: hidden;
+}
+
+#sidebar {
+	position: absolute;
+	left: 850px;
+	width: 300px;
+	height: 400px;
+	border: 1px solid black;
+	padding: 1em;
+}
+
+.section {
+	margin-top: 1em;
+	padding-top: 1em;
+	border-top: 1px solid black;
+}
+
+.center-marker {
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	background-color: black;
+	z-index: 2;
+	opacity: 0.5;
 }
 
 </style>
@@ -14,35 +43,34 @@
 
 <p>This goes above the map.</p>
 
-<div id="map" style="border: 1px solid black; width: 800px; height: 400px; position: relative; overflow: hidden;"></div>
+<div id="sidebar">
+	<select id="stations"></select>
+	<div id="station-data" style="display: none">
+		<div class="section">
+			Centers:<br />
+			<div id="station-centers" style="margin-left: 1em;"></div>
+		</div>
+
+		<div class="section" id="saving" style="display: none; background-color: #ffc;">
+			Saving changes...
+		</div>
+
+	</div>
+</div>
+
+<div id="map"></div>
 
 <p>And this goes below it.</p>
 
 <script src="js/map.js"></script>
+<script src="js/core.js"></script>
 <script>
 
-//
-// This hash defines everything about the map that we need to know.
-// The 'zooms' hash tells us how many tiles are in each zoom level and what the composite's offset is on those tiles.
-//
-
-var g_map_data = {
-	'path' : 'tiles',
-	'zooms' : {
-		4 : [2, 2, 9, 62],
-		3 : [4, 4, 19, 123],
-		2 : [8, 7, 38, 119],
-		1 : [16, 13, 76, 110]
-	},
-	global_start_x: 0,
-	global_start_y: 0
-};
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-
 var g_map = new map();
-var g_selected_hex = null;
+var g_markers = null;
+
+var g_current_station = 0;
+var g_station_centers = [];
 
 window.onload = function(){
 
@@ -51,8 +79,13 @@ window.onload = function(){
 	g_map.set_zoom_level(3);
 	g_map.center_on_pos(445, 447);
 
+	g_map.set_zoom_level(1);
 
-	//g_map.get_slab().appendChild(g_test);
+
+
+	g_markers = document.createElement('div');
+	g_markers.style.position = 'absolute';
+	g_map.get_slab().appendChild(g_markers);
 
 	g_map.onpan = function(){
 		// something?
@@ -63,10 +96,143 @@ window.onload = function(){
 	};
 
 	g_map.onclick = function(x, y){
-
 		// process click
 	}
+
+
+	api_call('get_stations', {}, function(o){
+
+		var html = '';
+		var first_id = 0;
+
+		for (var i in o.names){
+			if (!first_id) first_id = i;
+			html += '<option value="'+i+'">'+o.names[i]+'</option>';
+		}
+		var s = document.getElementById('stations');
+		s.innerHTML = html;
+		s.onchange = function(){
+			var id = s.options[s.selectedIndex].value;
+			select_station(id);
+		}
+
+		select_station(first_id);
+	});
 };
+
+// this is called when we select a new station from the drop down
+function select_station(id){
+
+	document.getElementById('station-data').style.display = 'none';
+
+	api_call('get_station', {id: id}, function(o){
+
+		g_current_station = id;
+		g_station_centers = [];
+		if (o.row.location.centers) g_station_centers = o.row.location.centers;
+		rebuild_centers_list();
+
+
+		//
+		// try and center the map somewhere sensible
+		//
+
+		if (g_station_centers.length){
+
+			var x = g_station_centers[0][0];
+			var y = g_station_centers[0][1];
+			g_map.center_on_pos(x, y);
+
+		}else{
+			if (o.row.main_x){
+				var x = (((o.row.main_x - 194) / (2536 - 194)) * (3821 - 282)) + 282;
+				var y = (((o.row.main_y - 108) / (1868 - 108)) * (2803 - 264)) + 264;
+				g_map.center_on_pos(x, y);
+			}
+		}
+
+		document.getElementById('station-data').style.display = 'block';
+	});
+}
+
+function rebuild_centers_list(){
+
+	//
+	// the admin list
+	//
+
+	var d = document.getElementById('station-centers');
+
+	var num = 0;
+	var html = '';
+	for (var i=0; i<g_station_centers.length; i++){
+		var cen = g_station_centers[i];
+		num++;
+		html += "["+cen[0]+","+cen[1]+"] (<a href=\"#\" onclick=\"delete_center("+i+"); return false;\">delete</a>)<br />";
+	}
+	if (num == 0){
+		html += "<i>none</i><br />";
+	}
+	html += "<a href=\"#\" onclick=\"add_center(); return false;\">add</a><br />";
+
+	d.innerHTML = html;
+
+
+	//
+	// the markers
+	//
+
+	html = '';
+
+	for (var i=0; i<g_station_centers.length; i++){
+		var cen = g_station_centers[i];
+
+		html += "<div class=\"center-marker\" style=\"left: "+(cen[0]-12)+"px; top: "+(cen[1]-12)+"px\"></div>";
+	}
+
+	g_markers.innerHTML = html;
+}
+
+function save_station(){
+
+	document.getElementById('saving').style.display = 'block';
+
+	var args = {
+		id: g_current_station,
+		centers: '',
+	};
+
+	var centers = [];
+	for (var i=0; i<g_station_centers.length; i++){
+		centers.push(g_station_centers[i][0]+','+g_station_centers[i][1]);
+	}
+	args.centers = centers.join('|');
+
+	api_call('save_station', args, function(o){
+
+		document.getElementById('saving').style.display = 'none';
+	});
+
+}
+
+function add_center(){
+
+	g_station_centers.push(g_map.get_center());
+	save_station();
+	rebuild_centers_list();
+}
+
+function delete_center(idx){
+	g_station_centers.splice(idx, 1);
+	save_station();
+	rebuild_centers_list();
+}
+
+
+
+
+
+
 
 
 function translate_point_in(point){
@@ -90,7 +256,6 @@ function translate_point_out(point){
 
 	return [x, y];
 }
-
 
 </script>
 
