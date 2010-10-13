@@ -51,12 +51,19 @@
 			$line_ids[$row2['line_id']] = 1;
 		}
 
-		$line_ids = implode(', ', array_keys($line_ids));
-		$ret3 = db_fetch("SELECT * FROM tube_lines WHERE id IN ($line_ids)");
-
 		$lines = array();
-		foreach ($ret3['rows'] as $row3){
-			$lines[$row3['id']] = $row3;
+		$raw_lines = array();
+
+		if (count($line_ids)){
+
+			$line_ids = implode(', ', array_keys($line_ids));
+			$ret3 = db_fetch("SELECT * FROM tube_lines WHERE id IN ($line_ids)");
+
+			foreach ($ret3['rows'] as $row3){
+				$lines[$row3['id']] = $row3;
+			}
+
+			$raw_lines = $ret3['rows'];
 		}
 
 
@@ -84,7 +91,7 @@
 		api_reply(array(
 			'ok'	=> 1,
 			'row'	=> $row,
-			'lines'	=> $ret3['rows'],
+			'lines'	=> $raw_lines,
 			'cons'	=> $cons,
 		));
 	}
