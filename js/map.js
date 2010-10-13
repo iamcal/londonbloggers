@@ -596,3 +596,32 @@ map.prototype.onzoombar_click = function(e){
 		return;
 	}
 };
+
+
+//
+// these 2 functions let you map coordinates between different zoom levels. note that
+// both the in and our coordinates include the master offsets at each zoom level. you
+// will need to adjust further to get coordinates based on the master image.
+//
+
+map.prototype.current_to_zoom1 = function(point){
+
+	var z = this.zoom_level;
+	var factor = Math.pow(0.5, z-1);
+
+	var x = ((point[0] - this.slab.zooms[z][2]) / factor) + this.slab.zooms[1][2];
+	var y = ((point[1] - this.slab.zooms[z][3]) / factor) + this.slab.zooms[1][3];
+
+	return [x, y];
+};
+
+map.prototype.zoom1_to_current = function(point){
+
+	var z = this.zoom_level;
+	var factor = Math.pow(0.5, z-1);
+
+	var x = ((point[0] - this.slab.zooms[1][2]) * factor) + this.slab.zooms[z][2];
+	var y = ((point[1] - this.slab.zooms[1][3]) * factor) + this.slab.zooms[z][3];
+
+	return [x, y];	
+};
