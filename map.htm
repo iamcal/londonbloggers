@@ -8,7 +8,7 @@
 	background-image: url(images/stripes.gif);
 	border: 1px solid black;
 	width: 800px;
-	height: 400px;
+	height: 600px;
 	position: relative;
 	overflow: hidden;
 }
@@ -17,7 +17,6 @@
 	position: absolute;
 	left: 850px;
 	width: 300px;
-	height: 400px;
 	border: 1px solid black;
 	padding: 1em;
 }
@@ -113,7 +112,8 @@ var g_con_edit_id = 0;
 window.onload = function(){
 
 	g_map.init(g_map_data.path, g_map_data.zooms);
-	g_map.create(document.getElementById('map'), 800, 400);
+	g_map.create(document.getElementById('map'), 800, 600);
+	g_map.drag_constraints = false;
 	g_map.set_zoom_level(3);
 	g_map.center_on_pos(445, 447);
 
