@@ -49,6 +49,15 @@
 	opacity: 0.5;
 }
 
+a.secret {
+	color: #000;
+	text-decoration: none;
+}
+
+a.secret:hover {
+	text-decoration: underline;
+}
+
 </style>
 </head>
 <body>
@@ -260,7 +269,7 @@ function rebuild_cons_list(lines, cons){
 
 				if (con.line_id == line.id){
 
-					html += con.id+': '+con.remote_name+' ('+con.remote_id+') (<a href="#" onclick="edit_con('+con.id+'); return false;">edit</a>)<br />';
+					html += con.id+': <a href="#" onclick="select_station('+con.remote_id+'); return false;" class="secret">'+con.remote_name+'</a> ('+con.remote_id+') (<a href="#" onclick="edit_con('+con.id+'); return false;">edit</a>)<br />';
 				}
 			}
 
