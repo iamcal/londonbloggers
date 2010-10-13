@@ -30,6 +30,7 @@ function map(){
 	this.drag = {};
 	this.start_tile_x = 1;
 	this.start_tile_y = 1;
+	this.drag_constraints = true;
 
 	this.zoom_level = 3;
 
@@ -468,6 +469,8 @@ map.prototype.recalc_minmax = function(){
 };
 
 map.prototype.check_slab_pos = function(){
+
+	if (!this.drag_constraints) return;
 
 	if (this.drag.new_slab_x < this.slab.x_min) this.drag.new_slab_x = this.slab.x_min;
 	if (this.drag.new_slab_y < this.slab.y_min) this.drag.new_slab_y = this.slab.y_min;
