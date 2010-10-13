@@ -204,7 +204,14 @@ function rebuild_line_list(lines){
 	if (lines){
 		for (var i=0; i<lines.length; i++){
 			var line = lines[i];
-			html += line.id+"/"+line.name+'<br />';
+
+			if (line.has_line == '1'){
+				html += "<div style=\"float: left; height: 4px; width: 80px; background-color: #fff; border-top: 6px solid "+line.color+"; border-bottom: 6px solid "+line.color+"\"></div> ";
+			}else{
+				html += "<div style=\"float: left; height: 16px; width: 80px; background-color: "+line.color+"\"></div> ";
+			}
+
+			html += line.name+'<br />';
 		}
 	}
 
