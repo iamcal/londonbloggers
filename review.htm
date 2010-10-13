@@ -56,12 +56,21 @@ window.onload = function(){
 
 	g_map.onzoomchange = function(){
 		// maintain selection here
+		refresh_markers(g_map.zoom_level);
 	};
 
 	g_map.onclick = function(x, y){
 		// process click
 	}
 
+	refresh_markers(1);
+};
+
+function refresh_markers(zoom){
+
+	var factor = Math.pow(0.5, zoom-1);
+	var size = 25 * factor;
+	var offset = size / 2;
 
 	api_call('get_all_centers', {}, function(o){
 
@@ -70,15 +79,15 @@ window.onload = function(){
 		for (var i=0; i<o.centers.length; i++){
 			var cen = o.centers[i];
 
-			html += "<div class=\"center-marker\" style=\"left: "+(cen[0]-12)+"px; top: "+(cen[1]-12)+"px\"></div>";
+			var pt = g_map.zoom1_to_current(cen);
+
+			html += "<div class=\"center-marker\" style=\"left: "+((pt[0])-offset)+"px; top: "+((pt[1])-offset)+"px; width: "+size+"px; height: "+size+"px\"></div>";
 		}
 
 		g_markers.innerHTML = html;
-
-
 	});
-};
 
+}
 
 </script>
 
