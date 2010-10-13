@@ -27,9 +27,18 @@
 
 		$row['location'] = unserialize($row['location']);
 
+		$line_ids = array();
+		$ret2 = db_fetch("SELECT line_id FROM tube_connections WHERE station_id_1=$id_enc OR station_id_2=$id_enc");
+		foreach ($ret2['rows'] as $row2){
+			$line_ids[$row2['line_id']] = 1;
+		}
+		$line_ids = implode(', ', array_keys($line_ids));
+		$ret3 = db_fetch("SELECT * FROM tube_lines WHERE id IN ($line_ids)");
+
 		api_reply(array(
 			'ok'	=> 1,
 			'row'	=> $row,
+			'lines'	=> $ret3['rows'],
 		));
 	}
 

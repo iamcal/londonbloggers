@@ -50,7 +50,10 @@
 			Centers:<br />
 			<div id="station-centers" style="margin-left: 1em;"></div>
 		</div>
-
+		<div class="section">
+			Lines:<br />
+			<div id="station-lines" style="margin-left: 1em;"></div>
+		</div>
 		<div class="section" id="saving" style="display: none; background-color: #ffc;">
 			Saving changes...
 		</div>
@@ -131,6 +134,7 @@ function select_station(id){
 		g_station_centers = [];
 		if (o.row.location.centers) g_station_centers = o.row.location.centers;
 		rebuild_centers_list();
+		rebuild_line_list(o.lines);
 
 
 		//
@@ -191,6 +195,21 @@ function rebuild_centers_list(){
 	}
 
 	g_markers.innerHTML = html;
+}
+
+function rebuild_line_list(lines){
+
+	var html = '';
+
+	if (lines){
+		for (var i=0; i<lines.length; i++){
+			var line = lines[i];
+			html += line.id+"/"+line.name+'<br />';
+		}
+	}
+
+	var d = document.getElementById('station-lines');
+	d.innerHTML = html;
 }
 
 function save_station(){
