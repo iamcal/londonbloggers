@@ -22,6 +22,18 @@
 	padding: 1em;
 }
 
+.overbox {
+	display: none;
+	position: absolute;
+	left: 860px;
+	width: 280px;
+	height: 200px;
+	top: 100px;
+	border: 1px solid black;
+	padding: 1em;
+	background-color: #eee;
+}
+
 .section {
 	margin-top: 1em;
 	padding-top: 1em;
@@ -54,11 +66,30 @@
 			Lines:<br />
 			<div id="station-lines" style="margin-left: 1em;"></div>
 		</div>
+		<div class="section">
+			Connections:<br />
+			<div id="station-cons" style="margin-left: 1em;"></div>
+		</div>
 		<div class="section" id="saving" style="display: none; background-color: #ffc;">
 			Saving changes...
 		</div>
 
 	</div>
+</div>
+
+<div id="edit-con" class="overbox">
+
+	<div id="edit-con-title">TITLE</div>
+
+	<select id="edit-con-station"></select><br />
+	<select id="edit-con-line"></select><br />
+	<br />
+	<input type="button" value="Save" onclick="save_con();" />
+	or
+	<input type="button" value="Cancel" onclick="document.getElementById('edit-con').style.display = 'none';" /><br />
+	<br />
+	<br />
+	<div id="edit-con-delete">(<a href="#" onclick="delete_con(); return false;">delete con</a>)</div>
 </div>
 
 <div id="map"></div>
@@ -74,6 +105,8 @@ var g_markers = null;
 
 var g_current_station = 0;
 var g_station_centers = [];
+var g_station_cons = [];
+var g_con_edit_id = 0;
 
 window.onload = function(){
 
@@ -110,7 +143,7 @@ window.onload = function(){
 
 		for (var i in o.names){
 			if (!first_id) first_id = i;
-			html += '<option value="'+i+'">'+o.names[i]+'</option>';
+			html += '<option value="'+i+'">'+o.names[i]+' ('+i+')</option>';
 		}
 		var s = document.getElementById('stations');
 		s.innerHTML = html;
@@ -119,8 +152,20 @@ window.onload = function(){
 			select_station(id);
 		}
 
+		document.getElementById('edit-con-station').innerHTML = html;
+
 		select_station(first_id);
 	});
+
+	api_call('get_lines', {}, function(o){
+		var html = '';
+
+		for (var i in o.lines){
+			html += '<option value="'+i+'">'+o.lines[i]+' ('+i+')</option>';
+		}
+		document.getElementById('edit-con-line').innerHTML = html;
+	});
+
 };
 
 // this is called when we select a new station from the drop down
@@ -135,6 +180,9 @@ function select_station(id){
 		if (o.row.location.centers) g_station_centers = o.row.location.centers;
 		rebuild_centers_list();
 		rebuild_line_list(o.lines);
+
+		g_station_cons = o.cons;
+		rebuild_cons_list(o.cons);
 
 
 		//
@@ -211,12 +259,56 @@ function rebuild_line_list(lines){
 				html += "<div style=\"float: left; height: 16px; width: 80px; background-color: "+line.color+"\"></div> ";
 			}
 
-			html += line.name+'<br />';
+			html += line.name+' ('+line.id+')<br />';
 		}
 	}
 
 	var d = document.getElementById('station-lines');
 	d.innerHTML = html;
+}
+
+function rebuild_cons_list(cons){
+
+	var html = '';
+
+	if (cons){
+		for (var i=0; i<cons.length; i++){
+			var con = cons[i];
+
+			html += con.id+': to '+con.remote_name+' ('+con.remote_id+') via '+con.line_name+' (<a href="#" onclick="edit_con('+con.id+'); return false;">edit</a>)<br />';
+		}
+	}
+	html += '<a href="#" onclick="edit_con(); return false;">add</a><br />';
+
+	var d = document.getElementById('station-cons');
+	d.innerHTML = html;
+}
+
+function edit_con(id){
+
+	g_con_edit_id = id;
+
+	if (id){
+		document.getElementById('edit-con-title').innerHTML = 'Edit con '+id;
+		document.getElementById('edit-con-delete').style.display = 'block';
+
+		var con = null;
+		for (var i=0; i<g_station_cons.length; i++){
+			if (g_station_cons[i].id == id) con = g_station_cons[i];
+		}
+
+		var line_id = con.line_id;
+		var station_id = con.remote_id;
+
+		select_set_value('edit-con-station', station_id);
+		select_set_value('edit-con-line', line_id);
+
+	}else{
+		document.getElementById('edit-con-title').innerHTML = 'Add new con';
+		document.getElementById('edit-con-delete').style.display = 'none';
+	}
+
+	document.getElementById('edit-con').style.display = 'block';
 }
 
 function save_station(){
@@ -254,7 +346,72 @@ function delete_center(idx){
 	rebuild_centers_list();
 }
 
+function save_con(){
 
+	if (g_con_edit_id){
+
+		var method = 'edit_con';
+		var args = {
+			'con_id'	: g_con_edit_id,
+			'src'		: g_current_station,
+			'dst'		: select_get_value('edit-con-station'),
+			'line'		: select_get_value('edit-con-line'),
+		};
+	}else{
+		var method = 'add_con';
+		var args = {
+			'src'		: g_current_station,
+			'dst'		: select_get_value('edit-con-station'),
+			'line'		: select_get_value('edit-con-line'),
+		};
+	}
+
+	document.getElementById('edit-con').style.display = 'none';
+	document.getElementById('saving').style.display = 'block';
+
+	api_call(method, args, function(o){
+
+		document.getElementById('saving').style.display = 'none';
+		select_station(g_current_station);
+	});
+}
+
+function delete_con(){
+
+	var method = 'delete_con';
+	var args = {
+		'con_id'	: g_con_edit_id,
+	};
+
+	document.getElementById('edit-con').style.display = 'none';
+	document.getElementById('saving').style.display = 'block';
+
+	api_call(method, args, function(o){
+
+		document.getElementById('saving').style.display = 'none';
+		select_station(g_current_station);
+	});
+}
+
+
+function select_get_value(name){
+
+	var elm = document.getElementById(name);
+
+	return elm.options[elm.selectedIndex].value;
+}
+
+function select_set_value(name, value){
+
+	var elm = document.getElementById(name);
+
+	for (var i in elm.options){
+		if (elm.options[i].value == value){
+			elm.selectedIndex = i;
+			return;
+		}
+	}
+}
 
 
 
