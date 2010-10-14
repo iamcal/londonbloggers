@@ -4,7 +4,7 @@
 //
 
 var g_map_data = {
-	'path' : 'tiles',
+	'path' : '/tiles',
 	'zooms' : {
 		4 : [2, 2, 9, 62],
 		3 : [4, 4, 19, 123],
@@ -146,7 +146,7 @@ map.prototype.create = function(parent, w, h){
 	this.zoom.barelm.style.height = '43px';
 	this.zoom.barelm.style.left = '20px';
 	this.zoom.barelm.style.top = '20px';
-	this.zoom.barelm.style.backgroundImage = 'url(images/zoom_widget.gif)';
+	this.zoom.barelm.style.backgroundImage = 'url(/images/zoom_widget.gif)';
 	//this.zoom.barelm.style.backgroundColor = 'red';
 	this.zoom.barelm.style.zIndex = 22;
 	this.zoom.barelm.style.cursor = 'pointer';
@@ -188,7 +188,7 @@ map.prototype.create = function(parent, w, h){
 
 	// the arrow represents sharing
 	this.slab.a = document.createElement('img');
-	this.slab.a.src = 'images/cross.gif';
+	this.slab.a.src = '/images/cross.gif';
 	this.slab.a.style.position = 'absolute';
 	this.slab.a.style.width = '11px';
 	this.slab.a.style.height = '11px';
