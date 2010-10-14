@@ -43,7 +43,7 @@ function map(){
 		mx : 1,
 		my : 1,
 		zoom : 3,
-		zooms : {},
+		zooms : {}
 	};
 
 	this.tile_path = '';
@@ -343,7 +343,7 @@ map.prototype.recalc_visibles = function(force){
 		x_hi : 0 - ((this.drag.new_slab_x - this.w) - 1),
 
 		y_lo : 0 - (this.drag.new_slab_y - 1),
-		y_hi : 0 - ((this.drag.new_slab_y - this.h) - 1),
+		y_hi : 0 - ((this.drag.new_slab_y - this.h) - 1)
 	};
 
 	var lo_x = 0 - ((this.drag.new_slab_x - 1) >> 8);
