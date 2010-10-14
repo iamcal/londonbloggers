@@ -1,3 +1,22 @@
+<?
+	include('include/init.php');
+
+
+	#
+	# get station target data
+	#
+
+	$ret = db_fetch("SELECT * FROM tube_stations ORDER BY name ASC");
+	foreach ($ret['rows'] as $row){
+
+		$location = unserialize($row['location']);
+
+		$data[$row['id']] = array(
+			'name'	=> $row['name'],
+			'pts'	=> is_array($location['centers']) ? $location['centers'] : array(),
+		);
+	}
+?>
 <html>
 <head>
 <title></title>
@@ -63,36 +82,6 @@ a.secret:hover {
 
 <p>This goes above the map.</p>
 
-<div id="sidebar">
-	<select id="stations"></select>
-	<div id="station-data" style="display: none">
-		<div class="section">
-			Centers:<br />
-			<div id="station-centers" style="margin-left: 1em;"></div>
-		</div>
-		<div class="section" id="station-cons"></div>
-		<div class="section" id="saving" style="display: none; background-color: #ffc;">
-			Saving changes...
-		</div>
-
-	</div>
-</div>
-
-<div id="edit-con" class="overbox">
-
-	<div id="edit-con-title">TITLE</div>
-
-	<select id="edit-con-station"></select><br />
-	<select id="edit-con-line"></select><br />
-	<br />
-	<input type="button" value="Save" onclick="save_con();" />
-	or
-	<input type="button" value="Cancel" onclick="document.getElementById('edit-con').style.display = 'none';" /><br />
-	<br />
-	<br />
-	<div id="edit-con-delete">(<a href="#" onclick="delete_con(); return false;">delete con</a>)</div>
-</div>
-
 <div id="map"></div>
 
 <p>And this goes below it.</p>
@@ -104,10 +93,8 @@ a.secret:hover {
 var g_map = new map();
 var g_markers = null;
 
-var g_current_station = 0;
-var g_station_centers = [];
-var g_station_cons = [];
-var g_con_edit_id = 0;
+var g_station_positions = <?=JSON_encode($data)?>;
+var g_click_boxes = [];
 
 window.onload = function(){
 
@@ -120,10 +107,10 @@ window.onload = function(){
 	g_map.set_zoom_level(1);
 
 
-
 	g_markers = document.createElement('div');
 	g_markers.style.position = 'absolute';
 	g_map.get_slab().appendChild(g_markers);
+
 
 	g_map.onpan = function(){
 		// something?
@@ -131,312 +118,92 @@ window.onload = function(){
 
 	g_map.onzoomchange = function(){
 		// maintain selection here
+		calculate_click_boxes();
 	};
 
 	g_map.onclick = function(x, y){
-		// process click
+
+		// find any matching boxes
+		var matches = [];
+
+		for (var i=0; i<g_click_boxes.length; i++){
+			var box = g_click_boxes[i];
+			if (x >= box[0] && y >= box[1] && x <= box[2] && y <= box[3]){
+				matches.push(box);
+			}
+		}
+
+		if (!matches.length) return;
+
+
+		//
+		// find shortest distance to each station
+		//
+
+		var distances = {};
+
+		for (var i=0; i<matches.length; i++){
+			var cx = matches[i][0] + ((matches[i][2] - matches[i][0]) / 2);
+			var cy = matches[i][1] + ((matches[i][3] - matches[i][1]) / 2);
+			var dx = Math.abs(x - cx);
+			var dy = Math.abs(y - cy);
+			var d = Math.sqrt(dx * dx + dy * dy);
+
+			if (!distances[matches[i][4]] || d < distances[matches[i][4]]){
+
+				distances[matches[i][4]] = d;
+			}
+		}
+
+
+		//
+		// pick the closest station
+		//
+
+		var best_d = 1000;
+		var best_id = null;
+
+		for (var i in distances){
+			if (distances[i] < best_d){
+				best_d = distances[i];
+				best_id = i;
+			}
+		}
+		if (!best_id) return;
+
+		var station = g_station_positions[best_id];
+		console.log("Closest station is "+station.name);
 	}
 
-
-	api_call('get_stations', {}, function(o){
-
-		var html = '';
-		var first_id = 0;
-
-		for (var i in o.names){
-			if (!first_id) first_id = i;
-			html += '<option value="'+i+'">'+o.names[i]+' ('+i+')</option>';
-		}
-		var s = document.getElementById('stations');
-		s.innerHTML = html;
-		s.onchange = function(){
-			var id = s.options[s.selectedIndex].value;
-			select_station(id);
-		}
-
-		document.getElementById('edit-con-station').innerHTML = html;
-
-		select_station(first_id);
-	});
-
-	api_call('get_lines', {}, function(o){
-		var html = '';
-
-		for (var i in o.lines){
-			html += '<option value="'+i+'">'+o.lines[i]+' ('+i+')</option>';
-		}
-		document.getElementById('edit-con-line').innerHTML = html;
-	});
-
+	// set up initial click targets
+	calculate_click_boxes();
 };
 
-// this is called when we select a new station from the drop down
-function select_station(id){
+function calculate_click_boxes(){
 
-	document.getElementById('station-data').style.display = 'none';
-
-	api_call('get_station', {id: id}, function(o){
-
-		g_current_station = id;
-		g_station_centers = [];
-		if (o.row.location.centers) g_station_centers = o.row.location.centers;
-		rebuild_centers_list();
-
-		g_station_cons = o.cons;
-		rebuild_cons_list(o.lines, o.cons);
-
-
-		//
-		// try and center the map somewhere sensible
-		//
-
-		if (g_station_centers.length){
-
-			var x = g_station_centers[0][0];
-			var y = g_station_centers[0][1];
-			g_map.center_on_pos(x, y);
-
-		}else{
-			if (o.row.main_x){
-				var x = (((o.row.main_x - 194) / (2536 - 194)) * (3821 - 282)) + 282;
-				var y = (((o.row.main_y - 108) / (1868 - 108)) * (2803 - 264)) + 264;
-				g_map.center_on_pos(x, y);
-			}
-		}
-
-		document.getElementById('station-data').style.display = 'block';
-	});
-}
-
-function rebuild_centers_list(){
-
-	//
-	// the admin list
-	//
-
-	var d = document.getElementById('station-centers');
-
-	var num = 0;
-	var html = '';
-	for (var i=0; i<g_station_centers.length; i++){
-		var cen = g_station_centers[i];
-		num++;
-		html += "["+cen[0]+","+cen[1]+"] (<a href=\"#\" onclick=\"delete_center("+i+"); return false;\">delete</a>)<br />";
-	}
-	if (num == 0){
-		html += "<i>none</i><br />";
-	}
-	html += "<a href=\"#\" onclick=\"add_center(); return false;\">add</a><br />";
-
-	d.innerHTML = html;
-
-
-	//
-	// the markers
-	//
-
-	html = '';
-
-	for (var i=0; i<g_station_centers.length; i++){
-		var cen = g_station_centers[i];
-
-		html += "<div class=\"center-marker\" style=\"left: "+(cen[0]-12)+"px; top: "+(cen[1]-12)+"px\"></div>";
-	}
-
-	g_markers.innerHTML = html;
-}
-
-function rebuild_cons_list(lines, cons){
-
-	var html = '';
-
-	if (cons && lines){
-
-		for (var i=0; i<lines.length; i++){
-			var line = lines[i];
-
-			if (line.has_line == '1'){
-				html += "<div style=\"float: left; margin-right: 8px; height: 4px; width: 80px; background-color: #fff; border-top: 6px solid "+line.color+"; border-bottom: 6px solid "+line.color+"\"></div> ";
-			}else{
-				html += "<div style=\"float: left; margin-right: 8px; height: 16px; width: 80px; background-color: "+line.color+"\"></div> ";
-			}
-
-			html += line.name+' ('+line.id+')<br />';
-			html += '<div style="margin-left: 1em">';
-
-			for (var j=0; j<cons.length; j++){
-				var con = cons[j];
-
-				if (con.line_id == line.id){
-
-					html += con.id+': <a href="#" onclick="select_station('+con.remote_id+'); return false;" class="secret">'+con.remote_name+'</a> ('+con.remote_id+') (<a href="#" onclick="edit_con('+con.id+'); return false;">edit</a>)<br />';
-				}
-			}
-
-			html += '</div>';
-
-		}
-	}
-	html += '<a href="#" onclick="edit_con(); return false;">add</a><br />';
-
-	var d = document.getElementById('station-cons');
-	d.innerHTML = html;
-}
-
-function edit_con(id){
-
-	g_con_edit_id = id;
-
-	if (id){
-		document.getElementById('edit-con-title').innerHTML = 'Edit con '+id;
-		document.getElementById('edit-con-delete').style.display = 'block';
-
-		var con = null;
-		for (var i=0; i<g_station_cons.length; i++){
-			if (g_station_cons[i].id == id) con = g_station_cons[i];
-		}
-
-		var line_id = con.line_id;
-		var station_id = con.remote_id;
-
-		select_set_value('edit-con-station', station_id);
-		select_set_value('edit-con-line', line_id);
-
-	}else{
-		document.getElementById('edit-con-title').innerHTML = 'Add new con';
-		document.getElementById('edit-con-delete').style.display = 'none';
-	}
-
-	document.getElementById('edit-con').style.display = 'block';
-}
-
-function save_station(){
-
-	document.getElementById('saving').style.display = 'block';
-
-	var args = {
-		id: g_current_station,
-		centers: '',
-	};
-
-	var centers = [];
-	for (var i=0; i<g_station_centers.length; i++){
-		centers.push(g_station_centers[i][0]+','+g_station_centers[i][1]);
-	}
-	args.centers = centers.join('|');
-
-	api_call('save_station', args, function(o){
-
-		document.getElementById('saving').style.display = 'none';
-	});
-
-}
-
-function add_center(){
-
-	g_station_centers.push(g_map.get_center());
-	save_station();
-	rebuild_centers_list();
-}
-
-function delete_center(idx){
-	g_station_centers.splice(idx, 1);
-	save_station();
-	rebuild_centers_list();
-}
-
-function save_con(){
-
-	if (g_con_edit_id){
-
-		var method = 'edit_con';
-		var args = {
-			'con_id'	: g_con_edit_id,
-			'src'		: g_current_station,
-			'dst'		: select_get_value('edit-con-station'),
-			'line'		: select_get_value('edit-con-line'),
-		};
-	}else{
-		var method = 'add_con';
-		var args = {
-			'src'		: g_current_station,
-			'dst'		: select_get_value('edit-con-station'),
-			'line'		: select_get_value('edit-con-line'),
-		};
-	}
-
-	document.getElementById('edit-con').style.display = 'none';
-	document.getElementById('saving').style.display = 'block';
-
-	api_call(method, args, function(o){
-
-		document.getElementById('saving').style.display = 'none';
-		select_station(g_current_station);
-	});
-}
-
-function delete_con(){
-
-	var method = 'delete_con';
-	var args = {
-		'con_id'	: g_con_edit_id,
-	};
-
-	document.getElementById('edit-con').style.display = 'none';
-	document.getElementById('saving').style.display = 'block';
-
-	api_call(method, args, function(o){
-
-		document.getElementById('saving').style.display = 'none';
-		select_station(g_current_station);
-	});
-}
-
-
-function select_get_value(name){
-
-	var elm = document.getElementById(name);
-
-	return elm.options[elm.selectedIndex].value;
-}
-
-function select_set_value(name, value){
-
-	var elm = document.getElementById(name);
-
-	for (var i in elm.options){
-		if (elm.options[i].value == value){
-			elm.selectedIndex = i;
-			return;
-		}
-	}
-}
-
-
-
-
-
-
-function translate_point_in(point){
-
+	g_click_boxes = [];
 	var z = g_map.zoom_level;
-	var factor = Math.pow(0.5, z-1);
-	
-	var x = ((point[0] - g_map_data.bounds.x_lo) * factor) + g_map_data.zooms[z][2];
-	var y = ((point[1] - g_map_data.bounds.y_lo) * factor) + g_map_data.zooms[z][3];
 
-	return [x, y];
-}
+	var box_size = 35;
 
-function translate_point_out(point){
+	if (z == 2) box_size /= 2;
+	if (z == 3) box_size /= 4;
+	if (z == 4) box_size /= 8;
+	var half_box = box_size / 2; // TODO: make smaller for other zooms
 
-	var z = g_map.zoom_level;
-	var factor = Math.pow(0.5, z-1);
+	for (var station_id in g_station_positions){
+		var station = g_station_positions[station_id];
+		for (var i=0; i<station.pts.length; i++){
+			var pt = station.pts[i];
 
-	var x = ((point[0] - g_map_data.zooms[z][2]) / factor) + g_map_data.bounds.x_lo;
-	var y = ((point[1] - g_map_data.zooms[z][3]) / factor) + g_map_data.bounds.y_lo;
+			if (z != 1) pt = g_map.zoom1_to_current(pt);
 
-	return [x, y];
+			var x = pt[0]-half_box;
+			var y = pt[1]-half_box;
+
+			g_click_boxes.push([x, y, x+box_size, y+box_size, station_id]);
+		}
+	}
 }
 
 </script>
