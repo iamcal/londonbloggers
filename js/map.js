@@ -31,6 +31,7 @@ function map(){
 	this.start_tile_x = 1;
 	this.start_tile_y = 1;
 	this.drag_constraints = true;
+	this.show_crosshairs = true;
 
 	this.zoom_level = 3;
 
@@ -60,6 +61,10 @@ function map(){
 
 	// how many pixels we allow you to drag and it still count as a click
 	this.click_drag_allow = 5;
+
+	this.slide_ticks = 5;
+	this.slide_tick_time = 50;
+
 };
 
 map.prototype.init = function(tiles, zooms){
@@ -187,13 +192,15 @@ map.prototype.create = function(parent, w, h){
 	this.recalc_visibles();
 
 	// the arrow represents sharing
-	this.slab.a = document.createElement('img');
-	this.slab.a.src = '/images/cross.gif';
-	this.slab.a.style.position = 'absolute';
-	this.slab.a.style.width = '11px';
-	this.slab.a.style.height = '11px';
-	this.slab.a.style.zIndex = 19;
-	this.parent.appendChild(this.slab.a);
+	if (this.show_crosshairs){
+		this.slab.a = document.createElement('img');
+		this.slab.a.src = '/images/cross.gif';
+		this.slab.a.style.position = 'absolute';
+		this.slab.a.style.width = '11px';
+		this.slab.a.style.height = '11px';
+		this.slab.a.style.zIndex = 19;
+		this.parent.appendChild(this.slab.a);
+	}
 
 
 	// position everything correctly
@@ -449,8 +456,10 @@ map.prototype.set_size = function(w, h){
 	this.cover.style.width = this.w+'px';
 	this.cover.style.height = this.h+'px';
 
-	this.slab.a.style.left = (Math.round(this.w / 2) - 5) + 'px';
-	this.slab.a.style.top  = (Math.round(this.h / 2) - 5) + 'px';
+	if (this.slab.a){
+		this.slab.a.style.left = (Math.round(this.w / 2) - 5) + 'px';
+		this.slab.a.style.top  = (Math.round(this.h / 2) - 5) + 'px';
+	}
 
 	this.recalc_minmax();
 
@@ -569,6 +578,47 @@ map.prototype.center_on_pos = function(x, y){
 	this.set_slab_pos((this.w/2)-x, (this.h/2)-y);
 
 	this.recalc_visibles();
+};
+
+map.prototype.slide_to_pos = function(x, y){
+
+	if (this.slide_timer){
+		window.clearTimeout(this.slide_timer);
+		this.slide_timer = null;
+	}
+
+	var now = this.get_center();
+	this.slide = {
+		start_x	: now[0],
+		start_y	: now[1],
+		end_x	: x,
+		end_y	: y,
+		ticks
+	: 0
+	};
+
+	this.do_slide();
+};
+
+map.prototype.do_slide = function(){
+
+	var self = this;
+
+	this.slide.ticks++;
+	var x = this.slide.start_x + ((this.slide.end_x - this.slide.start_x) * (this.slide.ticks / this.slide_ticks));
+	var y = this.slide.start_y + ((this.slide.end_y - this.slide.start_y) * (this.slide.ticks / this.slide_ticks));
+
+	this.set_slab_pos((this.w/2)-x, (this.h/2)-y);
+	this.recalc_visibles();
+
+	if (this.slide.ticks < this.slide_ticks){
+
+		this.slide_timer = window.setTimeout(function(){
+			self.do_slide();
+		}, this.slide_tick_time);
+	}else{
+		this.slide_timer = null;
+	}
 };
 
 map.prototype.get_center = function(){
