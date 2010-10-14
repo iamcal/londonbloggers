@@ -27,7 +27,7 @@
 	background-image: url(/images/stripes.gif);
 	border: 1px solid black;
 	width: 800px;
-	height: 600px;
+	height: 400px;
 	position: relative;
 	overflow: hidden;
 }
@@ -76,6 +76,16 @@ a.secret:hover {
 	text-decoration: underline;
 }
 
+#infobox {
+	display: block;
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	background-color: pink;
+	z-index: 2;
+}
+
 </style>
 </head>
 <body>
@@ -83,6 +93,7 @@ a.secret:hover {
 <p>This goes above the map.</p>
 
 <div id="map"></div>
+<div id="infobox">Hello</div>
 
 <p>And this goes below it.</p>
 
@@ -98,18 +109,13 @@ var g_click_boxes = [];
 
 window.onload = function(){
 
+	g_map.show_crosshairs = false;
 	g_map.init(g_map_data.path, g_map_data.zooms);
-	g_map.create(document.getElementById('map'), 800, 600);
-	g_map.drag_constraints = false;
+	g_map.create(document.getElementById('map'), 800, 400);
 	g_map.set_zoom_level(3);
 	g_map.center_on_pos(445, 447);
 
-	g_map.set_zoom_level(1);
-
-
-	g_markers = document.createElement('div');
-	g_markers.style.position = 'absolute';
-	g_map.get_slab().appendChild(g_markers);
+	g_map.get_slab().appendChild(document.getElementById('infobox'));
 
 
 	g_map.onpan = function(){
@@ -171,8 +177,7 @@ window.onload = function(){
 		}
 		if (!best_id) return;
 
-		var station = g_station_positions[best_id];
-		console.log("Closest station is "+station.name);
+		select_station(best_id);
 	}
 
 	// set up initial click targets
@@ -204,6 +209,34 @@ function calculate_click_boxes(){
 			g_click_boxes.push([x, y, x+box_size, y+box_size, station_id]);
 		}
 	}
+}
+
+function select_station(id){
+
+	var station = g_station_positions[id];
+	//console.log("Closest station is "+station.name);	
+
+	var box = document.getElementById('infobox');
+
+	var xs = [];
+	var ys = [];
+	for (var i=0; i<station.pts.length; i++){
+		xs.push(station.pts[i][0]);
+		ys.push(station.pts[i][1]);
+	}
+	xs.sort();
+	ys.sort();
+	var x = (xs[0]+xs.pop())/2;
+	var y = (ys[0]+ys.pop())/2;
+
+	var pt = g_map.zoom1_to_current([x, y]);
+
+	g_map.slide_to_pos(pt[0], pt[1]);
+
+	box.style.display = 'block';
+	box.innerHTML = station.name;
+	box.style.left = (pt[0])+'px';
+	box.style.top = (pt[1]-100)+'px';
 }
 
 </script>
