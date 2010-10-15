@@ -80,10 +80,15 @@ a.secret:hover {
 	display: block;
 	position: absolute;
 	width: 100px;
-	height: 100px;
+	height: 77px;
 	position: absolute;
-	background-color: pink;
+	xbackground-color: pink;
+	background-image: url(images/bubble.gif);
 	z-index: 2;
+}
+
+#innerbox {
+	padding: 5px 5px 16px 5px;
 }
 
 </style>
@@ -93,7 +98,7 @@ a.secret:hover {
 <p>This goes above the map.</p>
 
 <div id="map"></div>
-<div id="infobox">Hello</div>
+<div id="infobox"><div id="innerbox">Hello</div></div>
 
 <p>And this goes below it.</p>
 
@@ -106,6 +111,7 @@ var g_markers = null;
 
 var g_station_positions = <?=JSON_encode($data)?>;
 var g_click_boxes = [];
+var g_selected_station = null;
 
 window.onload = function(){
 
@@ -125,6 +131,8 @@ window.onload = function(){
 	g_map.onzoomchange = function(){
 		// maintain selection here
 		calculate_click_boxes();
+
+		if (g_selected_station) select_station(g_selected_station, false);
 	};
 
 	g_map.onclick = function(x, y){
@@ -177,7 +185,7 @@ window.onload = function(){
 		}
 		if (!best_id) return;
 
-		select_station(best_id);
+		select_station(best_id, true);
 	}
 
 	// set up initial click targets
@@ -211,7 +219,9 @@ function calculate_click_boxes(){
 	}
 }
 
-function select_station(id){
+function select_station(id, jump){
+
+	g_selected_station = id;
 
 	var station = g_station_positions[id];
 	//console.log("Closest station is "+station.name);	
@@ -231,12 +241,15 @@ function select_station(id){
 
 	var pt = g_map.zoom1_to_current([x, y]);
 
-	g_map.slide_to_pos(pt[0], pt[1]);
+	if (jump){
+		g_map.slide_to_pos(pt[0], pt[1]);
+	}
 
 	box.style.display = 'block';
-	box.innerHTML = station.name;
-	box.style.left = (pt[0])+'px';
-	box.style.top = (pt[1]-100)+'px';
+	box.style.left = (pt[0]-16)+'px';
+	box.style.top = (pt[1]-77)+'px';
+
+	document.getElementById('innerbox').innerHTML = station.name;
 }
 
 </script>
