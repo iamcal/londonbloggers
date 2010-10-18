@@ -1,0 +1,48 @@
+		</td>
+		<td width="1" bgcolor="#666666"><img src="images/space.gif" width="1" height="10"></td>
+		<td width="160">
+			<div style="border-bottom: 1px solid #666666; padding: 12px 6px;">
+				<center>
+					<a href="map.php"><img src="images/tiny_map.gif" width="73" height="54" border="0" alt="View the full map" /></a><br>
+					<img src="images/space.gif" width="73" height="4" /><br>
+					<a href="map.php"><b>View the full map</b></a><br>
+				</center>
+			</div>
+			<div class="padded" style="border-bottom: 1px solid #666666;">
+				<b>Browse By Line</b><br>
+				<br>
+				<table border="0" cellpadding="0" cellspacng="0" width="144">
+{*
+<?
+	$result = mysql_query("SELECT * FROM tube_lines ORDER BY id ASC", $db);
+	while($row = mysql_fetch_array($result)){
+		insert_line_row($row);
+	}
+?>
+*}
+				</table>
+			</div>
+			<div class="padded">
+				<center>
+					There are currently <a href="weblogs.php"><?=$cfg[total_count]?></a> registered London weblogs.
+				</center>
+			</div>
+			<div class="padded">
+				<center>
+					<a href="edit.php">Edit your entry</a>.
+				</center>
+			</div>
+		</td>
+		<td width="1" bgcolor="#666666"><img src="images/space.gif" width="1" height="10"></td>
+	</tr>
+	<tr bgcolor="#666666">
+		<td colspan="7"><img src="images/space.gif" width="613" height="1"></td>
+	</tr>	
+</table>
+
+	<div class="footer">(C)2002-2004 <a href="http://www.iamcal.com/">Cal Henderson</a>. Thanks to <a href="http://www.stevethompson.me.uk/">Steve Thompson</a> for the domain.</div>
+
+</div>
+
+</body>
+</html>
