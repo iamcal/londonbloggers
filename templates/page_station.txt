@@ -1,0 +1,100 @@
+{include file='inc_head.txt'}
+
+		<td width="220" class="padded">
+
+			<h2>{$station.name} Station</h2>
+			<br />
+
+			If this is your nearest station, then click the button below.<br />
+			<br />
+			<form action="submit.php" action="get">
+			<input type="hidden" name="station" value="{$station.id}">
+			<span style="padding: 10px; background-color: #ccccff; border: 2px solid #9999cc; width: 300px; text-align: center;">
+				<input type="submit" value="Add My Weblog!">
+			</span>
+			</form>
+			<br />
+			<br />
+
+			<table border="0" cellpadding="0" cellspacing="0">
+				<tr valign="middle">
+					<td><img src="images/icon_tube.gif" width="16" height="16"></td>
+					<td>&nbsp;</td>
+					<td><a href="segment.php?x={$segx}&amp;y={$segy}&highlight={$station.id}">See this station on the tube map.</a></td>
+				</tr>
+{if $station.real_x}
+				<tr>
+					<td colspan="3">&nbsp;</td>
+				</td>
+				<tr valign="middle">
+					<td><img src="images/icon_street.gif" width="16" height="16"></td>
+					<td>&nbsp;</td>
+					<td><a href="http://www.streetmap.co.uk/newmap.srf?x={$station.real_x}&y={$station.real_y}&z=1" target="_blank">See this station on a street map.</a></td>
+				</tr>
+{/if}
+			</table>
+			<br />
+			The following lines pass through this station:<br />
+			<table border="0" cellpadding="0" cellspacng="0" width="206">
+{foreach from=$lines item='row'}
+	{$row|@insert_line_row}
+{/foreach}
+			</table>
+
+			<br />
+			<br />
+			<h2>Weblog Browser</h2>
+			<br>
+			The weblog browser shows a small menu of sites at this tube station. To use the weblog browser on your own site, copy and paste this code:<br>
+			<br>
+			<textarea style="width: 208px; height: 100px;" wrap="none">&lt;script src="{$cfg.base_url}browser.php?ids={$weblog.id}" type="text/javascript"&gt;&lt;/script&gt;</textarea><br>
+			<br>
+			To see a demo of the browser in action, <a href="browser_demo.php">click here</a>. The demo also includes instructions for getting the browser to display multiple stations and showing a smaller version of the browser.<br>
+			<br>
+
+			<h2>Photos</h2>
+			<br>
+<script language="Javascript" src="photos.php?tag={$station.tag}"></script>
+
+		</td>
+		<td width="10"><img src="images/space.gif" width="10"  height="10"></td>
+		<td width="220" class="padded">
+
+{if $blogs|@count}
+			<h2>Weblogs At This Station: {$blogs|@count}</h2>
+			<br />
+			The following weblogs are located at <i>{$station.name}</i>:<br />
+			<br />
+	{foreach from=$blogs item='row'}
+			output_blog_info($row);
+	{/foreach}
+
+{else}
+			<h2>Weblogs At This Station</h2>
+			<br />
+			There are no weblogs located at <i>{$station.name}</i>.
+			To add your own, click the button on the left.<br />
+{/if}
+
+
+			<br />
+			<h2>Stations Nearby</h2>
+			<br />
+{if $nearby_stations|@count}
+
+			The following stations are located within a mile of {$station.name}:<br>
+			<br>
+	{foreach from=$nearby_stations item='row'}
+			<a href="/stations/{$row.id}/">{$row.name}</a><br>
+	{/foreach}
+{else}
+			There are no other stations within a mile of {$station.name}.<br>
+{/if}
+
+<!--
+			<br />
+			<i>Note - this data relies on geo-coding information for the stations. At present, not all stations have been geo-coded.</i><br>
+-->
+		</td>
+
+{include file='inc_foot.txt'}
