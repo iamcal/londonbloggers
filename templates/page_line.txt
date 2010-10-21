@@ -1,15 +1,23 @@
 {include file='inc_head.txt'}
 
-		<td colspan="3">
-			<div class="padded">
-				<div style="border: 1px solid black; background-color: {$line.color};">&nbsp;</div>
-				<h1>{$line.name|escape}</h1>
-				<div style="border: 1px solid black; background-color: {$line.color};">&nbsp;</div>
-			</div>
+	<div class="section">
 
-<table cellpadding="0" cellspacing="0" border="0" width="450">
+		<h1>{if $line.has_line}Mainline - {/if}{$line.name|escape}</h1>
+
+{if $line.has_line}
+		<div style="height: 6px; xwidth: 100px; background-color: {$line.color}"></div>
+		<div style="height: 4px; xwidth: 100px; background-color: #fff"></div>
+		<div style="height: 6px; xwidth: 100px; background-color: {$line.color}"></div>
+{else}
+		<div style="height: 16px; xwidth: 100px; background-color: {$line.color}"></div>
+{/if}
+	</div>
+
+	<div class="section">
+	
+<table cellpadding="0" cellspacing="0" border="0">
 	<tr valign="top">
-		<td width="220" class="padded">
+		<td>
 			<h2>Stations</h2>
 			<br>
 
@@ -18,8 +26,7 @@
 {/foreach}
 
 		</td>
-		<td width="10"><img src="images/space.gif" width="10"  height="10"></td>
-		<td width="220" class="padded">
+		<td>
 			<h2>Weblogs</h2>
 			<br>
 
@@ -33,6 +40,7 @@
 	</tr>
 </table>
 
-		</td>
+	</div>
+
 
 {include file='inc_foot.txt'}
