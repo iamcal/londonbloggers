@@ -18,3 +18,5 @@ RewriteEngine on
 RewriteRule	^stations/(\d+)/$	/station.php?id=$1	[L,QSA]
 RewriteRule	^weblogs/(\d+)/$	/weblog.php?id=$1	[L,QSA]
 
+
+RewriteRule ^(.*\.)v[0-9.]+\.(css|js|gif|png|jpg)$	/$1$2	[L,QSA]
