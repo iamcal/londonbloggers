@@ -1,6 +1,13 @@
 {include file='inc_head.txt'}
 
 	<div class="section">
+
+		<p>This goes above the map.</p>
+	</div>
+
+{include file='inc_map.txt'}
+
+	<div class="section">
 		<p>YEAH!</p>
 	</div>
 
