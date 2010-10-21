@@ -1,21 +1,5 @@
 <?
 	include('include/init.php');
-
-
-	#
-	# get station target data
-	#
-
-	$ret = db_fetch("SELECT * FROM tube_stations ORDER BY name ASC");
-	foreach ($ret['rows'] as $row){
-
-		$location = unserialize($row['location']);
-
-		$data[$row['id']] = array(
-			'name'	=> $row['name'],
-			'pts'	=> is_array($location['centers']) ? $location['centers'] : array(),
-		);
-	}
 ?>
 <html>
 <head>
@@ -104,12 +88,12 @@ a.secret:hover {
 
 <script src="/js/map.js"></script>
 <script src="/js/core.js"></script>
+<script src="/map_data.php"></script>
 <script>
 
 var g_map = new map();
 var g_markers = null;
 
-var g_station_positions = <?=JSON_encode($data)?>;
 var g_click_boxes = [];
 var g_selected_station = null;
 
