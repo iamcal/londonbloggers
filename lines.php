@@ -14,7 +14,7 @@
 <? }else{ ?>
 		<td><div style="height: 16px; width: 100px; background-color: <?=$row['color']?>"></div></td>
 <? } ?>
-		<td><?=$row['name']?></td>
+		<td><a href="/lines/<?=$row['slug']?>/"><?=$row['name']?></a></td>
 <?
 	$ret2 = db_fetch("SELECT s.* FROM tube_stations AS s, tube_connections AS c WHERE c.line_id=$row[id] AND (c.station_id_1=s.id OR c.station_id_2=s.id) GROUP BY s.id LIMIT 5;");
 	$names = array();
