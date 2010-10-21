@@ -59,4 +59,20 @@
 	$GLOBALS['smarty']->register_function('timings', 'smarty_timings');
 
 	#######################################################################################
+
+	function versionify($path){
+
+		$full_path = $GLOBALS['cfg']['abs_root_path'].$path;
+		$stat = @stat($full_path);
+
+		$bits = explode('.', $path);
+
+		$ext = array_pop($bits);
+		$bits[] = "v$stat[9]";
+		$bits[] = $ext;
+
+		return implode('.', $bits);
+	}
+
+	#######################################################################################
 ?>

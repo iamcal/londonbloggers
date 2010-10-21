@@ -1,73 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>London Bloggers</title>
-<style>{literal}
+	<title>London Bloggers</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 
-#mapouter {
-	background-color: #000000;
-	padding: 1px 0;
-}
+	<link rel="stylesheet" href="{'/css/main.css'|versionify}" media="all">
 
-#map {
-	background-color: #cccccc;
-	background-image: url(/images/stripes.gif);
-	width: 800px;
-	height: 400px;
-	position: relative;
-	overflow: hidden;
-}
-
-#infobox {
-	display: block;
-	position: absolute;
-	width: 100px;
-	height: 77px;
-	position: absolute;
-	xbackground-color: pink;
-	background-image: url(images/bubble.gif);
-	z-index: 2;
-}
-
-#innerbox {
-	padding: 5px 5px 16px 5px;
-}
-
-body {
-	background-color: #f5f5f5;
-	text-align: center;
-	margin: 0;
-	padding: 0;
-}
-
-#main {
-	width: 800px;
-	margin: 0 auto;
-	text-align: left;
-	background-color: #fff;
-}
-
-#header {
-	padding: 1em;
-	background-color: blue;
-	color: white;
-}
-
-#footer {
-	padding: 1em;
-	background-color: blue;
-	color: white;
-}
-
-h1 {
-	margin: 0;
-}
-
-.section {
-	margin: 1em;
-}
-
-
-</style>{/literal}
 {include file='inc_map.txt'}
 </head>
 <body>

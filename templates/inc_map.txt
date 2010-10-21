@@ -1,6 +1,7 @@
-<script src="/js/map.js"></script>
-<script src="/js/core.js"></script>
-<script src="/map_data.php"></script>
+	<script src="/js/map.js"></script>
+	<script src="/js/core.js"></script>
+	<script src="/map_data.php"></script>
+
 <script>{literal}
 
 var g_map = new map();
