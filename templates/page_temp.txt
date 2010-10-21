@@ -1,38 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>London Bloggers</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-
-	<link rel="stylesheet" href="{'/css/main.css'|versionify}" media="all">
-
-{include file='inc_map.txt'}
-</head>
-<body>
-
-<div id="main">
-
-	<div id="header">
-		<h1>London Bloggers</h1>
-	</div>
+{include file='inc_head.txt'}
 
 	<div class="section">
-
-		<p>This goes above the map.</p>
+		<p>YEAH!</p>
 	</div>
 
-	<div id="mapouter"><div id="map"></div></div>
-	<div id="infobox"><div id="innerbox">Hello</div></div>
-
-	<div class="section">
-		<p>And this goes below it.</p>
-	</div>
-
-	<div id="footer">
-		yeah
-	</div>
-</div>
-
-
-</body>
-</html>
+{include file='inc_foot.txt'}
