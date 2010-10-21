@@ -1,0 +1,26 @@
+{"Content-type: text/html; charset=UTF-8"|header}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{if $title}{$title} | {/if}London Bloggers</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+
+	<link rel="stylesheet" href="{'/css/main.css'|versionify}" media="all">
+
+{include file='inc_map.txt'}
+</head>
+<body>
+
+<div id="main">
+
+	<div id="header">
+		<h1>London Bloggers</h1>
+	</div>
+
+	<div class="section">
+
+		<p>This goes above the map.</p>
+	</div>
+
+	<div id="mapouter"><div id="map"></div></div>
+	<div id="infobox"><div id="innerbox">Hello</div></div>
