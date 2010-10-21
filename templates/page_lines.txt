@@ -1,0 +1,22 @@
+{include file='inc_head.txt'}
+
+<table border="1" cellpadding="10">
+{foreach from=$lines item='row'}
+	<tr>
+		<td>{$row.id}</td>
+{if $row.has_line}
+		<td><div style="height: 4px; width: 100px; background-color: #fff; border-top: 6px solid {$row.color}; border-bottom: 6px solid {$row.color}"></div></td>
+{else}
+		<td><div style="height: 16px; width: 100px; background-color: {$row.color}"></div></td>
+{/if}
+		<td><a href="/lines/{$row.slug}/">{$row.name}</a></td>
+		<td>
+{foreach from=$row.stations item='row2' name='stations'}
+			{$row2.name}{if !$smarty.foreach.stations.last},{/if}
+{/foreach}
+		</td>
+	</tr>
+{/foreach}
+</table>
+
+{include file='inc_foot.txt'}
