@@ -87,7 +87,7 @@
 	$this_is_apache		= strlen($_SERVER['REQUEST_URI']) ? 1 : 0;
 	$this_is_shell		= $_SERVER['SHELL'] ? 1 : 0;
 	$this_is_webpage	= $this_is_apache && !$this_is_api ? 1 : 0;
-$cfg['db_profiling'] = 1;
+
 
 	#
 	# load some libraries which we will 'always' need
@@ -95,7 +95,7 @@ $cfg['db_profiling'] = 1;
 
 	loadlib('log');		# logging comes first, so that other modules can log during startup
 	loadlib('smarty');	# smarty comes next, since other libs register smarty modules
-	#loadlib('error');
+	loadlib('error');
 	loadlib('db');
 	#loadlib('cache');
 	#loadlib('login');
