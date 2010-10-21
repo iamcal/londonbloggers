@@ -1,6 +1,8 @@
 
 	<div id="footer">
-		yeah
+		Built by <a href="http://www.iamcal.com/">Cal Henderson</a>,
+		&copy; 2002-{'Y'|date}.
+		Source on <a href="http://github.com/iamcal/londonbloggers">github</a>.
 	</div>
 </div>
 

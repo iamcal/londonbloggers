@@ -3,6 +3,7 @@ body {
 	text-align: center;
 	margin: 0;
 	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 #main {
@@ -14,14 +15,19 @@ body {
 
 #header {
 	padding: 1em;
-	background-color: blue;
-	color: white;
+	background-color: #113B92;
+	color: #fff;
 }
 
 #footer {
+	text-align: center;
 	padding: 1em;
-	background-color: blue;
-	color: white;
+	background-color: #113B92;
+	color: #4A72C4;
+	font-size: 80%;
+}
+#footer a {
+	color: #4A72C4;
 }
 
 h1 {
@@ -53,7 +59,7 @@ h1 {
 	height: 77px;
 	position: absolute;
 	xbackground-color: pink;
-	background-image: url(images/bubble.gif);
+	background-image: url(/images/bubble.gif);
 	z-index: 2;
 }
 
