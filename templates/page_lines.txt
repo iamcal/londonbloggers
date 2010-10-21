@@ -5,9 +5,15 @@
 	<tr>
 		<td>{$row.id}</td>
 {if $row.has_line}
-		<td><div style="height: 4px; width: 100px; background-color: #fff; border-top: 6px solid {$row.color}; border-bottom: 6px solid {$row.color}"></div></td>
+		<td>
+			<div style="height: 6px; width: 100px; background-color: {$row.color}"></div>
+			<div style="height: 4px; width: 100px; background-color: #fff"></div>
+			<div style="height: 6px; width: 100px; background-color: {$row.color}"></div>
+		</td>
 {else}
-		<td><div style="height: 16px; width: 100px; background-color: {$row.color}"></div></td>
+		<td>
+			<div style="height: 16px; width: 100px; background-color: {$row.color}"></div>
+		</td>
 {/if}
 		<td><a href="/lines/{$row.slug}/">{$row.name}</a></td>
 		<td>
