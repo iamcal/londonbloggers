@@ -10,7 +10,10 @@
 	# fetch line details
 	#
 
-	$line = db_single(db_fetch("SELECT * FROM tube_lines WHERE id=".intval($_GET['id'])));
+	$slug_enc = AddSlashes($_GET['id']);
+	$line = db_single(db_fetch("SELECT * FROM tube_lines WHERE slug='$slug_enc'"));
+	if (!$line['id']) error_404();
+
 	$line['name'] = str_replace("National Rail - ", "", $line['name']);
 	$line['color'] = $line['color'] ? $line['color'] : 'transparent';
 
@@ -40,5 +43,5 @@
 	# output
 	#
 
-	$smarty->display('page_stations.txt');
+	$smarty->display('page_line.txt');
 ?>
