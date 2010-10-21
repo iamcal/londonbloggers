@@ -47,7 +47,7 @@
 			<br>
 			The weblog browser shows a small menu of sites at this tube station. To use the weblog browser on your own site, copy and paste this code:<br>
 			<br>
-			<textarea style="width: 208px; height: 100px;" wrap="none">&lt;script src="{$cfg.base_url}browser.php?ids={$weblog.id}" type="text/javascript"&gt;&lt;/script&gt;</textarea><br>
+			<textarea style="width: 208px; height: 100px;" wrap="none">&lt;script src="{$cfg.base_url}browser.php?ids={$station.id}" type="text/javascript"&gt;&lt;/script&gt;</textarea><br>
 			<br>
 			To see a demo of the browser in action, <a href="browser_demo.php">click here</a>. The demo also includes instructions for getting the browser to display multiple stations and showing a smaller version of the browser.<br>
 			<br>
