@@ -27,7 +27,7 @@
 
 		</td>
 		<td>
-			<h2>Weblogs</h2>
+			<h2>Recently Added Weblogs</h2>
 			<br>
 
 {foreach from=$weblogs item='row'}
@@ -35,7 +35,9 @@
 {foreachelse}
 			<b>&bull;</b> <i>none</i><br />
 {/foreach}
-
+{if $has_more}
+			<a href="/lines/{$line.slug}/all/">More...</a>
+{/if}
 		</td>
 	</tr>
 </table>
