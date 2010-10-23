@@ -1,26 +1,23 @@
 {include file='inc_head.txt'}
 
-		<td colspan="3">
-			<div class="padded">
+	<div class="section">
 
-	<h2>London Weblog #{$weblog.id}</h2>
-	<br>
+		<h2>London Weblog #{$weblog.id}</h2>
 
-	<b style="font-size: 13px;"><a href="{$weblog.blog_url}" target="_blank">{$weblog.blog_name|escape}</a></b>
+		<b style="font-size: 13px;"><a href="{$weblog.blog_url}">{$weblog.blog_name|escape}</a></b>
 
-{if $weblog.email_public}
-	by <a href="mailto:{$weblog.email|escape}">{$weblog.name|escape}</a><br />
-{else}
-	by {$weblog.name|escape}<br />
-{/if}
+		{if $weblog.email_public}
+			by <a href="mailto:{$weblog.email|escape}">{$weblog.name|escape}</a><br />
+		{else}
+			by {$weblog.name|escape}<br />
+		{/if}
 
-	Stations: {$stations}<br />
-	<i>{$weblog.about|escape}</i><br />
-	<br />
+		Stations: {$stations}<br />
+		<i>{$weblog.about|escape}</i><br />
+		<br />
 
-	<a href="weblogs.php">Click here</a> to see all the weblogs.
+		<a href="weblogs.php">Click here</a> to see all the weblogs.
 
-			</div>
-		</td>
+	</div>
 
 {include file='inc_foot.txt'}
