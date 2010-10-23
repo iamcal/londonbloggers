@@ -30,7 +30,7 @@ function highlight(name, col){
 		<td width="300">{$row.about|truncate:200:'...'|escape|default:'&nbsp;'}</td>
 		<td>
 			<input type="radio" name="ok{$row.id}" id="ok{$row.id}-1" value="ok"   onclick="highlight('row{$row.id}', '#9f9')" /> <label for="ok{$row.id}-1" onclick="highlight('row{$row.id}', '#9f9')">OK</label><br />
-			<input type="radio" name="ok{$row.id}" id="ok{$row.id}-0" value="spam" onclick="highlight('row{$row.id}', '#f99')" checked /> <label for="ok{$row.id}-0" onclick="highlight('row{$row.id}', '#f99')">Spam</label>
+			<input type="radio" name="ok{$row.id}" id="ok{$row.id}-0" value="spam" onclick="highlight('row{$row.id}', '#f99')" /> <label for="ok{$row.id}-0" onclick="highlight('row{$row.id}', '#f99')">Spam</label>
 		</td>
 	</tr>
 {/foreach}
