@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Admin - Review</title>
+<script>{literal}
+
+function highlight(name, col){
+	document.getElementById(name).style.backgroundColor = col;
+}
+
+</script>{/literal}
+</head>
+<body>
+
+<p>You can create and manage clock words by <a href="block.php">clicking here</a>.</p>
+
+<p>{$count} entries in the review queue</p>
+
+<form action="review.php" method="post">
+<input type="hidden" name="ids" value="{$ids}" />
+
+<table border="1">
+{foreach from=$rows item='row'}
+	<tr id="row{$row.id}">
+		<td>
+			Blog Name: {$row.blog_name|escape}<br />
+			Blog URL: <a href="{$row.blog_url|escape}">{$row.blog_url|escape}</a><br />
+			Author: {$row.name|escape}<br />
+			Stations: {','|implode:$row.stations}
+		</td>
+		<td width="300">{$row.about|truncate:200:'...'|escape|default:'&nbsp;'}</td>
+		<td>
+			<input type="radio" name="ok{$row.id}" id="ok{$row.id}-1" value="ok"   onclick="highlight('row{$row.id}', '#9f9')" /> <label for="ok{$row.id}-1" onclick="highlight('row{$row.id}', '#9f9')">OK</label><br />
+			<input type="radio" name="ok{$row.id}" id="ok{$row.id}-0" value="spam" onclick="highlight('row{$row.id}', '#f99')" checked /> <label for="ok{$row.id}-0" onclick="highlight('row{$row.id}', '#f99')">Spam</label>
+		</td>
+	</tr>
+{/foreach}
+	<tr>
+		<td colspan="2" align="left"><input type="submit" value="Next" /></td>
+		<td colspan="2" align="right"><input type="submit" value="Next" /></td>
+	</tr>
+</table>
+
+
+</form>
+
+</body>
+</html>
