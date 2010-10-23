@@ -20,6 +20,7 @@ RewriteRule	^weblogs/(\d+)/$	/weblog.php?id=$1	[L,QSA]
 
 RewriteRule	^lines/$		/lines.php		[L]
 RewriteRule	^lines/([a-z-_]+)/$	/line.php?id=$1		[L,QSA]
+RewriteRule	^lines/([a-z-_]+)/all/$	/line_all.php?id=$1	[L,QSA]
 
 
 RewriteRule ^(.*\.)v[0-9.]+\.(css|js|gif|png|jpg)$	/$1$2	[L]

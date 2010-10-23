@@ -1,0 +1,30 @@
+{include file='inc_head.txt'}
+
+	<div class="section">
+
+		<h1>{if $line.has_line}Mainline - {/if}{$line.name|escape}</h1>
+
+{if $line.has_line}
+		<div style="height: 6px; background-color: {$line.color}"></div>
+		<div style="height: 4px; background-color: #fff"></div>
+		<div style="height: 6px; background-color: {$line.color}"></div>
+{else}
+		<div style="height: 16px; background-color: {$line.color}"></div>
+{/if}
+	</div>
+
+	<div class="section">
+
+			<h2>All Weblogs ({$weblogs|@count})</h2>
+			<br>
+
+{foreach from=$weblogs item='row'}
+			<b>&bull;</b> <a href="/weblogs/{$row.id}">{$row.blog_name|escape}</a><br />
+{foreachelse}
+			<b>&bull;</b> <i>none</i><br />
+{/foreach}
+
+	</div>
+
+
+{include file='inc_foot.txt'}
