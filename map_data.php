@@ -11,6 +11,14 @@
 
 		$location = unserialize($row['location']);
 
+		if ($_GET['offset'] && is_array($location['centers'])){
+			
+			foreach (array_keys($location['centers']) as $k){
+				$location['centers'][$k][0] -= 76;
+				$location['centers'][$k][1] -= 110;
+			}
+		}
+
 		$data[$row['id']] = array(
 			'name'	=> $row['name'],
 			'pts'	=> is_array($location['centers']) ? $location['centers'] : array(),
