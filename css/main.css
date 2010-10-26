@@ -43,7 +43,7 @@ h1 {
 	padding: 1px 0;
 }
 
-#map {
+#map, #LBmap {
 	background-color: #cccccc;
 	background-image: url(/images/stripes.gif);
 	width: 800px;
