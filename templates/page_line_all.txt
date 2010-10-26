@@ -16,7 +16,6 @@
 	<div class="section">
 
 			<h2>All Weblogs ({$weblogs|@count})</h2>
-			<br>
 
 {foreach from=$weblogs item='row'}
 			<b>&bull;</b> <a href="/weblogs/{$row.id}">{$row.blog_name|escape}</a><br />
