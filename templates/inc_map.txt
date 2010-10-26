@@ -1,6 +1,0 @@
-{if 1}
-	<div id="mapouter"><div id="LBmap"></div></div>
-{else}
-	<div id="mapouter"><div id="map"></div></div>
-	<div id="infobox"><div id="innerbox">Hello</div></div>
-{/if}
