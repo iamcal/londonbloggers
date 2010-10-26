@@ -69,7 +69,7 @@ blank = null;
 		while (tx.length < 3) tx = "0"+tx;
 		while (ty.length < 3) ty = "0"+ty;
 
-		var url = "tiles/s2/tile_"+zoom+"_"+tx+"_"+ty+".jpg";
+		var url = "/tiles/s2/tile_"+zoom+"_"+tx+"_"+ty+".jpg";
 		return url;
 
 
@@ -135,6 +135,7 @@ CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
   
 var map;
 var info_window;
+var markers = [];
     
 function initialize() {
 	var mapOptions = {
@@ -321,9 +322,17 @@ function get_station_info(id){
 	return station;
 }
 
-function create_markers(){
+function clear_markers(){
 
-	var stations = [109, 40, 110, 96, 106, 95, 44, 3, 4, 98, 165, 94, 121, 97, 1, 162, 163, 70, 105, 107, 110, 61, 37, 160, 164, 100, 99, 101, 103, 108, 17, 161, 102, 616];
+	for (var i=0; i<markers.length; i++){
+		markers[i].setMap(null);
+	}
+	markers = [];
+}
+
+function create_markers(stations){
+
+	clear_markers();
 
 	var xs = [];
 	var ys = [];
@@ -333,18 +342,20 @@ function create_markers(){
 		var id = stations[i];
 		var station = get_station_info(id);
 
-		xs.push(station.x);
-		ys.push(station.y);
+		xs.push(parseInt(station.x));
+		ys.push(parseInt(station.y));
 
 		var marker = new google.maps.Marker({
 			position: PixelsToLatLng([station.x, station.y]),
 			map: map,
 			title: station.name
 		});
+
+		markers.push(marker);
 	}
 
-	xs.sort();
-	ys.sort();
+	xs.sort(function(a,b){return a-b});
+	ys.sort(function(a,b){return a-b});
 
 	var lo_x = xs[0];
 	var lo_y = ys[0];

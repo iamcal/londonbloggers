@@ -1,3 +1,9 @@
+{capture assign='head_js'}
+window.onload = function(){ldelim}
+	initialize();
+	create_markers([{', '|implode:$station_ids}]);
+{rdelim}
+{/capture}
 {include file='inc_head.txt'}
 
 	<div class="section">
@@ -13,22 +19,22 @@
 {/if}
 	</div>
 
+	<div id="mapouter"><div id="map"></div></div>
+
 	<div class="section">
 	
-<table cellpadding="0" cellspacing="0" border="0">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
 	<tr valign="top">
-		<td>
-			<h2>Stations</h2>
-			<br>
+		<td width="50%">
+			<h2>Stations on this Line</h2>
 
 {foreach from=$stations item='row'}
 			<b>&bull;</b> <a href="/stations/{$row.id}/">{$row.name|escape}</a><br />
 {/foreach}
 
 		</td>
-		<td>
+		<td width="50%">
 			<h2>Recently Added Weblogs</h2>
-			<br>
 
 {foreach from=$weblogs item='row'}
 			<b>&bull;</b> <a href="/weblogs/{$row.id}">{$row.blog_name|escape}</a><br />

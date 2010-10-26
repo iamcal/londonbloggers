@@ -25,6 +25,10 @@
 
 	$smarty->assign('stations', $ret['rows']);
 
+	$station_ids = array();
+	foreach ($ret['rows'] as $row) $station_ids[] = $row['id'];
+	$smarty->assign('station_ids', $station_ids);
+
 
 	#
 	# fetch weblogs
