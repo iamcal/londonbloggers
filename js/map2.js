@@ -147,7 +147,7 @@ function initialize() {
 		streetViewControl: false,
 		mapTypeId: 'LBmap'
 	};
-	map = new google.maps.Map(document.getElementById("LBmap"), mapOptions);
+	map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
 	if(config.debug) {
 		map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(config.tileSize, config.tileSize)));
@@ -173,15 +173,16 @@ function initialize() {
 	// allow clicks on map to highlight a station
 	calculate_click_boxes();
 
+
+	// we'll use this info window later
 	info_window = new google.maps.InfoWindow();
 
+
+	// click hook
 	google.maps.event.addListener(map, 'click', function(event){
 		var p = LatLngToPixels(event.latLng);
 		process_click(p[0], p[1]);
 	});
-
-	// select a starting station
-	select_station(581);
 }
 
 
