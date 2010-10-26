@@ -3,6 +3,7 @@ window.onload = function(){
 	initialize();
 
 	// select a starting station
+	map.setZoom(2);
 	select_station(1);
 }
 {/literal}{/capture}
@@ -48,7 +49,16 @@ window.onload = function(){
 			<h2>Recently Added Weblogs</h2>
 
 {foreach from=$weblogs item='row'}
-		output_blog_info($row);
+
+			<b style="font-size: 13px;"><a href="/weblogs/{$row.id}/">{$row.blog_name|escape}</a></b>
+	{if $row.email_public}
+			by <a href="mailto:{$row.email|escape}">{$row.name|escape}</a><br />
+	{else}
+			by {$row.name}<br />
+	{/if}
+			Stations: get_StationList({$row.id})<br />
+			<i>{$row.about|escape}</i><br />
+			<br />
 {/foreach}
 
 		</div>
