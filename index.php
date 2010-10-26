@@ -18,5 +18,5 @@
 	# output
 	#
 
-	$smarty->display('page_temp.txt');
+	$smarty->display('page_index.txt');
 ?>
