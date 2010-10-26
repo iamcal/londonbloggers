@@ -66,3 +66,9 @@ h1 {
 #innerbox {
 	padding: 5px 5px 16px 5px;
 }
+
+
+.col {
+	width: 400px;
+	float: left;
+}
