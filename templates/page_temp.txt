@@ -19,4 +19,45 @@ window.onload = function(){
 		<p>YEAH!</p>
 	</div>
 
+
+		<td width="220" class="padded">
+			<h2>The London Weblog Directory</h2>
+			<br>
+			This site is a directory of weblogs written by people who live or work in london, organised by the rather iconic London Tube map (and also the central london suburban rail network, docklands light railway and croydon tramlink).<br>
+			<br>		
+			<center>
+				<a href="map.php"><img src="images/mini_map.gif" width="208" height="149" alt="View the full map" border="0" /></a><br>
+				(<a href="map.php">click to view the map</a>)<br>
+			</center>
+			<br />
+			We have some XML feeds for your enjoyment: <a href="rdf_lines.php">lines</a>, <a href="rdf_stations.php">stations</a> and <a href="rdf_weblogs.php">weblogs</a> (the map[xywh] data relates to pixel sizes on the <a href="images/big.gif">full map</a>).<br />
+			<br />
+			If you've moved, we want to know! <a href="edit.php">Click here</a> to update your details.<br />
+			<br />
+
+			<h2>Weblog Browser</h2>
+			<br>
+			<div style="float: left;"><a href="browser_demo.php"><img src="images/browser_demo.gif" width="76" height="104" border="0"></a></div>
+			We've built a cool new widget that you can put on your weblog. When people click on it, they get a little popup menu of weblogs at your station.<br>
+			<br />
+			You can grab your copy by visiting the page for your station, and you can see a demo <a href="browser_demo.php">here</a>.<br>
+			<br />
+
+			<h2>UK Weblogs</h2>
+			<br />
+			For more UK-related weblog goodness, check out <a href="http://aggregator.weblogs.co.uk" target="_blank">The UKBlogs Aggregator</a> and the <a href="http://www.timemachinego.com/ukblogs/" target="_blank">Recently Updated GBlogs</a> listing. <a href="http://www.britblog.com/" target="_blank">BritBlog</a> has just launched - you should go register.<br />
+			<br />
+
+		</td>
+		<td width="10"><img src="images/space.gif" width="10"  height="10"></td>
+		<td width="220" class="padded">
+
+			<h2>Recently Added Weblogs</h2>
+			<br>
+{foreach from=$weblogs item='row'}
+		output_blog_info($row);
+{/foreach}
+
+		</td>
+
 {include file='inc_foot.txt'}
