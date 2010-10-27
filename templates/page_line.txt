@@ -4,11 +4,12 @@ window.onload = function(){ldelim}
 	create_markers([{', '|implode:$station_ids}]);
 {rdelim}
 {/capture}
+{capture assign='title'}{if $line.has_line}National Rail - {/if}{$line.name|escape}{/capture}
 {include file='inc_head.txt'}
 
 	<div class="section">
 
-		<h1>{if $line.has_line}Mainline - {/if}{$line.name|escape}</h1>
+		<h1>{if $line.has_line}National Rail - {/if}{$line.name|escape}</h1>
 
 {if $line.has_line}
 		<div style="height: 6px; xwidth: 100px; background-color: {$line.color}"></div>
