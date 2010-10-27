@@ -1,4 +1,4 @@
-{include file='inc_head.txt'}
+{include file='inc_head.txt' title=$station.name}
 
 		<td width="220" class="padded">
 
@@ -18,7 +18,7 @@
 
 			<table border="0" cellpadding="0" cellspacing="0">
 				<tr valign="middle">
-					<td><img src="images/icon_tube.gif" width="16" height="16"></td>
+					<td><img src="/images/icon_tube.gif" width="16" height="16"></td>
 					<td>&nbsp;</td>
 					<td><a href="segment.php?x={$segx}&amp;y={$segy}&highlight={$station.id}">See this station on the tube map.</a></td>
 				</tr>
@@ -27,9 +27,9 @@
 					<td colspan="3">&nbsp;</td>
 				</td>
 				<tr valign="middle">
-					<td><img src="images/icon_street.gif" width="16" height="16"></td>
+					<td><img src="/images/icon_street.gif" width="16" height="16"></td>
 					<td>&nbsp;</td>
-					<td><a href="http://www.streetmap.co.uk/newmap.srf?x={$station.real_x}&y={$station.real_y}&z=1" target="_blank">See this station on a street map.</a></td>
+					<td><a href="http://maps.google.com/maps?q={$station.name|escape|escape:'url'}%20Station,%20Greater%20London&z=14" target="_blank">See this station on a street map.</a></td>
 				</tr>
 {/if}
 			</table>
