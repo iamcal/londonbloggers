@@ -50,14 +50,11 @@ window.onload = function(){
 
 {foreach from=$weblogs item='row'}
 
-			<b style="font-size: 13px;"><a href="/weblogs/{$row.id}/">{$row.blog_name|escape}</a></b>
-	{if $row.email_public}
-			by <a href="mailto:{$row.email|escape}">{$row.name|escape}</a><br />
-	{else}
-			by {$row.name}<br />
-	{/if}
-			Stations: get_StationList({$row.id})<br />
-			<i>{$row.about|escape}</i><br />
+			<b style="font-size: 18px;"><a href="/weblogs/{$row.id}/">{$row.blog_name|escape}</a></b><br />
+			Near {$row.id|station_list:2}<br />
+			<div style="padding: 0.3em 1em;">
+				{$row.about|escape}
+			</div>
 			<br />
 {/foreach}
 

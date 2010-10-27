@@ -75,4 +75,24 @@
 	}
 
 	#######################################################################################
+
+	function station_list($id, $trim=2){
+
+		$id = intval($id);
+		$ret = db_fetch("SELECT s.* FROM tube_weblog_stations AS ws, tube_stations AS s WHERE ws.station_id=s.id AND ws.weblog_id=$id ORDER BY s.name ASC");
+
+		$out = array();
+		foreach ($ret['rows'] as $row){
+			$out[] = "<a href=\"/stations/$row[id]/\">".HtmlSpecialChars($row['name'])."</a>";
+		}
+
+		if (count($out) > $trim+1){
+			$out = array_slice($out, 0, $trim);		
+			$out[] = '...';
+		}
+
+		return implode(", ",$out);
+	}
+
+	#######################################################################################
 ?>
