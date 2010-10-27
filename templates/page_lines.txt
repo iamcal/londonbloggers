@@ -1,28 +1,48 @@
-{include file='inc_head.txt'}
+{include file='inc_head.txt' title='Browse by Line'}
 
-<table border="1" cellpadding="10">
-{foreach from=$lines item='row'}
+	<div class="section">
+
+		<h2>Browse by Line</h2>
+
+		<p>Pick a line below to view all stations and weblogs.</p>
+	</div>
+
+	<div class="col">
+		<div class="section">
+
+<table border="0" cellpadding="10">
+{foreach from=$lines.tfl item='row'}
 	<tr>
-		<td>{$row.id}</td>
-{if $row.has_line}
+		<td>
+			<div style="height: 16px; width: 100px; background-color: {$row.color}"></div>
+		</td>
+		<td><a href="/lines/{$row.slug}/">{$row.name}</a></td>
+	</tr>
+{/foreach}
+</table>
+
+		</div>
+	</div>
+	<div class="col">
+		<div class="section">
+
+<table border="0" cellpadding="10">
+{foreach from=$lines.national item='row'}
+	<tr>
 		<td>
 			<div style="height: 6px; width: 100px; background-color: {$row.color}"></div>
 			<div style="height: 4px; width: 100px; background-color: #fff"></div>
 			<div style="height: 6px; width: 100px; background-color: {$row.color}"></div>
 		</td>
-{else}
-		<td>
-			<div style="height: 16px; width: 100px; background-color: {$row.color}"></div>
-		</td>
-{/if}
 		<td><a href="/lines/{$row.slug}/">{$row.name}</a></td>
-		<td>
-{foreach from=$row.stations item='row2' name='stations'}
-			{$row2.name}{if !$smarty.foreach.stations.last},{/if}
-{/foreach}
-		</td>
 	</tr>
 {/foreach}
 </table>
+
+		</div>
+	</div>
+
+	<div style="clear: both"></div>
+
 
 {include file='inc_foot.txt'}
