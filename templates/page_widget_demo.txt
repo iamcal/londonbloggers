@@ -1,0 +1,26 @@
+{include file='inc_head.txt'}
+
+	<div class="section">
+
+		<h2>Weblog Browser Demo</h2>
+
+		This is just a demo of the Weblog Browser widget.
+		To get a copy for your website, just <a href="/">find your station on the map</a> - the code you need is on the page for your station.<br>
+		<br>
+		<script src="/widget/?ids=1,5" type="text/javascript"></script>
+		<br>
+		When you click on the icon above, a pop-up menu should appear.
+		If you're using an older browser, it will just take you to the london bloggers homepage.<br>
+		<br>
+		To show multiple stations in your weblog browser, change the "ids=5" part of the code
+		into "ids=5,12" where 5 and 12 are the station numbers (you can find these out by looking 
+		at the weblog browser code on each station's page). You can add as many station id's as you 
+		like, seperated by commas e.g "ids=1,2,3,4,5,6".<br>
+		<br>
+		To use the mini version of the browser, add <code>&amp;mini=1</code> after the station ids.
+		It will then use the following graphic:<br>
+		<br>
+		<img src="/images/browser_mini.gif" width="80" height="15" />
+	</div>
+
+{include file='inc_foot.txt'}
