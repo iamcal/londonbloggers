@@ -8,7 +8,7 @@
 		'name'	=> 'cal_london',
 	);
 
-	$GLOBALS['cfg']['abs_root_url']		= 'http://www.ourapp.com/';
+	$GLOBALS['cfg']['abs_root_url']		= 'http://london.local/';
 	$GLOBALS['cfg']['safe_abs_root_url']	= $GLOBALS['cfg']['abs_root_url'];
 
 	$GLOBALS['cfg']['abs_root_path']	= realpath(dirname(__FILE__) . '/../');
