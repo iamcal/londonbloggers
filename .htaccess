@@ -27,4 +27,6 @@ RewriteRule	^widget/demo/$		/widget_demo.php	[L]
 RewriteRule	^browser.php$		/widget.php		[L]
 RewriteRule	^browser_demo.php$	/widget_demo.php	[L]
 
+RewriteRule	^photos/([a-z]+)/$	/photos.php?tag=$1	[L,QSA]
+
 RewriteRule ^(.*\.)v[0-9.]+\.(css|js|gif|png|jpg)$	/$1$2	[L]

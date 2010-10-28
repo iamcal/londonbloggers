@@ -1,0 +1,11 @@
+{if $photos|@count}
+	Recent <a href="http://www.flickr.com/">flickr</a> photos for {$tag|escape}<br />
+	<br />
+{foreach from=$photos item='photo'}
+	<a href="{$photo.link|escape}" title="{$photo.title|escape}"><img src="{$photo.src|escape}" width="75" height="75" alt="{$photo.title|escape}" class="flickr" /></a>
+{/foreach}
+	<br />
+	<a href="http://www.flickr.com/photos/tags/{$tag|escape|escape:'url'}/">More photos...</a>
+{else}
+	There are no <a href="http://www.flickr.com/">flickr</a> photos for {$tag|escape} - why not <a href="http://www.flickr.com/photos/upload/">upload some</a>?
+{/if}
