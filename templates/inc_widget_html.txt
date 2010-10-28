@@ -1,0 +1,37 @@
+{if $smarty.get.mini}
+	{assign var='w' value=80}
+	{assign var='h' value=15}
+	{assign var='src' value='browser_mini.gif'}
+{else}
+	{assign var='w' value=143}
+	{assign var='h' value=54}
+	{assign var='src' value='browser.gif'}
+{/if}
+{assign var='menu_w' value=200}
+{math assign='menu_offset_x' equation="0-((menu_w-w)/2)" w=$w menu_w=$menu_w}
+{math assign='menu_offset_y' equation="h+5" h=$h}
+
+
+<div id="london-bloggers-widget-{$uid}" style="position: relative; width: {$w}px;">
+	<div style="position: relative;">
+		<a href="{$cfg.abs_root_url}" onclick="return ToggleTubeMenu('{$uid}');"><img border="0" style="border: 0" src="{$cfg.abs_root_url}images/{$src}" width="{$w}" height="{$h}"></a>
+	</div>
+	<div id="london-bloggers-widget-menu-{$uid}" style="position: absolute; left: {$menu_offset_x}px; top: {$menu_offset_y}px; zIndex: 10; background-color: #fff; width: {$menu_w}px; display: none">
+		<div style="border: 1px solid #666666; font-size: 11px; font-family: Arial, Helvetica, sans-serif; padding: 8px;">
+
+{foreach from=$stations item='station'}
+			<b>Weblogs at <a href="{$cfg.abs_root_url}stations/{$station.id}/">{$station.name|escape}</a>:</b><br>
+			<br>
+	{foreach from=$station.weblogs item='weblog'}
+			&bull; <a href="{$weblog.blog_url|escape}">{$weblog.blog_name|escape}</a><br>
+	{/foreach}
+	{if $station.more}
+			&bull; and {$station.more} more...<br>
+	{/if}
+			<br>
+{/foreach}
+			<b><a href="{$cfg.abs_root_url}">Are you a London Blogger?</a></b>
+
+		</div>
+	</div>
+</div>

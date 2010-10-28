@@ -1,0 +1,20 @@
+{"Content-type: text/plain; charset=UTF-8"|header}
+{capture assign='html'}{include file='inc_widget_html.txt'}{/capture}
+var html = '{$html|trim|escape:'javascript'}';
+
+{literal}
+
+var needs_close = false;
+if (document.all && navigator.appVersion.toLowerCase().indexOf("mac") == -1) needs_close = true;
+if (navigator.userAgent.indexOf('Gecko') != -1) needs_close = true;
+
+document.write(html);
+if (needs) document.close();
+
+function ToggleTubeMenu(uid){
+	var m = document.getElementById('london-bloggers-widget-menu-'+uid);
+	m.style.display = m.style.display == 'block' ? 'none' : 'block';
+	return false;
+}
+
+{/literal}
