@@ -1,0 +1,8 @@
+{foreach from=$weblogs item='row'}
+
+			<b style="font-size: 18px;"><a href="/weblogs/{$row.id}/">{$row.blog_name|escape}</a></b><br />
+			Near {$row.id|station_list:2}<br />
+			<div style="padding: 0.3em 1em 1em 1em;">
+				{$row.about|truncate:300|escape}
+			</div>
+{/foreach}

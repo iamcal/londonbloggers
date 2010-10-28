@@ -39,11 +39,7 @@ window.onload = function(){ldelim}
 
 			<h2>Recently Added Weblogs</h2>
 
-{foreach from=$weblogs item='row'}
-			<b>&bull;</b> <a href="/weblogs/{$row.id}">{$row.blog_name|escape}</a><br />
-{foreachelse}
-			<b>&bull;</b> <i>none</i><br />
-{/foreach}
+{include file='inc_weblogs.txt'}
 {if $has_more}
 			<a href="/lines/{$line.slug}/all/">More...</a>
 {/if}

@@ -48,15 +48,7 @@ window.onload = function(){
 
 			<h2>Recently Added Weblogs</h2>
 
-{foreach from=$weblogs item='row'}
-
-			<b style="font-size: 18px;"><a href="/weblogs/{$row.id}/">{$row.blog_name|escape}</a></b><br />
-			Near {$row.id|station_list:2}<br />
-			<div style="padding: 0.3em 1em;">
-				{$row.about|escape}
-			</div>
-			<br />
-{/foreach}
+{include file='inc_weblogs.txt'}
 
 		</div>
 	</div>
