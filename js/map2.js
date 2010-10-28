@@ -54,15 +54,12 @@ function PixelsToLatLng(pxs){
 var LBMapOptions = {
 
 	getTileUrl: function(tile, zoom) {
-		var blank = 'tiles/blank.gif';
-blank = null;
 
-		if (tile.x < 0 || tile.y < 0) return blank;
-		if ((zoom == 3) && (tile.x > 15 || tile.y > 12)) return blank;
-		if ((zoom == 2) && (tile.x > 7 || tile.y > 6)) return blank;
-		if ((zoom == 1) && (tile.x > 3 || tile.y > 3)) return blank;
-		if ((zoom == 0) && (tile.x > 1 || tile.y > 1)) return blank;
-
+		if (tile.x < 0 || tile.y < 0) return null;
+		if ((zoom == 3) && (tile.x > 15 || tile.y > 12)) return null;
+		if ((zoom == 2) && (tile.x > 7 || tile.y > 6)) return null;
+		if ((zoom == 1) && (tile.x > 3 || tile.y > 3)) return null;
+		if ((zoom == 0) && (tile.x > 1 || tile.y > 1)) return null;
 
 		var tx = ""+tile.x;
 		var ty = ""+tile.y;
@@ -71,25 +68,6 @@ blank = null;
 
 		var url = "/tiles/s2/tile_"+zoom+"_"+tx+"_"+ty+".jpg";
 		return url;
-
-
-		if(tile.x < 0 || tile.x >= Math.pow(2, zoom) || tile.y < 0 || tile.y >= Math.pow(2, zoom)) {
-			url += '/blank';
-		} else if(zoom == 0) {
-			url += '/base';
-		} else {
-			for(var z = zoom - 1; z >= 0; --z) {
-				var x = Math.floor(tile.x / Math.pow(2, z)) % 2;
-				var y = Math.floor(tile.y / Math.pow(2, z)) % 2;
-				url += '/' + (x + 2 * y);
-			}
-		}
-		url = url + '.' + config.fileExt;
-		if(config.cacheMinutes > 0) {
-			var d = new Date();
-			url += '?c=' + Math.floor(d.getTime() / (1000 * 60 * config.cacheMinutes));
-		}
-		return(url);
 	},
 	tileSize: new google.maps.Size(config.tileSize, config.tileSize),
 	maxZoom:  config.maxZoom,
