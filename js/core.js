@@ -2,13 +2,26 @@ function api_call(method, args, handler){
 
 	args.method = method;
 
-	ajaxify('/api.php', args, function(o){
+	ajaxify('/api/', args, function(o){
 
 		if (o.ok) return handler(o);
 
 		alert("API error: "+o.error);
 	});
 }
+
+function admin_api_call(method, args, handler){
+
+	args.method = method;
+
+	ajaxify('/admin/api.php', args, function(o){
+
+		if (o.ok) return handler(o);
+
+		alert("API error: "+o.error);
+	});
+}
+
 
 function ajaxify(url, args, handler){
 
