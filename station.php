@@ -39,7 +39,7 @@
 	# get blogs
 	#
 
-	$ret2 = db_fetch("SELECT w.*,s.station_id FROM tube_weblogs AS w, tube_weblog_stations AS s WHERE w.id=s.weblog_id AND s.station_id=$id ORDER BY w.blog_name ASC");
+	$ret2 = db_fetch("SELECT w.*,s.station_id FROM tube_weblogs AS w, tube_weblog_stations AS s WHERE w.id=s.weblog_id AND s.station_id=$id ORDER BY w.date_create DESC");
 
 	$smarty->assign_by_ref('blogs', $ret2['rows']);
 
