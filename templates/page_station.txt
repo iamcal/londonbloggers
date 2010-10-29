@@ -1,91 +1,84 @@
+{capture assign='head_js'}
+window.onload = function(){ldelim}
+	weblog_counts[{$station.id}] = {$blogs|@count};
+	initialize();
+	map.setZoom(2);
+	select_station({$station.id});
+{rdelim}
+{/capture}
 {include file='inc_head.txt' title=$station.name}
 
-		<td width="220" class="padded">
+	<div class="section">
+		<h1>{$station.name} Station</h1>
 
-			<h2>{$station.name} Station</h2>
-			<br />
+		<p>There are 45 weblogs registered here. <a href="/stations/{$station.id}/add/">Add yours</a>.</p>
+	</div>
 
-			If this is your nearest station, then click the button below.<br />
-			<br />
-			<form action="submit.php" action="get">
-			<input type="hidden" name="station" value="{$station.id}">
-			<span style="padding: 10px; background-color: #ccccff; border: 2px solid #9999cc; width: 300px; text-align: center;">
-				<input type="submit" value="Add My Weblog!">
-			</span>
-			</form>
-			<br />
-			<br />
+	<div id="mapouter"><div id="map"></div></div>
 
-			<table border="0" cellpadding="0" cellspacing="0">
-				<tr valign="middle">
-					<td><img src="/images/icon_tube.gif" width="16" height="16"></td>
-					<td>&nbsp;</td>
-					<td><a href="segment.php?x={$segx}&amp;y={$segy}&highlight={$station.id}">See this station on the tube map.</a></td>
-				</tr>
+	<div class="col">
+		<div class="section">
+
 {if $station.real_x}
-				<tr>
-					<td colspan="3">&nbsp;</td>
-				</td>
-				<tr valign="middle">
-					<td><img src="/images/icon_street.gif" width="16" height="16"></td>
-					<td>&nbsp;</td>
-					<td><a href="http://maps.google.com/maps?q={$station.name|escape|escape:'url'}%20Station,%20Greater%20London&z=14" target="_blank">See this station on a street map.</a></td>
-				</tr>
+			<img src="/images/icon_street.gif" width="16" height="16" />
+			<a href="http://maps.google.com/maps?q={$station.name|escape|escape:'url'}%20Station,%20Greater%20London&z=14" target="_blank">See this station on a street map.</a><br>
+			<br>
 {/if}
-			</table>
-			<br />
+
 			The following lines pass through this station:<br />
-			<table border="0" cellpadding="0" cellspacng="0" width="206">
+			<table border="0" cellpadding="0" cellspacing="6">
 {foreach from=$lines item='row'}
-	{$row|@insert_line_row}
+				{include file='inc_line.txt'}
 {/foreach}
 			</table>
 
-			<br />
-			<br />
+		</div>
+
+		<div class="section">
 			<h2>Weblog Browser</h2>
-			<br>
+
 			The weblog browser shows a small menu of sites at this tube station. To use the weblog browser on your own site, copy and paste this code:<br>
 			<br>
-			<textarea style="width: 208px; height: 100px;" wrap="none">&lt;script src="{$cfg.base_url}browser.php?ids={$station.id}" type="text/javascript"&gt;&lt;/script&gt;</textarea><br>
+			<textarea style="width: 100%; height: 75px;" wrap="none">&lt;script src="{$cfg.abs_root_url}widget/?ids={$station.id}" type="text/javascript"&gt;&lt;/script&gt;</textarea><br>
 			<br>
-			To see a demo of the browser in action, <a href="browser_demo.php">click here</a>. The demo also includes instructions for getting the browser to display multiple stations and showing a smaller version of the browser.<br>
-			<br>
+			You can <a href="/widget/demo/">see a demo</a> of the browser in action. The demo includes instructions for getting the browser to display multiple stations and showing a smaller image.<br>
+		</div>
+
+
+		<div class="section">
 
 			<h2>Photos</h2>
-			<br>
-<script language="Javascript" src="photos.php?tag={$station.tag}"></script>
+			<script type="text/javascript" src="/photos/{$station.tag}/"></script>
 
-		</td>
-		<td width="10"><img src="images/space.gif" width="10"  height="10"></td>
-		<td width="220" class="padded">
+		</div>
+	</div>
 
+	<div class="col">
+		<div class="section">
+
+			<h2>Recently Add Weblogs</h2>
 {if $blogs|@count}
-			<h2>Weblogs At This Station: {$blogs|@count}</h2>
-			<br />
-			The following weblogs are located at <i>{$station.name}</i>:<br />
-			<br />
-	{foreach from=$blogs item='row'}
-			output_blog_info($row);
-	{/foreach}
 
-{else}
-			<h2>Weblogs At This Station</h2>
-			<br />
-			There are no weblogs located at <i>{$station.name}</i>.
-			To add your own, click the button on the left.<br />
+{include file='inc_weblogs.txt' weblogs=$blogs|@array_slice:0:5}
+
+{if $blogs|@count>5}
+			<p>Want more? You can also browse the <a href="/stations/{$station.id}/all/">full list of {$blogs|@count} blogs</a> at this station.</p>
 {/if}
 
+{else}
+			<p>There are no weblogs located at <i>{$station.name}</i>.
+			To add your own, click the button on the left.</p>
+{/if}
+		</div>
 
-			<br />
-			<h2>Stations Nearby</h2>
-			<br />
+		<div class="section">
+			<h2>Nearby Stations</h2>
 {if $nearby_stations|@count}
 
-			The following stations are located within a mile of {$station.name}:<br>
+			There are {$nearby_stations|@count} stations are located within a mile of {$station.name}:<br>
 			<br>
 	{foreach from=$nearby_stations item='row'}
-			<a href="/stations/{$row.id}/">{$row.name}</a><br>
+			&bull; <a href="/stations/{$row.id}/">{$row.name}</a><br>
 	{/foreach}
 {else}
 			There are no other stations within a mile of {$station.name}.<br>
@@ -95,6 +88,9 @@
 			<br />
 			<i>Note - this data relies on geo-coding information for the stations. At present, not all stations have been geo-coded.</i><br>
 -->
-		</td>
+		</div>
+	</div>
+
+	<div style="clear: both"></div>
 
 {include file='inc_foot.txt'}
