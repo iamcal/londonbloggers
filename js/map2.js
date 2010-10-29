@@ -1,4 +1,4 @@
-var config = {
+var map_config = {
 	path		: 'tiles',
 	fileExt		: 'png',
 	tileSize	: 256,
@@ -7,6 +7,8 @@ var config = {
 	cacheMinutes	: 0,
 	debug		: false
 };
+var weblog_counts = {};
+var accept_station_clicks = true;
 
 
 //
@@ -16,14 +18,14 @@ var config = {
 function LBMapProjection(){}
   
 LBMapProjection.prototype.fromLatLngToPoint = function(latLng){
-	var x = latLng.lng() * config.tileSize;
-	var y = latLng.lat() * config.tileSize;
+	var x = latLng.lng() * map_config.tileSize;
+	var y = latLng.lat() * map_config.tileSize;
 	return new google.maps.Point(x, y);
 };
 
 LBMapProjection.prototype.fromPointToLatLng = function(point){
-	var lng = point.x * (1.0 / config.tileSize);
-	var lat = point.y * (1.0 / config.tileSize);
+	var lng = point.x * (1.0 / map_config.tileSize);
+	var lat = point.y * (1.0 / map_config.tileSize);
 	return new google.maps.LatLng(lat, lng);
 };
 
@@ -69,8 +71,8 @@ var LBMapOptions = {
 		var url = "/tiles/s2/tile_"+zoom+"_"+tx+"_"+ty+".jpg";
 		return url;
 	},
-	tileSize: new google.maps.Size(config.tileSize, config.tileSize),
-	maxZoom:  config.maxZoom,
+	tileSize: new google.maps.Size(map_config.tileSize, map_config.tileSize),
+	maxZoom:  map_config.maxZoom,
 	minZoom:  0,
 	isPng:    false
 };
@@ -117,7 +119,7 @@ var markers = [];
     
 function initialize() {
 	var mapOptions = {
-		zoom: config.defaultZoom,
+		zoom: map_config.defaultZoom,
 		center: new google.maps.LatLng(0.25, 0.25),
 		navigationControl: true,
 		navigationControlOptions: { style: google.maps.NavigationControlStyle.SMALL }, // still no way to get rid of the dude
@@ -128,8 +130,8 @@ function initialize() {
 	};
 	map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-	if(config.debug) {
-		map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(config.tileSize, config.tileSize)));
+	if(map_config.debug) {
+		map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(map_config.tileSize, map_config.tileSize)));
 
 		google.maps.event.addListener(map, 'click', function(event) {
 			console.log("latLng; " + event.latLng.lat() + ", " + event.latLng.lng());
@@ -189,6 +191,8 @@ function calculate_click_boxes(){
 }
 
 function process_click(x, y){
+
+	if (!accept_station_clicks) return;
 
 	// find any matching boxes
 	var matches = [];
@@ -271,9 +275,30 @@ function select_station(id){
 	map.panTo(ll);
 
 	info_window.close();
-	info_window.setContent(station.name);
 	info_window.setPosition(ll);
-	info_window.open(map);	
+	set_station_html(id);
+	info_window.open(map);
+
+	if (!weblog_counts[id]){
+
+		api_call('weblog_count', { 'station' : id }, function(o){
+			weblog_counts[o.station] = o.count;
+			if (o.station == g_selected_station){
+				set_station_html(g_selected_station);
+			}
+		});
+	}
+}
+
+function set_station_html(id){
+
+	var station = g_station_positions[id];
+
+	if (weblog_counts[id]){
+		info_window.setContent("<b>"+station.name+"</b><br /><br />Home to <a href=\"/stations/"+id+"/all/\">"+weblog_counts[id]+" weblogs</a>");
+	}else{
+		info_window.setContent("<b>"+station.name+"</b><br /><br />...");
+	}
 }
 
 function get_station_info(id){
