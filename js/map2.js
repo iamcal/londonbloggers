@@ -1,5 +1,5 @@
 var map_config = {
-	path		: 'tiles',
+	path		: '/tiles/s2b/',
 	fileExt		: 'png',
 	tileSize	: 256,
 	defaultZoom	: 3,
@@ -68,7 +68,7 @@ var LBMapOptions = {
 		while (tx.length < 3) tx = "0"+tx;
 		while (ty.length < 3) ty = "0"+ty;
 
-		var url = "/tiles/s2/tile_"+zoom+"_"+tx+"_"+ty+".jpg";
+		var url = map_config.path+"tile_"+zoom+"_"+tx+"_"+ty+".jpg";
 		return url;
 	},
 	tileSize: new google.maps.Size(map_config.tileSize, map_config.tileSize),
@@ -283,7 +283,7 @@ function select_station(id){
 	if (!weblog_counts[id]){
 
 		api_call('weblog_count', { 'station' : id }, function(o){
-			weblog_counts[o.station] = o.count;
+			weblog_counts[o.station] = o.count == 0 ? 'z' : o.count;
 			if (o.station == g_selected_station){
 				set_station_html(g_selected_station);
 			}
@@ -296,7 +296,9 @@ function set_station_html(id){
 	var station = g_station_positions[id];
 
 	if (weblog_counts[id]){
-		info_window.setContent("<b>"+station.name+"</b><br /><br />Home to <a href=\"/stations/"+id+"/all/\">"+weblog_counts[id]+" weblogs</a>");
+		var count = weblog_counts[id] == 'z' ? 0 : weblog_counts[id];
+		var weblogs = count==1 ? 'weblog' : 'weblogs';
+		info_window.setContent("<b>"+station.name+"</b><br /><br />Home to <a href=\"/stations/"+id+"/all/\">"+count+" "+weblogs+"</a>");
 	}else{
 		info_window.setContent("<b>"+station.name+"</b><br /><br />...");
 	}
