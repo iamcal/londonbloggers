@@ -119,6 +119,7 @@ var markers = [];
     
 function initialize() {
 	var mapOptions = {
+		backgroundColor: '#eee',
 		zoom: map_config.defaultZoom,
 		center: new google.maps.LatLng(0.25, 0.25),
 		navigationControl: true,
