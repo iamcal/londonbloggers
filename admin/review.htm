@@ -72,7 +72,7 @@ function refresh_markers(zoom){
 	var size = 25 * factor;
 	var offset = size / 2;
 
-	api_call('get_all_centers', {}, function(o){
+	admin_api_call('get_all_centers', {}, function(o){
 
 		html = '';
 	
