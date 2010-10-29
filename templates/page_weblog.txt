@@ -13,7 +13,7 @@
 			Written by {$weblog.name|escape}<br />
 		{/if}
 
-		Stations: {$stations}<br />
+		Stations: {$weblog.id|station_list:0}<br />
 		<i>{$weblog.about|escape}</i><br />
 		<br />
 

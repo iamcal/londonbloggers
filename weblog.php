@@ -18,15 +18,6 @@
 
 
 	#
-	# get station list
-	#
-
-	$stations = get_StationList($weblog['id']);
-
-	$smarty->assign('stations', $stations);
-
-
-	#
 	# output
 	#
 
