@@ -2,7 +2,7 @@
 
 	<div class="section">
 
-		<h2>Browse by Line</h2>
+		<h1>Browse by Line</h1>
 
 		<p>Pick a line below to view all stations and weblogs.</p>
 	</div>

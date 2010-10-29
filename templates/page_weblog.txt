@@ -3,7 +3,7 @@
 
 	<div class="section">
 
-		<h2><a href="{$weblog.blog_url|escape}">{$weblog.blog_name|escape}</a></h2>
+		<h1><a href="{$weblog.blog_url|escape}">{$weblog.blog_name|escape}</a></h1>
 
 		<b>London Weblog #{$weblog.id}</b><br />
 
