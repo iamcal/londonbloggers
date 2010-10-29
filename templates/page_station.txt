@@ -1,5 +1,6 @@
 {capture assign='head_js'}
 window.onload = function(){ldelim}
+	g_this_station = {$station.id};
 	weblog_counts[{$station.id}] = {$blogs|@count};
 	initialize();
 	map.setZoom(2);

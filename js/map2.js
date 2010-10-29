@@ -9,6 +9,7 @@ var map_config = {
 };
 var weblog_counts = {};
 var accept_station_clicks = true;
+var g_this_station = null;
 
 
 //
@@ -298,7 +299,10 @@ function set_station_html(id){
 	if (weblog_counts[id]){
 		var count = weblog_counts[id] == 'z' ? 0 : weblog_counts[id];
 		var weblogs = count==1 ? 'weblog' : 'weblogs';
-		info_window.setContent("<b>"+station.name+"</b><br /><br />Home to <a href=\"/stations/"+id+"/all/\">"+count+" "+weblogs+"</a>");
+		var link = "/stations/"+id+"/";
+		if (g_this_station == id) link += 'all/';
+
+		info_window.setContent("<b>"+station.name+"</b><br /><br />Home to <a href=\""+link+"\">"+count+" "+weblogs+"</a>");
 	}else{
 		info_window.setContent("<b>"+station.name+"</b><br /><br />...");
 	}
