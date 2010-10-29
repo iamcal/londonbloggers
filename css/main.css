@@ -67,22 +67,6 @@ h1 a:hover {
 	overflow: hidden;
 }
 
-#infobox {
-	display: block;
-	position: absolute;
-	width: 100px;
-	height: 77px;
-	position: absolute;
-	xbackground-color: pink;
-	background-image: url(/images/bubble.gif);
-	z-index: 2;
-}
-
-#innerbox {
-	padding: 5px 5px 16px 5px;
-}
-
-
 .col {
 	width: 400px;
 	float: left;
