@@ -1,0 +1,13 @@
+{capture assign='name'}{if $row.has_line}National Rail - {/if}{$row.name}{/capture}
+		<tr>
+			<td>
+{if $row.has_line}
+				<div style="height: 6px; width: 100px; background-color: {$row.color}"></div>
+				<div style="height: 4px; width: 100px; background-color: #fff"></div>
+				<div style="height: 6px; width: 100px; background-color: {$row.color}"></div>
+{else}
+				<div style="height: 16px; width: 100px; background-color: {$row.color}"></div>
+{/if}
+			</td>
+			<td><a href="/lines/{$row.slug}/">{$name|escape}</a></td>
+		</tr>
