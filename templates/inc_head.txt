@@ -24,5 +24,6 @@
 <div id="main">
 
 	<div id="header">
-		<h1><a href="/">London Bloggers</a></h1>
+		<a href="/"><img src="/images/logo.gif" width="407" height="97" /></a>
+		{*<h1><a href="/">London Bloggers</a></h1>*}
 	</div>
