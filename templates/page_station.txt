@@ -12,7 +12,15 @@ window.onload = function(){ldelim}
 	<div class="section">
 		<h1>{$station.name} Station</h1>
 
-		<p>There are 45 weblogs registered here. <a href="/stations/{$station.id}/add/">Add yours</a>.</p>
+{if $blogs|@count}
+	{if $blogs|@count==1}
+		<p>There is only 1 weblog registered here. <a href="/stations/{$station.id}/add/">Add yours</a>.</p>
+	{else}
+		<p>There are {$blogs|@count} weblogs registered here. <a href="/stations/{$station.id}/add/">Add yours</a>.</p>
+	{/if}
+{else}
+		<p>There are no weblogs registered here - start it off by <a href="/stations/{$station.id}/add/">adding yours</a>.</p>
+{/if}
 	</div>
 
 	<div id="mapouter"><div id="map"></div></div>
