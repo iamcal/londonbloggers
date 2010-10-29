@@ -41,12 +41,12 @@ h1 {
 	margin: 1em;
 }
 
-h1 a {
+#header h1 a {
 	color: #fff;
 	text-decoration: none
 }
 
-h1 a:hover {
+#header h1 a:hover {
 	text-decoration: underline;
 }
 
