@@ -2,7 +2,7 @@
 
 	<div class="section">
 
-		<h2>Weblog Browser Demo</h2>
+		<h1>Weblog Browser Demo</h1>
 
 		This is just a demo of the Weblog Browser widget.
 		To get a copy for your website, just <a href="/">find your station on the map</a> - the code you need is on the page for your station.<br>
