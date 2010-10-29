@@ -34,6 +34,10 @@ img {
 }
 
 h1 {
+	margin: 0.3em 0;
+}
+
+#header h1 {
 	margin: 1em;
 }
 
@@ -56,8 +60,7 @@ h1 a:hover {
 }
 
 #map, #LBmap {
-	background-color: #cccccc;
-	background-image: url(/images/stripes.gif);
+	background-color: #eee;
 	width: 800px;
 	height: 400px;
 	position: relative;
