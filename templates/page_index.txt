@@ -11,7 +11,7 @@ window.onload = function(){
 
 	<div class="section">
 
-		<p>This goes above the map.</p>
+		<p>A directory of <a href="/weblogs/">{$count_weblogs|number_format} weblogs</a> spread across <a href="/stations/">{$count_stations} stations</a> on <a href="/lines/">{$count_lines} lines</a>.</p>
 	</div>
 
 	<div id="mapouter"><div id="map"></div></div>
