@@ -11,7 +11,8 @@
 
 		$location = unserialize($row['location']);
 
-		if ($_GET['offset'] && is_array($location['centers'])){
+		# offset, because these positions were set with our old map
+		if (is_array($location['centers'])){
 			
 			foreach (array_keys($location['centers']) as $k){
 				$location['centers'][$k][0] -= 76;
