@@ -138,7 +138,7 @@ window.onload = function(){
 	}
 
 
-	api_call('get_stations', {}, function(o){
+	admin_admin_api_call('get_stations', {}, function(o){
 
 		var html = '';
 		var first_id = 0;
@@ -159,7 +159,7 @@ window.onload = function(){
 		select_station(first_id);
 	});
 
-	api_call('get_lines', {}, function(o){
+	admin_api_call('get_lines', {}, function(o){
 		var html = '';
 
 		for (var i in o.lines){
@@ -175,7 +175,7 @@ function select_station(id){
 
 	document.getElementById('station-data').style.display = 'none';
 
-	api_call('get_station', {id: id}, function(o){
+	admin_api_call('get_station', {id: id}, function(o){
 
 		g_current_station = id;
 		g_station_centers = [];
@@ -325,7 +325,7 @@ function save_station(){
 	}
 	args.centers = centers.join('|');
 
-	api_call('save_station', args, function(o){
+	admin_api_call('save_station', args, function(o){
 
 		document.getElementById('saving').style.display = 'none';
 	});
@@ -368,7 +368,7 @@ function save_con(){
 	document.getElementById('edit-con').style.display = 'none';
 	document.getElementById('saving').style.display = 'block';
 
-	api_call(method, args, function(o){
+	admin_api_call(method, args, function(o){
 
 		document.getElementById('saving').style.display = 'none';
 		select_station(g_current_station);
@@ -385,7 +385,7 @@ function delete_con(){
 	document.getElementById('edit-con').style.display = 'none';
 	document.getElementById('saving').style.display = 'block';
 
-	api_call(method, args, function(o){
+	admin_api_call(method, args, function(o){
 
 		document.getElementById('saving').style.display = 'none';
 		select_station(g_current_station);
