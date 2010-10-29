@@ -354,6 +354,14 @@ function create_markers(stations){
 			title: station.name
 		});
 
+		google.maps.event.addListener(marker, 'click', function(){
+			var cid = id;
+			var cmarker = marker;
+			return function(event){
+				marker_click(cid, cmarker);
+			};
+		}());
+
 		markers.push(marker);
 	}
 
@@ -369,3 +377,9 @@ function create_markers(stations){
 
 	map.fitBounds(bounds);
 }
+
+function marker_click(id, marker){
+
+	select_station(id);
+}
+
