@@ -15,6 +15,8 @@ ErrorDocument 403 /403.php
 
 RewriteEngine on
 
+RewriteRule	^api/$			/api.php		[L]
+
 RewriteRule	^stations/(\d+)/$	/station.php?id=$1	[L,QSA]
 RewriteRule	^weblogs/(\d+)/$	/weblog.php?id=$1	[L,QSA]
 
