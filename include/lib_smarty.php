@@ -86,9 +86,11 @@
 			$out[] = "<a href=\"/stations/$row[id]/\">".HtmlSpecialChars($row['name'])."</a>";
 		}
 
-		if (count($out) > $trim+1){
-			$out = array_slice($out, 0, $trim);		
-			$out[] = '...';
+		if ($trim){
+			if (count($out) > $trim+1){
+				$out = array_slice($out, 0, $trim);		
+				$out[] = '...';
+			}
 		}
 
 		return implode(", ",$out);
