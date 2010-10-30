@@ -30,10 +30,10 @@ window.onload = function(){
 
 			<h2>Weblog Browser</h2>
 
-			<div style="float: left;"><a href="/browser_demo.php"><img src="/images/browser_demo.gif" width="76" height="104" border="0"></a></div>
+			<div style="float: left; margin-right: 1em;"><a href="/widget/demo/"><img src="/images/browser_demo.gif" width="91" height="104" border="0"></a></div>
 			We've built a cool new widget that you can put on your weblog. When people click on it, they get a little popup menu of weblogs at your station.<br>
 			<br />
-			You can grab your copy by visiting the page for your station, and you can see a demo <a href="/browser_demo.php">here</a>.<br>
+			You can grab your copy by visiting the page for your station, and you can see a demo <a href="/widget/demo/">here</a>.<br>
 			<br />
 
 			<h2>UK Weblogs</h2>
