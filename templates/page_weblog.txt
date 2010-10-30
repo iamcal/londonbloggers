@@ -1,6 +1,41 @@
 {capture assign='title'}{$weblog.blog_name|escape}{/capture}
 {include file='inc_head.txt'}
 
+{if $added || $updated}
+
+	<div style="background-color: #cfc; border: 1px solid #9c9; margin: 20px;">
+
+		<h2 style="margin: 16px 16px 0 16px;">Thanks!</h2>
+
+		<div class="colthin">
+			<div class="section">
+{if $added}
+				Thanks for adding your weblog to the directory!<br />
+{else}
+				Thanks for editing your details - your changes have now been saved.<br />
+{/if}
+				<br />
+				If your weblog is at multiple stations (between several, or you live at work in different places, etc) then you can <a href="/edit/">add more stations</a>.<br />
+			</div>
+		</div>
+
+		<div class="colthin">
+			<div class="section">
+				Your personal weblog browser code is below:<br>
+				<br>
+				<textarea style="width: 340px; height: 75px;" wrap="none">&lt;script src="{$cfg.abs_root_url}widget/?ids={$station_ids}" type="text/javascript"&gt;&lt;/script&gt;</textarea><br>
+				<br>
+				Copy this code to use on your weblog and it'll look just like this:<br>
+				<br>
+				<script type="text/javascript" src="{$cfg.abs_root_url}widget/?ids={$station_ids}"></script><br />
+				(Click it for fun and excitement!)
+			</div>
+		</div>
+
+		<div style="clear: both"></div>
+	</div>
+{/if}
+
 	<div class="section">
 
 		<h1><a href="{$weblog.blog_url|escape}">{$weblog.blog_name|escape}</a></h1>
@@ -18,7 +53,7 @@
 		<br />
 
 		<a href="/weblogs/">Click here</a> to see all the weblogs.
-
 	</div>
+
 
 {include file='inc_foot.txt'}
