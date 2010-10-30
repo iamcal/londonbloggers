@@ -5,6 +5,16 @@
 
 
 	#
+	# old style url?
+	#
+
+	if (!$_SERVER['REDIRECT_URL']){
+		header("location: /stations/$_GET[id]/");
+		exit;
+	}
+
+
+	#
 	# grab station
 	#
 
