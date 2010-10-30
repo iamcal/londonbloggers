@@ -11,7 +11,7 @@
 {section name='i' start=1 loop=4}
 	<div class="colthree">
 		<div class="section">
-{foreach from=$stations|@slice:3:$i item='row'}
+{foreach from=$stations|@slice:3:$smarty.section.i.index item='row'}
 			<a href="/stations/{$row.id}/">{$row.name}</a> <span{if !$row.count} style="color: #ccc"{/if}>({$row.count})</span><br />
 {/foreach}
 		</div>
