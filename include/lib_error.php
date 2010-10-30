@@ -53,6 +53,10 @@
 				exit;
 			}
 		}
+		if (preg_match('!^/segment\.php!', $url)){
+			header("location: /");
+			exit;
+		}
 
 
 
