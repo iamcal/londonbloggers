@@ -16,7 +16,7 @@
 	<div style="position: relative;">
 		<a href="{$cfg.abs_root_url}" onclick="return ToggleTubeMenu('{$uid}');"><img border="0" style="border: 0" src="{$cfg.abs_root_url}images/{$src}" width="{$w}" height="{$h}"></a>
 	</div>
-	<div id="london-bloggers-widget-menu-{$uid}" style="position: absolute; left: {$menu_offset_x}px; top: {$menu_offset_y}px; zIndex: 10; background-color: #fff; width: {$menu_w}px; display: none">
+	<div id="london-bloggers-widget-menu-{$uid}" style="position: absolute; left: {$menu_offset_x}px; top: {$menu_offset_y}px; background-color: #fff; width: {$menu_w}px; display: none">
 		<div style="border: 1px solid #666666; font-size: 11px; font-family: Arial, Helvetica, sans-serif; padding: 8px;">
 
 {foreach from=$stations item='station'}
