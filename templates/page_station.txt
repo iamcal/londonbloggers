@@ -28,7 +28,7 @@ window.onload = function(){ldelim}
 	<div class="col">
 		<div class="section">
 
-{if $station.real_x}
+{if $station.real_x && 0}
 			<img src="/images/icon_street.gif" width="16" height="16" />
 			<a href="http://maps.google.com/maps?q={$station.name|escape|escape:'url'}%20Station,%20Greater%20London&z=14" target="_blank">See this station on a street map.</a><br>
 			<br>
@@ -76,15 +76,18 @@ window.onload = function(){ldelim}
 
 {else}
 			<p>There are no weblogs located at <i>{$station.name}</i>.
-			To add your own, click the button on the left.</p>
+			You should <a href="/stations/{$station.id}/add/">add your own</a>.</p>
 {/if}
 		</div>
 
 		<div class="section">
 			<h2>Nearby Stations</h2>
 {if $nearby_stations|@count}
-
-			There are {$nearby_stations|@count} stations are located within a mile of {$station.name}:<br>
+	{if $nearby_stations|@count==1}
+			There is one station located within a mile of {$station.name}:<br>
+	{else}
+			There are {$nearby_stations|@count} stations located within a mile of {$station.name}:<br>
+	{/if}
 			<br>
 	{foreach from=$nearby_stations item='row'}
 			&bull; <a href="/stations/{$row.id}/">{$row.name}</a><br>
