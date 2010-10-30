@@ -76,3 +76,13 @@ h1 {
 	width: 266px;
 	float: left;
 }
+
+p.error {
+	background-image: url(/images/warning.gif);
+	background-repeat: no-repeat;
+	background-position: center left;
+	padding: 16px 16px 16px 50px;
+	color: #cc0000;
+	background-color: #ffc;
+	border: 1px solid #aaa;
+}

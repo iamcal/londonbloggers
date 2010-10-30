@@ -24,5 +24,5 @@
 		
 	);
 
-
+	$GLOBALS['cfg']['sig_secret'] = 'goldfish';
 ?>

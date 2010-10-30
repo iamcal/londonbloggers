@@ -1,0 +1,74 @@
+{capture assign='title'}Add Your Weblog | {$station.name|escape}{/capture}
+{include file='inc_head.txt'}
+
+	<div class="section">
+
+		<h1>Add Your Weblog</h1>
+
+		If you have already added your weblog to a different station, but would like to
+		add this station to it, <a href="/edit/?add={$station.id}">click here</a>.<br />
+		<br />
+
+{if $error_fields}
+		<p class="error">Please fill out all the fields</p>
+{/if}
+{if $error_email_taken}
+		<p class="error">
+			We already have a weblog registered using that email address.
+			Perhaps you'd like to <a href="/edit/?add={$station.id}">add this station</a> instead?
+		</p>
+{/if}
+
+	<form action="/stations/{$station.id}/add/" method="post">
+	<input type="hidden" name="done" value="1">
+
+		<table cellspacing="8">
+			<tr valign="top">
+				<td><b>Your nearest station:</b></td>
+				<td><i>{$station.name|escape}</i></td>
+			</tr>
+			<tr valign="top">
+				<td><b>The name of your weblog:</b></td>
+				<td><input type="text" name="blog_name" style="width: 300px;" value="{$smarty.post.blog_name|escape}"></td>
+			</tr>
+			<tr valign="top">
+				<td><b>The URL to your weblog:</b></td>
+				<td><input type="text" name="blog_url" style="width: 300px;" value="{$smarty.post.blog_url|escape|default:'http://'}"></td>
+			</tr>
+			<tr valign="top">
+				<td><b>Your name:</b></td>
+				<td><input type="text" name="name" style="width: 300px;" value="{$smarty.post.name|escape}"></td>
+			</tr>
+			<tr valign="top">
+				<td><b>Your email address:</b></td>
+				<td>
+					<input type="text" name="email" style="width: 300px;" value="{$smarty.post.email|escape}"><br />
+					<input type="checkbox" name="email_public" id="emailpublic" checked> <label for="emailpublic">Display your email address on this site.</label><br />
+					<input type="checkbox" name="email_spam" id="emailspam" checked> <label for="emailspam">Allow us to send you exciting non-spam emails about this site.</label><br />
+				</td>
+			</tr>
+			<tr valign="top">
+				<td><b>A little bit about your site:</b></td>
+				<td>
+					<textarea name="about" style="width: 300px; height: 100px;" wrap="virtual">{$smarty.post.about|escape}</textarea><br />
+					(HTML will not work - just plain text please!)
+				</td>
+			</tr>
+			<tr valign="top">
+				<td><b>Choose a password:</b></td>
+				<td>
+					<input type="password" name="password" style="width: 300px;" value="{$smarty.post.password|escape}"><br />
+					(You will need to remember this if you want to edit your details in future.)
+				</td>
+			</tr>
+			<tr valign="top">
+				<td>&nbsp;</td>
+				<td><input type="submit" value="Add My Weblog"></td>
+			</tr>
+		</table>
+
+	</form>
+
+	</div>
+
+{include file='inc_foot.txt'}
