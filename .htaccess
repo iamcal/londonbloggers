@@ -27,7 +27,6 @@ RewriteRule	^lines/([a-z-_]+)/all/$	/line_all.php?id=$1	[L,QSA]
 RewriteRule	^widget/$		/widget.php		[L]
 RewriteRule	^widget/demo/$		/widget_demo.php	[L]
 RewriteRule	^browser.php$		/widget.php		[L]
-RewriteRule	^browser_demo.php$	/widget_demo.php	[L]
 
 RewriteRule	^photos/([a-z]+)/$	/photos.php?tag=$1	[L,QSA]
 
