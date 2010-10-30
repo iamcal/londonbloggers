@@ -35,10 +35,25 @@
 		# static redirect map. add things here if you know you moved them.
 		#
 
-		if ($redir = $GLOBALS['cfg']['rewrite_static_urls']){
+		if ($redir = $GLOBALS['cfg']['rewrite_static_urls'][$url]){
 			header("location: {$redir}");
 			exit;
 		}
+
+
+		#
+		# dynamic rewrites
+		#
+
+		if (preg_match('!^/stations\.php\?line=(\d+)$!', $url, $m)){
+			$id = intval($m[1]);
+			$row = db_single(db_fetch("SELECT * FROM tube_lines WHERE id=$id"));
+			if ($row['slug']){
+				header("location: /lines/$row[slug]/");
+				exit;
+			}
+		}
+
 
 
 		#

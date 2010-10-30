@@ -17,4 +17,12 @@
 	$GLOBALS['cfg']['check_notices'] = 1;
 
 	$GLOBALS['cfg']['http_timeout'] = 3;
+
+
+	$GLOBALS['cfg']['rewrite_static_urls'] = array(
+		'/map.php' => '/',
+		
+	);
+
+
 ?>
