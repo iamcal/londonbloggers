@@ -17,7 +17,10 @@ RewriteEngine on
 
 RewriteRule	^api/$			/api.php		[L]
 
+RewriteRule	^stations/$		/stations.php		[L]
 RewriteRule	^stations/(\d+)/$	/station.php?id=$1	[L,QSA]
+
+RewriteRule	^weblogs/$		/weblogs.php		[L]
 RewriteRule	^weblogs/(\d+)/$	/weblog.php?id=$1	[L,QSA]
 
 RewriteRule	^lines/$		/lines.php		[L]
