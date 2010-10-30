@@ -19,6 +19,8 @@ RewriteRule	^api/$			/api.php		[L]
 
 RewriteRule	^stations/$		/stations.php		[L]
 RewriteRule	^stations/(\d+)/$	/station.php?id=$1	[L,QSA]
+RewriteRule	^stations/(\d+)/all/$	/station_all.php?id=$1	[L,QSA]
+RewriteRule	^stations/(\d+)/add/$	/station_add.php?id=$1	[L,QSA]
 
 RewriteRule	^weblogs/$		/weblogs.php		[L]
 RewriteRule	^weblogs/(\d+)/$	/weblog.php?id=$1	[L,QSA]
