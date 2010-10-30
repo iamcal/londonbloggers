@@ -1,7 +1,7 @@
 {capture assign='head_js'}
 window.onload = function(){ldelim}
 	g_this_station = {$station.id};
-	weblog_counts[{$station.id}] = {$blogs|@count};
+	weblog_counts[{$station.id}] = {if $blogs|@count}{$blogs|@count}{else}'z'{/if};
 	initialize();
 	map.setZoom(2);
 	select_station({$station.id});
