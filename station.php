@@ -21,6 +21,7 @@
 	$id = intval($_GET['id']);
 
 	$station = db_single(db_fetch("SELECT * FROM tube_stations WHERE id=$id"));
+	if (!$station['id']) error_404();
 
 	$station['tag'] = preg_replace("![^a-z]!", "", StrToLower($station['name']));
 
