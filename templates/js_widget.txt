@@ -14,7 +14,17 @@ if (needs_close) document.close();
 function ToggleTubeMenu(uid){
 	var m = document.getElementById('london-bloggers-widget-menu-'+uid);
 	m.style.display = m.style.display == 'block' ? 'none' : 'block';
+	if (m.style.display == 'block') MoveMenuOntoScreen(m);
 	return false;
 }
 
+function MoveMenuOntoScreen(m){
+	var p = m;
+	var x = 0;
+	while (p != null){
+		x += p.offsetLeft;
+		p = p.offsetParent;
+	}
+	if (x < 5) m.style.left = '0px';
+}
 {/literal}
