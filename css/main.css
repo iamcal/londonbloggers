@@ -72,6 +72,11 @@ h1 {
 	float: left;
 }
 
+.colthin {
+	width: 375px;
+	float: left;
+}
+
 .colthree {
 	width: 266px;
 	float: left;
