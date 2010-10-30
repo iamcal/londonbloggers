@@ -304,7 +304,7 @@ function set_station_html(id){
 			if (weblog_counts[id] > 1){
 				info_window.setContent("<b>"+station.name+"</b><br /><br />View <a href=\"/stations/"+id+"/all/\">all "+count+" "+weblogs+"</a>");
 			}else{
-				info_window.setContent("<b>"+station.name+"</b>");
+				info_window.setContent("<b>"+station.name+"</b><br /><br />Be the first to <a href=\"/stations/"+id+"/add/\">add your weblog</a>");
 			}
 		}else{
 			info_window.setContent("<b>"+station.name+"</b><br /><br />Home to <a href=\"/stations/"+id+"/\">"+count+" "+weblogs+"</a>");
