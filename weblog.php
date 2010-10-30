@@ -5,6 +5,16 @@
 
 
 	#
+	# old style url?
+	#
+
+	if (!$_SERVER['REDIRECT_URL']){
+		header("location: /weblogs/$_GET[id]/");
+		exit;
+	}
+
+
+	#
 	# grab blog
 	#
 
