@@ -53,6 +53,12 @@
 		<i>{$weblog.about|escape}</i><br />
 		<br />
 
+{if !$added && !$updated}
+		If this is your weblog, you can <a href="/edit/">update the details</a>.<br />
+		<br />
+{/if}
+
+
 		<a href="/weblogs/">Click here</a> to see all the weblogs.
 	</div>
 

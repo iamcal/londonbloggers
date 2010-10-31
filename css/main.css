@@ -91,3 +91,7 @@ p.error {
 	background-color: #ffc;
 	border: 1px solid #aaa;
 }
+
+tr.added td {
+	background-color: #cfc;
+}
