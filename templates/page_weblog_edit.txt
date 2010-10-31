@@ -1,0 +1,105 @@
+{include file='inc_head.txt'}
+
+	<div class="section">
+		<h1>Edit Your Details</h1>
+	</div>
+
+	<div class="col" style="width: 450px;">
+		<div class="section">
+
+
+{if $error_fields}
+			<p class="error">Please fill out all the fields</p>
+{/if}
+{if $error_email_taken}
+			<p class="error">We already have a different weblog registered using that email address.</p>
+{/if}
+
+			<form action="/weblogs/{$weblog.id}/edit/{$smarty.get.sig|escape}/" method="post">
+			<input type="hidden" name="done" value="1">
+
+			<table cellspacing="8">
+				<tr valign="top">
+					<td><b>Weblog:</b></td>
+					<td><input type="text" name="blog_name" style="width: 300px;" value="{$edit.blog_name|escape}"></td>
+				</tr>
+				<tr valign="top">
+					<td><b>URL:</b></td>
+					<td><input type="text" name="blog_url" style="width: 300px;" value="{$edit.blog_url|escape}"></td>
+				</tr>
+				<tr valign="top">
+					<td><b>Name:</b></td>
+					<td><input type="text" name="name" style="width: 300px;" value="{$edit.name|escape}"></td>
+				</tr>
+				<tr valign="top">
+					<td><b>Email:</b></td>
+					<td>
+						<input type="text" name="email" style="width: 300px;" value="{$edit.email|escape}"><br />
+						<input type="checkbox" name="email_public" id="emailpublic"{if $edit.email_public} checked{/if}> <label for="emailpublic">Display your email address on this site.</label><br />
+						<input type="checkbox" name="email_spam" id="emailspam"{if $edit.email_spam} checked{/if}> <label for="emailspam">Allow us to send you exciting non-spam emails about this site.</label><br />
+					</td>
+				</tr>
+				<tr valign="top">
+					<td><b>About:</b></td>
+					<td>
+						<textarea name="about" style="width: 300px; height: 100px;" wrap="virtual">{$edit.about|escape}</textarea><br />
+						(HTML will not work - just plain text please!)
+					</td>
+				</tr>
+				<tr valign="top">
+					<td><b>Password:</b></td>
+					<td><input type="password" name="password" style="width: 300px;" value="{$edit.password|escape}"></td>
+				</tr>
+				<tr valign="top">
+					<td>&nbsp;</td>
+					<td><input type="submit" value="Save Changes"></td>
+				</tr>
+			</table>
+
+			</form>
+
+		</div>
+	</div>
+
+	<div class="col" style="width: 350px;">
+		<div class="section">
+
+			<h2 style="margin-top: 0">Your Stations</h1>
+
+			<form action="/weblogs/{$weblog.id}/edit/{$smarty.get.sig|escape}/" method="post">
+			<input type="hidden" name="done_add" value="1">
+
+{if !$stations|@count}
+			<p class="error">You should add at least one station, or your weblog wont appear in the directory.</p>
+{/if}
+
+
+			<table cellspacing="0" cellpadding="5">
+{foreach from=$stations item='row'}
+				<tr{if $row.id==$added_station} class="added"{/if}>
+					<td><b>{$row.name|escape}</b></td>
+					<td><a href="/weblogs/{$weblog.id}/edit/{$smarty.get.sig|escape}/?remove={$row.id}">remove</a></td>
+				</tr>
+{/foreach}
+				<tr>
+					<td><select name="station">
+						<option value="0">-</option>
+{foreach from=$all_stations item='row'}
+						<option value="{$row.id}">{$row.name|escape}</option>
+{/foreach}
+					</select></td>
+					<td><input type="submit" value="add"></td>
+				</tr>
+			</table>
+
+			</form>
+
+
+			<p style="margin-top: 3em">Done editing? You can <a href="/weblogs/{$weblog.id}/">view your listing</a> instead.</p>
+
+		</div>
+	</div>
+
+	<div style="clear: both"></div>
+
+{include file='inc_foot.txt'}
