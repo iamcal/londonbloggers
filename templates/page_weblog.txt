@@ -15,7 +15,8 @@
 				Thanks for editing your details - your changes have now been saved.<br />
 {/if}
 				<br />
-				If your weblog is at multiple stations (between several, or you live at work in different places, etc) then you can <a href="/edit/">add more stations</a>.<br />
+				If your weblog is at multiple stations (between several, or you live at work in different places, etc)
+				then you can <a href="/weblogs/{$weblog.id}/edit/{$sig|escape}/">add more stations</a>.<br />
 			</div>
 		</div>
 

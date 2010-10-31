@@ -35,11 +35,13 @@
 
 	if ($_GET['added'] == blog_signature($weblog['id'])){
 
+		$smarty->assign('sig', $_GET['added']);
 		$smarty->assign('added', 1);
 	}
 
 	if ($_GET['updated'] == blog_signature($weblog['id'])){
 
+		$smarty->assign('sig', $_GET['updated']);
 		$smarty->assign('updated', 1);
 	}
 
