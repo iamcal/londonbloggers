@@ -1,0 +1,94 @@
+{include file='inc_head.txt'}
+
+	<div class="section">
+		<h1>Edit Your Details</h1>
+	</div>
+
+	<div class="col">
+		<div class="section">	
+
+			If you have not yet added your weblog to the directory,
+			you should start by <a href="/stations/">picking a station</a>.<br />
+			<br>
+			You can use this page to change your details or add/remove a
+			station for your weblog.<br />
+			<br />
+
+{if $error_missingfields}
+			<p class="error">
+				Enter your email address and password, silly.
+			</p>
+{/if}
+{if $error_badlogin}
+			<p class="error">
+				The login details you entered were not recognised.
+				Try using the form on the right if you have forgotten your password.
+			</p>
+{/if}
+
+			<form action="/edit/" method="post">
+			<input type="hidden" name="login" value="1">
+			<input type="hidden" name="add" value="{$smarty.request.add|escape}">
+
+			<table cellspacing="8">
+				<tr>
+					<td>Email:</td>
+					<td><input type="text" name="email" value="{$smarty.post.email|escape}"></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" name="password" value="{$smarty.post.password|escape}"></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><input type="submit" value="Login"></td>
+				</tr>
+			</table>
+		
+			</form>
+
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="section">	
+
+			<a name="password"></a>
+			<h2 style="margin-top: 0">Forgotten your password?</h2>
+
+{if $error_remind_notfound}
+			<p class="error">
+				The email address you entered is not registered.
+				Try a different address, or <a href="http://www.iamcal.com/help/contact/">contact me</a>.
+			</p>
+{/if}
+
+			<form action="/edit/#password" method="post">
+			<input type="hidden" name="remind" value="1">
+
+			<table cellspacing="8">
+				<tr>
+					<td>Email:</td>
+					<td><input type="text" name="remind_email" value="{$smarty.post.remind_email|escape}"></td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td><input type="submit" value="Reset my password"></td>
+				</tr>
+			</table>
+			
+			</form>
+
+			<br />
+
+			<h2>Forgotten your email address too?</h2>
+
+			Then <a href="http://www.iamcal.com/help/contact/">contact me</a> and i'll try and sort it out.
+
+
+		</div>
+	</div>
+
+	<div style="clear: both"></div>
+
+{include file='inc_foot.txt'}

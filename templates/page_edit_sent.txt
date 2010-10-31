@@ -1,0 +1,12 @@
+{include file='inc_head.txt'}
+
+	<div class="section">
+		<h1>Password reset</h1>
+
+		Your login details have been mailed to you at {$row.email|escape}.<br />
+		<br />
+		Once you recieve the email, <a href="/edit/">click here to log in</a>.<br />
+
+	</div>
+
+{include file='inc_foot.txt'}
