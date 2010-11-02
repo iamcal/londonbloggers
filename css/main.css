@@ -51,6 +51,15 @@ h1 {
 	text-decoration: underline;
 }
 
+a.stealth {
+	color: #000;
+	text-decoration: none
+}
+
+a.stealth:hover {
+	text-decoration: underline;
+}
+
 .section {
 	margin: 1em;
 }
@@ -74,7 +83,6 @@ h1 {
 	padding: 1px;
 	width: 350px;
 	height: 200px;
-	float: right;
 }
 
 .col {
