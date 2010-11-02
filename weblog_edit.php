@@ -58,12 +58,12 @@
 		#
 
 		$hash = array(
-			'blog_name'	=> AddSlashes($_POST['blog_name']),
-			'blog_url'	=> AddSlashes($_POST['blog_url']),
-			'name'		=> AddSlashes($_POST['name']),
-			'email'		=> AddSlashes(StrToLower($_POST['email'])),
-			'about'		=> AddSlashes($_POST['about']),
-			'password'	=> AddSlashes($_POST['password']),
+			'blog_name'	=> AddSlashes(trim($_POST['blog_name'])),
+			'blog_url'	=> AddSlashes(trim($_POST['blog_url'])),
+			'name'		=> AddSlashes(trim($_POST['name'])),
+			'email'		=> AddSlashes(trim(StrToLower($_POST['email']))),
+			'about'		=> AddSlashes(trim($_POST['about'])),
+			'password'	=> AddSlashes(trim($_POST['password'])),
 		);
 
 		$ok = 1;
@@ -72,6 +72,16 @@
 				$ok = 0;
 				$smarty->assign('error_fields', 1);
 			}
+		}
+
+
+		#
+		# url validation
+		#
+
+		if (!preg_match('!^http://!i', $edit['blog_url'])){
+			$ok = 0;
+			$smarty->assign('error_url_http', 1);
 		}
 
 

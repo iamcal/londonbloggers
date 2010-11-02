@@ -18,6 +18,9 @@
 			Perhaps you'd like to <a href="/edit/?add={$station.id}">add this station</a> instead?
 		</p>
 {/if}
+{if $error_url_http}
+			<p class="error">Your URL must start with <tt>http://</tt>.</p>
+{/if}
 
 	<form action="/stations/{$station.id}/add/" method="post">
 	<input type="hidden" name="done" value="1">
