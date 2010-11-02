@@ -1,0 +1,45 @@
+{capture assign='title'}All Weblogs | {$station.name|escape}{/capture}
+{include file='inc_head.txt'}
+
+{if $blogs|@count}
+
+	<div class="section">
+{if $blogs|@count>1}
+		<h1>All {$blogs|@count} Weblogs at {$station.name|escape} Station</h1>
+{else}
+		<h1>Weblogs at {$station.name|escape} Station</h1>
+{/if}
+
+		<p><a href="/stations/{$station.id}/">&laquo; Back to the {$station.name|escape} Station page</a>.</p>
+	</div>
+
+	<div class="col">
+		<div class="section">
+{include file='inc_weblogs.txt' weblogs=$blogs|@slice:2:1}
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="section">
+{include file='inc_weblogs.txt' weblogs=$blogs|@slice:2:2}
+		</div>
+	</div>
+
+	<div style="clear: both"></div>
+
+	<div class="section">
+		<p><a href="/stations/{$station.id}/">&laquo; Back to the {$station.name|escape} Station page</a>.</p>
+	</div>
+
+{else}
+	<div class="section">
+		<h1>Weblogs at {$station.name|escape} Station</h1>
+
+		<p>There are no weblogs here yet. Why not <a href="/stations/{$station.id}/add/">add one</a>?</p>
+
+		<p><a href="/stations/{$station.id}/">&laquo; Back to the {$station.name|escape} Station page</a>.</p>
+	</div>
+{/if}
+
+
+{include file='inc_foot.txt'}
