@@ -1,3 +1,10 @@
+{capture assign='head_js'}
+window.onload = function(){ldelim}
+	accept_station_clicks = false;
+	initialize();
+	create_markers([{$station_ids}]);
+{rdelim}
+{/capture}
 {capture assign='title'}{$weblog.blog_name|escape}{/capture}
 {include file='inc_head.txt'}
 
@@ -38,6 +45,8 @@
 {/if}
 
 	<div class="section">
+
+		<div id="mapouter" class="mini"><div id="map"></div></div>
 
 		<h1><a href="{$weblog.blog_url|escape}">{$weblog.blog_name|escape}</a></h1>
 
