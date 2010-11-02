@@ -46,29 +46,31 @@ window.onload = function(){ldelim}
 
 	<div class="section">
 
-		<div id="mapouter" class="mini"><div id="map"></div></div>
+		<div style="float: right; margin: 0 0 2em 2em">
+			<div id="mapouter" class="mini"><div id="map"></div></div>
+		</div>
 
-		<h1><a href="{$weblog.blog_url|escape}">{$weblog.blog_name|escape}</a></h1>
+		<h1><a href="{$weblog.blog_url|escape}" class="stealth">{$weblog.blog_name|escape}</a></h1>
 
-		<b>London Weblog #{$weblog.id}</b><br />
+		<p><a href="{$weblog.blog_url|escape}">{$weblog.blog_url|escape}</a></p>
 
 		{if $weblog.email_public}
-			Written by <a href="mailto:{$weblog.email|escape}">{$weblog.name|escape}</a><br />
+			<p>Written by <a href="mailto:{$weblog.email|escape}">{$weblog.name|escape}</a></p>
 		{else}
-			Written by {$weblog.name|escape}<br />
+			<p>Written by {$weblog.name|escape}</p>
 		{/if}
 
-		Stations: {$weblog.id|station_list:0}<br />
-		<i>{$weblog.about|escape}</i><br />
-		<br />
+		<p><b>Stations:</b> {$weblog.id|station_list:0}</p>
+
+		<p style="margin-bottom: 3em"><i>{$weblog.about|escape}</i></p>
+
 
 {if !$added && !$updated}
-		If this is your weblog, you can <a href="/edit/">update the details</a>.<br />
-		<br />
+		<p>If this is your weblog, you can <a href="/edit/">update the details</a>.</p>
 {/if}
 
 
-		<a href="/weblogs/">Click here</a> to see all the weblogs.
+		<p>Choose a station above to see all weblogs there, or <a href="/weblogs/">view all the weblogs</a>.</p>
 	</div>
 
 
