@@ -18,12 +18,16 @@ window.onload = function(){ldelim}
 			<div class="section">
 {if $added}
 				Thanks for adding your weblog to the directory!<br />
-{else}
-				Thanks for editing your details - your changes have now been saved.<br />
-{/if}
 				<br />
 				If your weblog is at multiple stations (between several, or you live at work in different places, etc)
 				then you can <a href="/weblogs/{$weblog.id}/edit/{$sig|escape}/">add more stations</a>.<br />
+{else}
+				Thanks for editing your details - your changes have now been saved.
+				A preview of your weblog listing is below<br />
+				<br />
+				If you want to edit your details again, or add/remove stations, 
+				then <a href="/weblogs/{$weblog.id}/edit/{$sig|escape}/">click this handy link</a>.<br />
+{/if}
 			</div>
 		</div>
 
