@@ -1,0 +1,49 @@
+{capture assign='title'}Weblogs added in {$display_month}{/capture}
+{include file='inc_head.txt'}
+
+{if $blogs|@count}
+
+	<div class="section">
+{if $blogs|@count>1}
+		<h1>All {$blogs|@count} Weblogs added in {$display_month}</h1>
+{else}
+		<h1>Weblogs added in {$display_month}</h1>
+{/if}
+
+		<p><a href="/weblogs/">&laquo; Back to the weblog month archive</a>.</p>
+	</div>
+
+	<div class="col">
+		<div class="section">
+{include file='inc_weblogs.txt' weblogs=$blogs|@slice:2:1}
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="section">
+{include file='inc_weblogs.txt' weblogs=$blogs|@slice:2:2}
+		</div>
+	</div>
+
+	<div style="clear: both"></div>
+
+	<div class="section">
+		<p><a href="/weblogs/">&laquo; Back to the weblog month archive</a>.</p>
+	</div>
+
+{else}
+	<div class="section">
+		<h1>Weblogs added in {$display_month}</h1>
+
+{if $is_future}
+		<p>There are no weblogs from the future. Yet.</p>
+{else}
+		<p>There were no weblogs added in {$display_month}.</p>
+{/if}
+
+		<p><a href="/weblogs/">&laquo; Back to the weblog month archive</a>.</p>
+	</div>
+{/if}
+
+
+{include file='inc_foot.txt'}

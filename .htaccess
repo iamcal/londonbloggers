@@ -25,6 +25,7 @@ RewriteRule	^stations/(\d+)/add/$	/station_add.php?id=$1	[L,QSA]
 RewriteRule	^edit/$			/edit.php		[L]
 
 RewriteRule	^weblogs/$			/weblogs.php			[L]
+RewriteRule	^weblogs/(\d\d\d\d)-(\d\d)/$	/weblogs_month.php?y=$1&m=$2	[L,QSA]
 RewriteRule	^weblogs/(\d+)/$		/weblog.php?id=$1		[L,QSA]
 RewriteRule	^weblogs/(\d+)/edit/([^/]+)/$	/weblog_edit.php?id=$1&sig=$2	[L,QSA]
 RewriteRule	^weblogs/(\d+)/delete/([^/]+)/$	/weblog_delete.php?id=$1&sig=$2	[L,QSA]
