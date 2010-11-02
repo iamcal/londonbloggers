@@ -64,6 +64,7 @@
 		$hash['email_public']	= $_POST['email_public'] ? 1 : 0;
 		$hash['email_spam']	= $_POST['email_spam'] ? 1 : 0;
 		$hash['date_create']	= time();
+		$hash['month_create']	= date('Y-m-01');
 
 
 		#
