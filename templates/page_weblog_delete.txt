@@ -1,0 +1,17 @@
+{include file='inc_head.txt'}
+
+	<div class="section">
+		<h1>Remove Your Weblog</h1>
+
+		<p>Are you sure you want to remove your weblog &quot;{$weblog.name|escape}&quot; from the directory?</p>
+
+		<form action="/weblogs/{$weblog.id}/delete/{$smarty.get.sig|escape}/" method="post">
+		<input type="hidden" name="done" value="1">
+		<input type="submit" value="Yes, Remove My Weblog" class="delete">
+		</form>
+
+		<p>Or, <a href="/weblogs/{$weblog.id}/edit/{$smarty.get.sig|escape}/">cancel and go back</a>.</p>
+
+	</div>
+
+{include file='inc_foot.txt'}

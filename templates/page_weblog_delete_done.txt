@@ -1,0 +1,12 @@
+{include file='inc_head.txt'}
+
+	<div class="section">
+		<h1>Remove Your Weblog</h1>
+
+		<p>Your weblog has been removed.</p>
+
+		<p><a href="/">Return to the homepage</a>.</p>
+
+	</div>
+
+{include file='inc_foot.txt'}

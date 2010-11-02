@@ -101,6 +101,8 @@
 
 			<p style="margin-top: 3em">Done editing? You can <a href="/weblogs/{$weblog.id}/">view your listing</a> instead.</p>
 
+			<p style="margin-top: 3em">Weblog doesn't exist any more? You can <a href="/weblogs/{$weblog.id}/delete/{$smarty.get.sig|escape}/" style="color: red">delete it from the directory</a>.</p>
+
 		</div>
 	</div>
 
