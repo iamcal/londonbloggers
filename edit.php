@@ -21,8 +21,8 @@
 	if ($_POST['login']){
 
 		$ok = 1;
-		$email_enc = AddSlashes(StrToLower($_POST['email']));
-		$password_enc = AddSlashes(StrToLower($_POST['password']));
+		$email_enc = AddSlashes(trim(StrToLower($_POST['email'])));
+		$password_enc = AddSlashes(trim($_POST['password']));
 
 		if (!strlen($email_enc) || !strlen($password_enc)){
 
