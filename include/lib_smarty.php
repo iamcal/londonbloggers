@@ -102,7 +102,7 @@
 
 		$num = ceil(count($data) / $cols);
 
-		return array_slice($data, ($col-1)*$num, $num);
+		return array_slice($data, ($col-1)*$num, $num, true);
 	}
 
 	#######################################################################################
