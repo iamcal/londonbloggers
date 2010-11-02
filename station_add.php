@@ -51,7 +51,7 @@
 		# url validation
 		#
 
-		if (!preg_match('!^http://!i', StripSlashes($hash['blog_url']))){
+		if (!preg_match('!^http://.!i', StripSlashes($hash['blog_url']))){
 			$ok = 0;
 			$smarty->assign('error_url_http', 1);
 		}
@@ -77,6 +77,19 @@
 
 				$ok = 0;
 				$smarty->assign('error_email_taken', 1);
+			}
+		}
+
+
+		#
+		# human proof
+		#
+
+		if ($ok){
+			if (trim($_POST['prove']) != '7'){
+
+				$ok = 0;
+				$smarty->assign('error_prove', 1);
 			}
 		}
 

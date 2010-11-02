@@ -65,6 +65,13 @@
 				</td>
 			</tr>
 			<tr valign="top">
+				<td><b>Prove you're human:</b></td>
+				<td>
+					<input type="text" name="prove" style="width: 300px;{if $error_prove} background-color: red; color: white;{/if}" value="{$smarty.post.prove|escape}"><br />
+					Enter the answer to 3+4
+				</td>
+			</tr>
+			<tr valign="top">
 				<td>&nbsp;</td>
 				<td><input type="submit" value="Add My Weblog"></td>
 			</tr>

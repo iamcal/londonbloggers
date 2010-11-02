@@ -79,7 +79,7 @@
 		# url validation
 		#
 
-		if (!preg_match('!^http://!i', $edit['blog_url'])){
+		if (!preg_match('!^http://.!i', $edit['blog_url'])){
 			$ok = 0;
 			$smarty->assign('error_url_http', 1);
 		}
