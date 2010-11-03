@@ -6,7 +6,8 @@ use Data::Dumper;
 
 $|++;
 
-my $outdir = '/var/www/cal/gnespy.com/tiles';
+my $indir = '/var/www/cal/gnespy.com/tiles';
+my $outdir = '/var/www/cal/gnespy.com/tiles/s2';
 my $convert = '/usr/bin/convert';
 
 my $zoom_stats = {};
@@ -27,7 +28,7 @@ print "\n";
 #
 
 print "creating zoom level 1 ($size_w x $size_h)...";
-`cp $outdir/full.png $outdir/zoom1.png`;
+`cp $indir/full.png $outdir/zoom1.png`;
 print "ok\n";
 
 my ($z1_w, $z1_h) = &center_in_tilespace('zoom1.png', $size_w, $size_h, 1);
@@ -46,7 +47,7 @@ for (my $z=2; $z<=4; $z++){
 	my $sy = int($size_h / (2 ** ($z - 1)));
 
 	print "creating zoom level $z ($sx x $sy)...";
-	`$convert $outdir/full.png -resize ${sx}x${sy} $outdir/zoom$z.png`;
+	`$convert $indir/full.png -resize ${sx}x${sy} $outdir/zoom$z.png`;
 	print "ok\n";
 
 	my ($s2x, $s2y) = &center_in_tilespace("zoom$z.png", $sx, $sy, $z);
@@ -80,7 +81,7 @@ for my $lvl(@{$levels}){
 	for (my $y=1; $y<=$tiles_y; $y++){
 	for (my $x=1; $x<=$tiles_x; $x++){
 
-		my $tile = sprintf 'tile_%d_%03d_%03d.jpg', $lvl->[1], $x, $y;
+		my $tile = sprintf 'tile_%d_%03d_%03d.jpg', (4 - $lvl->[1]), ($x-1), ($y-1);
 		`mv $outdir/tiles_$c.jpg $outdir/$tile`;
 		$c++;
 	}
@@ -114,9 +115,11 @@ sub center_in_tilespace {
 	}else{
 		my $x_offset = int(($w2 - $w) / 2);
 		my $y_offset = int(($h2 - $h) / 2);
+		$x_offset = 0;
+		$y_offset = 0;
 
                 print "\trounding to 256 tiles...";
-                `$convert -size ${w2}x${h2} xc:white $outdir/temp_$src`;
+                `$convert -size ${w2}x${h2} xc:#eeeeee $outdir/temp_$src`;
                 `composite -geometry +${x_offset}+${y_offset} $outdir/$src $outdir/temp_$src $outdir/temp_$src`;
 		`mv $outdir/temp_$src $outdir/$src`;
                 print "ok\n";
