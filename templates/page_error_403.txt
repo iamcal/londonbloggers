@@ -6,9 +6,12 @@
 
 	<p>Sorry, you do not have permission to view this page.</p>
 
+{if $cfg.is_admin}
 	<div class="admin-section">
 		<pre class="admin-debug">{$debug_block}</pre>
 	</div>
+{/if}
+
 </div>
 
 {include file='inc_foot.txt'}

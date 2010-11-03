@@ -8,6 +8,8 @@
 		'name'	=> 'cal_london',
 	);
 
+	$GLOBALS['cfg']['environment'] = 'dev';
+
 	$GLOBALS['cfg']['abs_root_url']		= 'http://london.local/';
 	$GLOBALS['cfg']['safe_abs_root_url']	= $GLOBALS['cfg']['abs_root_url'];
 
