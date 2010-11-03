@@ -48,7 +48,17 @@
 
 	function blog_signature($id){
 
-		return substr(sha1($GLOBALS['cfg']['sig_secret'].$id), 0, 5);
+		return substr(sha1($GLOBALS['cfg']['sig_secret'].$id), 0, 10);
+	}
+
+	######################################################################
+
+	function blog_ip_crumb($id){
+
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$ua = $_SERVER['HTTP_USER_AGENT'];
+
+		return substr(sha1($ip.$ua.$GLOBALS['cfg']['sig_secret'].$ip.$id), 0, 20);
 	}
 
 	######################################################################
