@@ -1,4 +1,4 @@
-{include file='inc_head.txt' title='Browse by Line'}
+{include file='inc_head.txt' title='All Weblogs'}
 
 	<div class="section">
 
