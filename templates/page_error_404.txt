@@ -6,6 +6,10 @@
 
 	<p>We can't find the page you requested. Sorry :(</p>
 
+	<p>You can <a href="/weblogs/">browse weblogs by date</a>, <a href="/stations/">by station</a> or <a href="/lines/">by line</a>.</p>
+
+	<p>If you're pretty sure this URL should be working, <a href="http://www.iamcal.com/help/contact/">let me know</a>.</p>
+
 {if $cfg.is_admin}
 	<div class="admin-section">
 		<pre class="admin-debug">{$debug_block}</pre>
