@@ -117,7 +117,7 @@
 
 	loadlib('error');
 	loadlib('db');
-	#loadlib('email');
+	loadlib('email');
 	loadlib('utf8');
 	loadlib('http');
 
