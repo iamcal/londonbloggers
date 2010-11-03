@@ -28,5 +28,9 @@
 
 	$GLOBALS['cfg']['sig_secret'] = 'goldfish';
 
+	$GLOBALS['cfg']['email_from_name']	= 'London Bloggers';
+	$GLOBALS['cfg']['email_from_email']	= 'londonbloggers@iamcal.com';
+	$GLOBALS['cfg']['auto_email_args']	= '-flondonbloggers@iamcal.com';
+
 	$GLOBALS['cfg']['admin_email'] = 'cal@iamcal.com';
 ?>
