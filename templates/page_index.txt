@@ -10,7 +10,7 @@ window.onload = function(){ldelim}
 
 	<div class="section">
 
-		<p>A directory of <a href="/weblogs/">{$count_weblogs|number_format} weblogs</a> spread across <a href="/stations/">{$count_stations} stations</a> on <a href="/lines/">{$count_lines} lines</a>.</p>
+		<p>A directory of <a href="/weblogs/">{$count_weblogs|number_format} weblogs</a> in and around London, spread across <a href="/stations/">{$count_stations} stations</a> on <a href="/lines/">{$count_lines} lines</a>.</p>
 	</div>
 
 	<div id="mapouter"><div id="map"></div></div>
