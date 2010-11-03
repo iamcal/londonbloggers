@@ -21,9 +21,17 @@
 	# fetch weblogs
 	#
 
-	$ret = db_fetch("SELECT w.*, s.station_id FROM tube_weblogs AS w, tube_weblog_stations AS s, tube_connections AS c WHERE w.id=s.weblog_id AND (s.station_id=c.station_id_1 OR s.station_id=c.station_id_2) AND c.line_id=$line[id] GROUP BY w.id ORDER BY w.blog_name ASC");
+	$ret = db_fetch("SELECT w.*, s.station_id FROM tube_weblogs AS w, tube_weblog_stations AS s, tube_connections AS c WHERE w.id=s.weblog_id AND (s.station_id=c.station_id_1 OR s.station_id=c.station_id_2) AND c.line_id=$line[id] GROUP BY w.id ORDER BY w.date_create DESC");
 
-	$smarty->assign('weblogs', $ret['rows']);
+	$smarty->assign('count', count($ret['rows']));
+
+	$weblogs = array();
+	foreach ($ret['rows'] as $row){
+		list($y) = explode('-', $row['month_create']);
+		$weblogs[$y][] = $row;
+	}
+
+	$smarty->assign('weblogs', $weblogs);
 
 
 
