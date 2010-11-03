@@ -7,9 +7,6 @@ You requested your login details for London Bloggers:
 Email: {$row.email}
 Password: {$row.password}
 
-Your weblog: {$row.blog_name}
-             {$row.blog_url}
-
 You can log in here:
     {$cfg.abs_root_url}edit/
 
