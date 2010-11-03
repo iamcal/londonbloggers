@@ -27,4 +27,6 @@
 	);
 
 	$GLOBALS['cfg']['sig_secret'] = 'goldfish';
+
+	$GLOBALS['cfg']['admin_email'] = 'cal@iamcal.com';
 ?>
