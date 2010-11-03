@@ -12,19 +12,27 @@
 {else}
 		<div style="height: 16px; background-color: {$line.color}"></div>
 {/if}
+
+		<p>All {$count} weblogs, listed by the year they were added</p>
 	</div>
 
-	<div class="section">
+{section name='i' start=1 loop=3}
+	<div class="col">
+		<div class="section">
 
-			<h2>All Weblogs ({$weblogs|@count})</h2>
-
-{foreach from=$weblogs item='row'}
-			<b>&bull;</b> <a href="/weblogs/{$row.id}/">{$row.blog_name|escape}</a><br />
-{foreachelse}
-			<b>&bull;</b> <i>none</i><br />
+{foreach from=$weblogs|@slice:2:$smarty.section.i.index item='rows' key='year'}
+			<h2 style="margin-bottom: 0">{$year}</h2>
+			<p style="margin-left: 1em; margin-top: 0">
+{foreach from=$rows item='row'}
+				<b>&bull;</b> <a href="/weblogs/{$row.id}/">{$row.blog_name|escape}</a><br />
+{/foreach}
+			</p>
 {/foreach}
 
+		</div>
 	</div>
+{/section}
 
+	<div style="clear: both"></div>
 
 {include file='inc_foot.txt'}
