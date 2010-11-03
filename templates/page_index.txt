@@ -37,7 +37,7 @@ window.onload = function(){ldelim}
 
 			<h2>UK Weblogs</h2>
 
-			For more UK-related weblog goodness, check out the <a href="http://www.timemachinego.com/ukblogs/">Recently Updated GBlogs</a> listing. It's possible that <a href="http://www.britblog.com/">BritBlog</a> might comeback to life too.<br />
+			For more UK-related weblog goodness, check out the <a href="http://www.timemachinego.com/ukblogs/">Recently Updated GBlogs</a> listing. It's possible that <a href="http://www.britblog.com/">BritBlog</a> might come back to life too.<br />
 
 		</div>
 	</div>
