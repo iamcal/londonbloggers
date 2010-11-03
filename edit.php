@@ -78,7 +78,7 @@
 			$smarty->assign('row', $weblog);
 
 			email_send(array(
-				'to_email'	=> $row['email'],
+				'to_email'	=> $weblog['email'],
 				'template'	=> 'email_reset.txt',
 			));
 
