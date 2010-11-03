@@ -77,7 +77,10 @@
 
 			$smarty->assign('row', $weblog);
 
-			#mail($row[email], "[LondonBloggers] Login Details", $msg, "From: LondonBloggers <cal@londonbloggers.co.uk>\r\nReturn-path: cal@londonbloggers.co.uk");
+			email_send(array(
+				'to_email'	=> $row['email'],
+				'template'	=> 'email_reset.txt',
+			));
 
 			$smarty->display('page_edit_sent.txt');
 			exit;
