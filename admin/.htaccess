@@ -1,0 +1,4 @@
+AuthType basic
+AuthName "London Bloggers Admin"
+AuthUserFile /var/www/cal/includes/.passwd
+require valid-user
