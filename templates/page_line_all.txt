@@ -19,7 +19,7 @@
 			<h2>All Weblogs ({$weblogs|@count})</h2>
 
 {foreach from=$weblogs item='row'}
-			<b>&bull;</b> <a href="/weblogs/{$row.id}">{$row.blog_name|escape}</a><br />
+			<b>&bull;</b> <a href="/weblogs/{$row.id}/">{$row.blog_name|escape}</a><br />
 {foreachelse}
 			<b>&bull;</b> <i>none</i><br />
 {/foreach}
