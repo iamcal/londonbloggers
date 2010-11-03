@@ -96,25 +96,30 @@
 
 	loadlib('log');		# logging comes first, so that other modules can log during startup
 	loadlib('smarty');	# smarty comes next, since other libs register smarty modules
+
+
+	#
+	# we check env after loading lib_log but before lib_db, since
+	# we want to set up logging correctly before we connect to the DB.
+	#
+
+	if ($cfg['environment'] == 'dev'){
+		$cfg['is_admin'] = 1;
+	}else{
+		$cfg['is_admin'] = 0;
+		$GLOBALS['log_handlers']['notice'] = array();
+	}
+
+
+	#
+	# load the rest of the usual suspects
+	#
+
 	loadlib('error');
 	loadlib('db');
-	#loadlib('cache');
-	#loadlib('login');
 	#loadlib('email');
 	loadlib('utf8');
-	#loadlib('args');
-	#loadlib('calendar');
-	#loadlib('users');
-	#loadlib('versions');
 	loadlib('http');
-
-
-
-	if ($this_is_webpage){
-
-		#login_b_cookie();
-		#login_check();
-	}
 
 
 	#
@@ -128,7 +133,6 @@
 			error_forbidden();
 		}
 	}
-
 
 
 	#
