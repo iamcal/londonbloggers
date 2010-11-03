@@ -22,10 +22,6 @@
 
 	if (!$weblog['id']) error_404();
 
-	if (!preg_match("/^http\:\/\//i", $weblog['blog_url'])){
-		$weblog['blog_url'] = "http://". $weblog['blog_url'];
-	}
-
 	$smarty->assign('weblog', $weblog);
 
 
