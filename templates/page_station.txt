@@ -80,6 +80,7 @@ window.onload = function(){ldelim}
 {/if}
 		</div>
 
+{if 0}
 		<div class="section">
 			<h2>Nearby Stations</h2>
 {if $nearby_stations|@count}
@@ -96,11 +97,13 @@ window.onload = function(){ldelim}
 			There are no other stations within a mile of {$station.name}.<br>
 {/if}
 
-<!--
+{if 0}
 			<br />
 			<i>Note - this data relies on geo-coding information for the stations. At present, not all stations have been geo-coded.</i><br>
--->
+{/if}
 		</div>
+{/if}
+
 	</div>
 
 	<div style="clear: both"></div>
