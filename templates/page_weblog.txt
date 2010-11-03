@@ -71,6 +71,8 @@ window.onload = function(){ldelim}
 
 {if !$added && !$updated}
 		<p>If this is your weblog, you can <a href="/edit/">update the details</a>.</p>
+
+		<p>Does this look like spam? <a href="/weblogs/{$weblog.id}/report/">Report it</a>.</p>
 {/if}
 
 

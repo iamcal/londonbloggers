@@ -1,0 +1,10 @@
+{assign var='email_subject' value='[London Bloggers] Spam report'}
+
+URL: {$cfg.abs_root_url}weblogs/{$weblog.id}/
+Extra:
+
+{$smarty.post.extra}
+
+
+------------------------------------------------------------------
+{$cfg.abs_root_url}

@@ -1,0 +1,55 @@
+{capture assign='title'}Report Entry | {$weblog.blog_name|escape}{/capture}
+{include file='inc_head.txt'}
+
+	<div class="section">
+		<h1>Report Entry</h1>
+	</div>
+
+	<div class="col">
+		<div class="section">
+
+{if $done}
+			<div style="background-color: #cfc; border: 1px solid #9c9; padding: 0 1em">
+				<p>Thanks for reporting this entry.</p>
+				<p>You can <a href="/">head back home</a> to continue browsing.</p>
+			</div>
+{else}
+			<form action="/weblogs/{$weblog.id}/report/" method="post">
+			<input type="hidden" name="done" value="{$report_slug}" />
+
+			<p>If this entry looks like spam, then you can use this page to report it.
+			It will then be manually checked and possibly removed from the directory.</p>
+
+			<p>If you have any extra notes, add them here (optional):</p>
+
+			<p><textarea style="width: 100%; height: 100px;" wrap="virtual" name="extra"></textarea></p>
+
+			<p><input type="submit" value="Report this Entry"></p>
+
+			<p>Or, <a href="/weblogs/{$weblog.id}/">go back to the weblog listing</a> without reporting it.</p>
+
+			</form>
+{/if}
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="section">
+
+			<p><b>Weblog:</b> <a href="{$weblog.blog_url|escape}">{$weblog.blog_url|escape}</a></p>
+
+			{if $weblog.email_public}
+				<p><b>Author:</b> <a href="mailto:{$weblog.email|escape}">{$weblog.name|escape}</a></p>
+			{else}
+				<p><b>Author:</b> {$weblog.name|escape}</p>
+			{/if}
+
+			<p style="margin-bottom: 3em"><i>{$weblog.about|escape}</i></p>
+
+		</div>
+	</div>
+
+	<div style="clear: both"></div>
+
+
+{include file='inc_foot.txt'}
