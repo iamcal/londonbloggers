@@ -1,5 +1,5 @@
 <?
-	include('include/init.php');
+	include('../include/init.php');
 
 
 
@@ -183,6 +183,29 @@
 		));
 	}
 
+	if ($_REQUEST['method'] == 'set_station_label'){
+
+		$id_enc = intval($_REQUEST['id']);
+
+		$row = db_single(db_fetch("SELECT * FROM tube_stations WHERE id=$id_enc"));
+
+		$location = unserialize($row['location']);
+
+		$location['label'] = array(
+			'l' => intval($_REQUEST['l']),
+			'r' => intval($_REQUEST['r']),
+			't' => intval($_REQUEST['t']),
+			'b' => intval($_REQUEST['b']),
+		);
+
+		db_update('tube_stations', array(
+			'location' => AddSlashes(serialize($location)),
+		), "id=$id_enc");
+
+		api_reply(array(
+			'ok'	=> 1,
+		));
+	}
 
 
 	api_error("Method \"$_REQUEST[method]\" not found");
