@@ -222,30 +222,14 @@ function process_click(x, y){
 function select_station(id){
 
 	g_selected_station = id;
-	var station = g_station_positions[id];
-
-
-	//
-	// get station position (pixels)
-	//
-
-	var xs = [];
-	var ys = [];
-	for (var i=0; i<station.pts.length; i++){
-		xs.push(station.pts[i][0]);
-		ys.push(station.pts[i][1]);
-	}
-	xs.sort();
-	ys.sort();
-	var x = (xs[0]+xs.pop())/2;
-	var y = (ys[0]+ys.pop())/2;
+	var station = g_stations[id];
 
 
 	//
 	// open window
 	//
 
-	var ll = PixelsToLatLng([x, y]);
+	var ll = PixelsToLatLng([station.x, station.y]);
 	map.panTo(ll);
 
 	info_window.close();
@@ -266,7 +250,7 @@ function select_station(id){
 
 function set_station_html(id){
 
-	var station = g_station_positions[id];
+	var station = g_stations[id];
 
 	if (weblog_counts[id]){
 		var count = weblog_counts[id] == 'z' ? 0 : weblog_counts[id];
@@ -288,26 +272,7 @@ function set_station_html(id){
 
 function get_station_info(id){
 
-	var station = g_station_positions[id];
-
-	//
-	// get station position (pixels)
-	//
-
-	if (!station.x){
-		var xs = [];
-		var ys = [];
-		for (var i=0; i<station.pts.length; i++){
-			xs.push(station.pts[i][0]);
-			ys.push(station.pts[i][1]);
-		}
-		xs.sort();
-		ys.sort();
-		station.x = (xs[0]+xs.pop())/2;
-		station.y = (ys[0]+ys.pop())/2;
-	}
-
-	return station;
+	return g_stations[id];
 }
 
 function clear_markers(){
