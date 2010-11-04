@@ -153,10 +153,6 @@ function initialize() {
 	// We can now set the map to use the 'coordinate' map type
 	map.setMapTypeId('LBmap');
 
-	// allow clicks on map to highlight a station
-	calculate_click_boxes();
-
-
 	// we'll use this info window later
 	info_window = new google.maps.InfoWindow();
 
@@ -166,30 +162,6 @@ function initialize() {
 		var p = LatLngToPixels(event.latLng);
 		process_click(p[0], p[1]);
 	});
-}
-
-
-
-var g_click_boxes = [];
-
-function calculate_click_boxes(){
-
-	g_click_boxes = [];
-
-	var box_size = 35;
-	var half_box = box_size / 2;
-
-	for (var station_id in g_station_positions){
-		var station = g_station_positions[station_id];
-		for (var i=0; i<station.pts.length; i++){
-			var pt = station.pts[i];
-
-			var x = pt[0]-half_box;
-			var y = pt[1]-half_box;
-
-			g_click_boxes.push([x, y, x+box_size, y+box_size, station_id]);
-		}
-	}
 }
 
 function process_click(x, y){
