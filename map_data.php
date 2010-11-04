@@ -7,7 +7,7 @@
 	#
 
 	$click_boxes = array();
-	$box_size = 35;
+	$box_size = 25;
 	$half_box = $box_size / 2;
 
 	$ret = db_fetch("SELECT * FROM tube_stations ORDER BY name ASC");
