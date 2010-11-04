@@ -37,6 +37,12 @@
 			}
 		}
 
+		if (is_array($location['label'])){
+
+			$l = $location['label'];
+			$click_boxes[] = array($l['l'], $l['t'], $l['r'], $l['b'], $row['id']);
+		}
+
 
 		#
 		# find center point
