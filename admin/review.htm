@@ -1,25 +1,44 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title></title>
+<title>London Bloggers</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="/js/core.js"></script>
+<script type="text/javascript" src="/js/map2.js"></script>
+<script type="text/javascript" src="/map_data.php"></script>
+
+<script type="text/javascript">
+
+window.onload = function(){
+	initialize();
+	map.setZoom(2);
+
+	for (var i=0; i<g_click_boxes.length; i++){
+
+		var box = g_click_boxes[i];
+
+		new google.maps.Rectangle({
+			bounds: new google.maps.LatLngBounds(PixelsToLatLng([box[0], box[3]]), PixelsToLatLng([box[2], box[1]])),
+			clickable: false,
+			fillOpacity: 0.5,
+			fillColor: '#000000',
+			strokeOpacity: 0,
+			strokeWeight: 0,
+			map: map
+		});
+
+	}
+};
+
+</script>
 <style>
 
 #map {
-	background-color: #cccccc;
-	background-image: url(/images/stripes.gif);
+	width: 100%;
+	height: 600px;
 	border: 1px solid black;
-	width: 1200px;
-	height: 800px;
-	position: relative;
-	overflow: hidden;
-}
-
-.center-marker {
-	width: 25px;
-	height: 25px;
-	position: absolute;
-	background-color: black;
-	z-index: 2;
-	opacity: 0.5;
 }
 
 </style>
@@ -27,69 +46,6 @@
 <body>
 
 <div id="map"></div>
-
-<script src="/js/map.js"></script>
-<script src="/js/core.js"></script>
-<script>
-
-var g_map = new map();
-var g_markers = null;
-
-window.onload = function(){
-
-	g_map.init(g_map_data.path, g_map_data.zooms);
-	g_map.create(document.getElementById('map'), 1200, 800);
-	g_map.set_zoom_level(3);
-	g_map.center_on_pos(445, 447);
-
-	g_map.set_zoom_level(1);
-
-
-
-	g_markers = document.createElement('div');
-	g_markers.style.position = 'absolute';
-	g_map.get_slab().appendChild(g_markers);
-
-	g_map.onpan = function(){
-		// something?
-	};
-
-	g_map.onzoomchange = function(){
-		// maintain selection here
-		refresh_markers(g_map.zoom_level);
-	};
-
-	g_map.onclick = function(x, y){
-		// process click
-	}
-
-	refresh_markers(1);
-};
-
-function refresh_markers(zoom){
-
-	var factor = Math.pow(0.5, zoom-1);
-	var size = 25 * factor;
-	var offset = size / 2;
-
-	admin_api_call('get_all_centers', {}, function(o){
-
-		html = '';
-	
-		for (var i=0; i<o.centers.length; i++){
-			var cen = o.centers[i];
-
-			var pt = g_map.zoom1_to_current(cen);
-
-			html += "<div class=\"center-marker\" style=\"left: "+((pt[0])-offset)+"px; top: "+((pt[1])-offset)+"px; width: "+size+"px; height: "+size+"px\"></div>";
-		}
-
-		g_markers.innerHTML = html;
-	});
-
-}
-
-</script>
 
 </body>
 </html>
