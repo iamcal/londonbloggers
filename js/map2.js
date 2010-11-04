@@ -323,6 +323,22 @@ function create_markers(stations){
 	var hi_x = xs.pop();
 	var hi_y = ys.pop();
 
+
+	//
+	// for large marker sets (lines), we will pull the edges in to avoid fitToBounds()
+	// picking a zoom level too far out. or google could just fix this...
+	//
+
+	if (hi_x - lo_x > 1000){
+		lo_x += 200;
+		hi_x -= 200;
+	}
+	if (hi_y - lo_y > 1000){
+		lo_y += 200;
+		hi_y -= 200;
+	}
+
+
 	var bounds = new google.maps.LatLngBounds(PixelsToLatLng([lo_x, hi_y]), PixelsToLatLng([hi_x, lo_y]));
 
 	map.fitBounds(bounds);
