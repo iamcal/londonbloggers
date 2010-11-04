@@ -33,4 +33,6 @@
 	$GLOBALS['cfg']['auto_email_args']	= '-flondonbloggers@iamcal.com';
 
 	$GLOBALS['cfg']['admin_email'] = 'cal@iamcal.com';
+
+	$GLOBALS['cfg']['data_rev'] = 2;
 ?>
