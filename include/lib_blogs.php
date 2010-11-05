@@ -62,4 +62,25 @@
 	}
 
 	######################################################################
+
+	function blog_hash_password($password){
+
+		$salt = substr(sha1(rand(0,9999999).time()), 0, 2);
+		return blog_hash_password_full($salt, $password);
+	}
+
+	function blog_check_password($password){
+
+		$salt = substr($password, 0, 2);
+		$rest = substr($password, 2);
+
+		return blog_hash_password_full($salt, $reset) == $password ? 1 : 0;
+	}
+
+	function blog_hash_password_full($salt, $password){
+
+		return $salt.sha1($password.$salt.$GLOBALS['cfg']['pass_secret'].$password);
+	}
+
+	######################################################################
 ?>
