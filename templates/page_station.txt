@@ -23,7 +23,7 @@ window.onload = function(){ldelim}
 {/if}
 	</div>
 
-	<div id="mapouter"><div id="map"></div></div>
+	<div id="mapouter" style="height: 300px;"><div id="map"></div></div>
 
 	<div class="col">
 		<div class="section">
@@ -65,7 +65,7 @@ window.onload = function(){ldelim}
 	<div class="col">
 		<div class="section">
 
-			<h2>Recently Add Weblogs</h2>
+			<h2>Recently Added Weblogs</h2>
 {if $blogs|@count}
 
 {include file='inc_weblogs.txt' weblogs=$blogs|@array_slice:0:5}
