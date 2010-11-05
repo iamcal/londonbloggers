@@ -44,15 +44,21 @@ window.onload = function(){ldelim}
 		</div>
 
 		<div class="section">
-			<h2>Weblog Browser</h2>
+			<h2>Weblog Browser Widget</h2>
 
-			The weblog browser shows a small menu of sites at this tube station. To use the weblog browser on your own site, copy and paste this code:<br>
+			The weblog browser shows a small menu of sites at this tube station. To use the <a href="/widget/demo/">weblog browser</a> on your own site, copy and paste this code:<br>
 			<br>
 			<textarea style="width: 100%; height: 75px;" wrap="none">&lt;script src="{$cfg.abs_root_url}widget/?ids={$station.id}" type="text/javascript"&gt;&lt;/script&gt;</textarea><br>
 			<br>
-			You can <a href="/widget/demo/">see a demo</a> of the browser in action. The demo includes instructions for getting the browser to display multiple stations and showing a smaller image.<br>
+			<div style="padding: 0 1em">
+				<div style="float: right; margin: 0 0 1em 1em;">
+					<script type="text/javascript" src="/widget/?ids={$station.id}"></script>
+				</div>
+				It'll look exactly like this:<br />
+				(Click it to open the menu)
+				<div style="clear: right"></div>
+			</div>
 		</div>
-
 
 		<div class="section">
 
