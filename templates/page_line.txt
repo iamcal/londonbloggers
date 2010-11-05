@@ -2,6 +2,7 @@
 window.onload = function(){ldelim}
 	accept_station_clicks = false;
 	initialize();
+	g_marker_image = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=+|{'#'|str_replace:'':$line.color}';
 	create_markers([{', '|implode:$station_ids}]);
 {rdelim}
 {/capture}

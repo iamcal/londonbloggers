@@ -10,7 +10,7 @@ var map_config = {
 var weblog_counts = {};
 var accept_station_clicks = true;
 var g_this_station = null;
-
+var g_marker_image = null;
 
 //
 // a very simple projection
@@ -289,6 +289,8 @@ function create_markers(stations){
 
 	var xs = [];
 	var ys = [];
+	var marker_img = new google.maps.MarkerImage(g_marker_image);
+	var shadow_img = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_shadow');
 
 	for (var i=0; i<stations.length; i++){
 
@@ -303,6 +305,11 @@ function create_markers(stations){
 			map: map,
 			title: station.name
 		});
+
+		if (g_marker_image){
+			marker.setIcon(marker_img);
+			marker.setShadow(shadow_img);
+		}
 
 		google.maps.event.addListener(marker, 'click', function(){
 			var cid = id;
