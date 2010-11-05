@@ -3,9 +3,9 @@
 	<div class="section">
 		<h1>Password reset</h1>
 
-		Your login details have been mailed to you at {$row.email|escape}.<br />
-		<br />
-		Once you recieve the email, <a href="/edit/">click here to log in</a>.<br />
+		<p>We've just sent an email to {$row.email|escape}.</p>
+
+		<p>Once you recieve the email, click on the link it contains to reset your password.</p>
 
 	</div>
 
