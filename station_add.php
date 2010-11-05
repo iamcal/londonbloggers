@@ -35,7 +35,7 @@
 			'name'		=> AddSlashes(trim($_POST['name'])),
 			'email'		=> AddSlashes(trim(StrToLower($_POST['email']))),
 			'about'		=> AddSlashes(trim($_POST['about'])),
-			'password'	=> AddSlashes(trim($_POST['password'])),
+			'password'	=> trim($_POST['password']),
 		);
 
 		$ok = 1;
@@ -45,6 +45,15 @@
 				$smarty->assign('error_fields', 1);
 			}
 		}
+
+
+		#
+		# we hash the password after checking for missing fields, since
+		# the hash always has length, even if the password is empty
+		#
+
+		$hash['password_hash'] = AddSlashes(blog_hash_password($hash['password']));
+		unset($hash['password']);
 
 
 		#
