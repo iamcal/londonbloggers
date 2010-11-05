@@ -58,11 +58,14 @@ window.onload = function(){ldelim}
 
 		<p><a href="{$weblog.blog_url|escape}">{$weblog.blog_url|escape}</a></p>
 
+		<p>
 		{if $weblog.email_public}
-			<p>Written by <a href="mailto:{$weblog.email|escape}">{$weblog.name|escape}</a></p>
+			Written by <a href="mailto:{$weblog.email|escape}">{$weblog.name|escape}</a><br />
 		{else}
-			<p>Written by {$weblog.name|escape}</p>
+			Written by {$weblog.name|escape}<br />
 		{/if}
+			Added {'jS F Y'|date:$weblog.date_create}
+		</p>
 
 		<p><b>Stations:</b> {$weblog.id|station_list:0}</p>
 
