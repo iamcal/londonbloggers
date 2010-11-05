@@ -31,12 +31,12 @@
 
 	if ($_POST['done']){
 
-		$password = AddSlashes(trim($_POST['password']));
+		$password = trim($_POST['password']);
 
 		if (strlen($password)){
 
 			db_update('tube_weblogs', array(
-				'password'	=> $password,
+				'password_hash'	=> AddSlashes(blog_hash_password($password)),
 			), "id=$weblog[id]");
 
 

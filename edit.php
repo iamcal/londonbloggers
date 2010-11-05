@@ -22,18 +22,24 @@
 
 		$ok = 1;
 		$email_enc = AddSlashes(trim(StrToLower($_POST['email'])));
-		$password_enc = AddSlashes(trim($_POST['password']));
+		$password = trim($_POST['password']);
 
-		if (!strlen($email_enc) || !strlen($password_enc)){
+		if (!strlen($email_enc) || !strlen($password)){
 
 			$ok = 0;
 			$smarty->assign('error_missingfields', 1);
 		}
 
 		if ($ok){
-			$weblog = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE email='$email_enc' AND password='$password_enc'"));
+			$weblog = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE email='$email_enc'"));
 
 			if (!$weblog['id']){
+
+				$ok = 0;
+				$smarty->assign('error_badlogin', 1);
+			}
+
+			if (!blog_check_password($weblog['password_hash'], $password)){
 
 				$ok = 0;
 				$smarty->assign('error_badlogin', 1);
