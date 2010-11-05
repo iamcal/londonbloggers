@@ -1,0 +1,26 @@
+{include file='inc_head.txt'}
+
+	<div class="section">
+		<h1>Reset Your Password</h1>
+
+		<p>Almost done - just pick a new password.</p>
+
+		<form action="/reset/{$weblog.id}/{$smarty.get.sig|escape}/" method="post">
+		<input type="hidden" name="done" value="1">
+
+		<table cellspacing="8">
+			<tr>
+				<td>New Password:</td>
+				<td><input type="password" name="password" value=""></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><input type="submit" value="Reset Password"></td>
+			</tr>
+		</table>
+		
+		</form>
+
+	</div>
+
+{include file='inc_foot.txt'}

@@ -48,7 +48,6 @@
 		$edit['name']		= $_POST['name'];
 		$edit['email']		= $_POST['email'];
 		$edit['about']		= $_POST['about'];
-		$edit['password']	= $_POST['password'];
 		$edit['email_public']	= $_POST['email_public'] ? 1 : 0;
 		$edit['email_spam']	= $_POST['email_spam'] ? 1 : 0;
 
@@ -63,7 +62,6 @@
 			'name'		=> AddSlashes(trim($_POST['name'])),
 			'email'		=> AddSlashes(trim(StrToLower($_POST['email']))),
 			'about'		=> AddSlashes(trim($_POST['about'])),
-			'password'	=> AddSlashes(trim($_POST['password'])),
 		);
 
 		$ok = 1;

@@ -75,6 +75,7 @@
 
 		if ($ok){
 
+			$smarty->assign('sig', blog_signature($weblog['id']));
 			$smarty->assign('row', $weblog);
 
 			email_send(array(

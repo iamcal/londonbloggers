@@ -2,6 +2,14 @@
 
 	<div class="section">
 		<h1>Edit Your Details</h1>
+
+{if $smarty.get.newpass}
+		<div style="background-color: #cfc; border: 1px solid #9c9; margin-top: 20px; padding: 1em;">
+
+			We've saved your new password.
+ You can modify your weblog's details below.
+		</div>
+{/if}
 	</div>
 
 	<div class="col" style="width: 450px;">
@@ -49,10 +57,6 @@
 						<textarea name="about" style="width: 300px; height: 100px;" wrap="virtual">{$edit.about|escape}</textarea><br />
 						(HTML will not work - just plain text please!)
 					</td>
-				</tr>
-				<tr valign="top">
-					<td><b>Password:</b></td>
-					<td><input type="password" name="password" style="width: 300px;" value="{$edit.password|escape}"></td>
 				</tr>
 				<tr valign="top">
 					<td>&nbsp;</td>
