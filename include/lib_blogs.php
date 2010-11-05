@@ -69,12 +69,12 @@
 		return blog_hash_password_full($salt, $password);
 	}
 
-	function blog_check_password($password){
+	function blog_check_password($hash, $input){
 
-		$salt = substr($password, 0, 2);
-		$rest = substr($password, 2);
+		$salt = substr($hash, 0, 2);
+		$rest = substr($hash, 2);
 
-		return blog_hash_password_full($salt, $reset) == $password ? 1 : 0;
+		return blog_hash_password_full($salt, $input) == $hash ? 1 : 0;
 	}
 
 	function blog_hash_password_full($salt, $password){
