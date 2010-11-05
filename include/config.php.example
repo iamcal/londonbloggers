@@ -27,6 +27,7 @@
 	);
 
 	$GLOBALS['cfg']['sig_secret'] = 'goldfish';
+	$GLOBALS['cfg']['pass_secret'] = 'carp';
 
 	$GLOBALS['cfg']['email_from_name']	= 'London Bloggers';
 	$GLOBALS['cfg']['email_from_email']	= 'londonbloggers@iamcal.com';
