@@ -23,6 +23,7 @@ RewriteRule	^stations/(\d+)/all/$	/station_all.php?id=$1	[L,QSA]
 RewriteRule	^stations/(\d+)/add/$	/station_add.php?id=$1	[L,QSA]
 
 RewriteRule	^edit/$			/edit.php		[L]
+RewriteRule	^reset/(\d+)/([^/]+)/$	/reset.php?id=$1&sig=$2	[L]
 
 RewriteRule	^weblogs/$			/weblogs.php			[L]
 RewriteRule	^weblogs/(\d\d\d\d)-(\d\d)/$	/weblogs_month.php?y=$1&m=$2	[L,QSA]

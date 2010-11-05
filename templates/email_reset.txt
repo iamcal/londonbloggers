@@ -1,14 +1,14 @@
-{assign var='email_subject' value='[London Bloggers] Login Details'}
+{assign var='email_subject' value='[London Bloggers] Password Reset'}
 
 Hi {$row.name},
 
-You requested your login details for London Bloggers:
+You asked to reset your password for London Bloggers.
 
-Email: {$row.email}
-Password: {$row.password}
+You can do that by clicking this link:
+    {$cfg.abs_root_url}reset/{$row.id}/{$sig}/
 
-You can log in here:
-    {$cfg.abs_root_url}edit/
+
+If you didn't ask to reset your password, just ignore this email.
 
 
 ------------------------------------------------------------------
