@@ -2,7 +2,7 @@
 
 	<div class="section">
 
-		<h1>Stations</h1>
+		<h1>Browse by Station</h1>
 
 		This is a list of every station in the London Oyster rail services network, along with a count of how many 
 		weblogs have been registered at each. You can also browse stations <a href="/lines/">by line</a>.
