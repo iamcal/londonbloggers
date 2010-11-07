@@ -51,6 +51,19 @@ h1 {
 	text-decoration: underline;
 }
 
+#nav {
+	float: right;
+	height: 90px;
+	width: 100px;
+	text-align: right;
+	margin-right: 1em;
+	color: #AEBCDA;
+}
+
+#nav a {
+	color: #AEBCDA;
+}
+
 a.stealth {
 	color: #000;
 	text-decoration: none
