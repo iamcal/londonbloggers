@@ -1,0 +1,30 @@
+[x] send password reset emails
+[x] all weblogs at station page (station_all)
+[x] edit weblog page
+[x] spam protection for adding
+[x] admin tool to find orphans
+[x] lowercase all email addresses in DB
+[x] make sure all URLs in DB start 'http'
+[x] enforce 'http' at start of urls (add & edit)
+[x] weblogs index page
+[x] year/month weblog pages
+[x] disable ?debug=1 and details on 403/404 pages
+[x] move real config out of git
+[x] move all tables/fields to UTF8
+[x] delete weblogs
+[x] add 'report spam' link
+[x] clean up individual weblog page
+[x] set up analytics
+[x] check report emails are sent correctly
+[x] check password reminder emails are sent correctly
+[x] put admin pages behind some auth
+[x] make stations labels clickable
+[x] some line maps could zoom in further and look better: http://london2.iamcal.com/lines/bakerloo/
+[x] hash passwords
+[x] send reset emails instead of sending password in plain text
+[x] don't allow editing of passwords (exposes plaintext version back to you)
+[x] add some main navigation
+[ ] better spam prevention (changing math problem?)
+[ ] create admin page for individual weblogs (edit/delete)
+[ ] link report emails to admin tool above
+[ ] retouch maps and regen tiles
