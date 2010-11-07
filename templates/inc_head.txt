@@ -34,6 +34,13 @@ _gaq.push(['_trackPageview']);
 <div id="main">
 
 	<div id="header">
+{if !$hide_nav}
+		<div id="nav">
+			<br />
+			Browse by:<br />
+			<a href="/lines/">Line</a><br />
+			<a href="/stations/">Station</a><br />
+		</div>
+{/if}
 		<a href="/"><img src="/images/logo.gif" width="407" height="91" /></a>
-		{*<h1><a href="/">London Bloggers</a></h1>*}
 	</div>
