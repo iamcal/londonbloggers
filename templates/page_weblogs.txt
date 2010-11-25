@@ -6,6 +6,8 @@
 
 		<p>This page lists all weblogs in the directory, arranged by when they were added.</p>
 		<p>You can also <a href="/stations/">browse by station</a> and <a href="/lines/">by line</a>.</p>
+
+		<img src="{$spark_url}" width="{$spark_w}" width="{$spark_h}" alt="Weblogs added over time" />
 	</div>
 
 {section name='i' start=1 loop=4}
