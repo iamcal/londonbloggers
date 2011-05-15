@@ -22,7 +22,12 @@
 
 			<p>If you have any extra notes, add them here (optional):</p>
 
-			<p><textarea style="width: 100%; height: 100px;" wrap="virtual" name="extra"></textarea></p>
+			<p><textarea style="width: 100%; height: 100px;" wrap="virtual" name="extra">{$smarty.post.extra|escape}</textarea></p>
+
+			<p>
+				Prove you're human - enter the answer to 3+4:<br />
+				<input type="text" name="prove" style="width: 100%;{if $error_prove} background-color: red; color: white;{/if}" value="{$smarty.post.prove|escape}">
+			</p>
 
 			<p><input type="submit" value="Report this Entry"></p>
 
