@@ -29,12 +29,22 @@
 
 	if ($_POST['done'] == $report_slug){
 
-		email_send(array(
-			'to_email'	=> $cfg['admin_email'],
-			'template'	=> 'email_report.txt',
-		));
+		$ok = 1;
 
-		$smarty->assign('done', 1);
+		if (trim($_POST['prove']) != '7'){
+
+			$ok = 0;
+			$smarty->assign('error_prove', 1);
+		}
+
+		if ($ok){
+			email_send(array(
+				'to_email'	=> $cfg['admin_email'],
+				'template'	=> 'email_report.txt',
+			));
+
+			$smarty->assign('done', 1);
+		}
 	}
 
 
