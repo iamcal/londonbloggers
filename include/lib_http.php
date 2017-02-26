@@ -1,8 +1,4 @@
-<?
-	#
-	# $Id$
-	#
-
+<?php
 	$GLOBALS['timings']['http_count']	= 0;
 	$GLOBALS['timings']['http_time']	= 0;
 	$GLOBALS['timing_keys']['http'] = 'HTTP Requests';

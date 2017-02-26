@@ -1,10 +1,5 @@
 <?php
 	#
-	# $Id$
-	#
-
-
-	#
 	# the log module is designed to be as flexible as possible. the application can log message at
 	# multiple levels: fatal, error & notice. these messages can have an attached type (e.g. 'db'),
 	# but this is only used for notices right now. for each level, we can define zero or more
