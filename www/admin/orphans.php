@@ -1,9 +1,5 @@
-<?
-	#
-	# $Id$
-	#
-
-	include('../include/init.php');
+<?php
+	include('../../include/init.php');
 
 
 	#
@@ -89,4 +85,3 @@
 		echo "$id, ";
 	}
 
-?>
