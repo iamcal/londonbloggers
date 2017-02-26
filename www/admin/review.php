@@ -1,5 +1,5 @@
-<?
-	include("../include/init.php");
+<?php
+	include("../../include/init.php");
 
 
 	#
@@ -63,4 +63,3 @@
 	#
 
 	$smarty->display('page_admin_review.txt');
-?>

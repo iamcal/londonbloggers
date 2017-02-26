@@ -1,9 +1,5 @@
-<?
-	#
-	# $Id$
-	#
-
-	include('../include/init.php');
+<?php
+	include('../../include/init.php');
 
 
 	#
@@ -81,4 +77,3 @@
 
 	dumper($matched);
 	echo implode(',', array_keys($matched));
-?>

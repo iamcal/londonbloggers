@@ -48,7 +48,10 @@
 
 	function blog_signature($id){
 
-		return substr(sha1($GLOBALS['cfg']['sig_secret'].$id), 0, 10);
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$ua = $_SERVER['HTTP_USER_AGENT'];
+
+		return hash_hmac('sha256', $id.$ip.$ua, $GLOBALS['cfg']['crumb_secret']);
 	}
 
 	######################################################################
@@ -58,29 +61,19 @@
 		$ip = $_SERVER['REMOTE_ADDR'];
 		$ua = $_SERVER['HTTP_USER_AGENT'];
 
-		return substr(sha1($ip.$ua.$GLOBALS['cfg']['sig_secret'].$ip.$id), 0, 20);
+		return hash_hmac('sha256', $ip.$id.$ua, $GLOBALS['cfg']['crumb_secret']);
 	}
 
 	######################################################################
 
 	function blog_hash_password($password){
 
-		$salt = substr(sha1(rand(0,9999999).time()), 0, 2);
-		return blog_hash_password_full($salt, $password);
+		return password_hash($password, PASSWORD_BCRYPT, array(
+			'cost' => 13,
+		));
 	}
 
 	function blog_check_password($hash, $input){
 
-		$salt = substr($hash, 0, 2);
-		$rest = substr($hash, 2);
-
-		return blog_hash_password_full($salt, $input) == $hash ? 1 : 0;
+		return password_verify($input, $hash);
 	}
-
-	function blog_hash_password_full($salt, $password){
-
-		return $salt.sha1($password.$salt.$GLOBALS['cfg']['pass_secret'].$password);
-	}
-
-	######################################################################
-?>

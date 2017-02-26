@@ -24,8 +24,7 @@
 		'/map.php' => '/',
 	);
 
-	$GLOBALS['cfg']['sig_secret'] = 'goldfish';
-	$GLOBALS['cfg']['pass_secret'] = 'carp';
+	$GLOBALS['cfg']['crumb_secret'] = trim(file_get_contents($cfg['abs_root_path'].'/secrets/crumb_secret'));
 
 	$GLOBALS['cfg']['email_from_name']	= 'London Bloggers';
 	$GLOBALS['cfg']['email_from_email']	= 'londonbloggers@iamcal.com';

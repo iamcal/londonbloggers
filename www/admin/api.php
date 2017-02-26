@@ -1,5 +1,5 @@
-<?
-	include('../include/init.php');
+<?php
+	include('../../include/init.php');
 
 
 
@@ -85,7 +85,6 @@
 				'line_name' => $lines[$row2['line_id']]['name'],
 			);
 		}
-		
 
 
 		api_reply(array(
@@ -226,4 +225,3 @@
 		exit;
 	}
 
-?>

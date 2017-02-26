@@ -1,5 +1,5 @@
-<?
-	include('../include/init.php');
+<?php
+	include('../../include/init.php');
 
 
 	#
@@ -69,4 +69,4 @@
 
 	echo "done";
 
-?>
+
