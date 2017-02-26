@@ -13,10 +13,6 @@
 
 	function slurp_file($html, $id){
 
-		if (preg_match('!The requested URL /weblogs/.*? was not found on this server!', $html)){
-			return;
-		}
-
 		#echo "$id: ".strlen($html)."\n";
 
 		$hash = array(
@@ -74,6 +70,7 @@
 		}
 
 
+		if (!strlen($hash['blog_url'])) return;
 
 
 		#print_r($hash);
