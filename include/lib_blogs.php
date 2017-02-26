@@ -1,26 +1,4 @@
-<?
-	######################################################################
-
-	function insert_line_row($row){
-
-		$row[name] = str_replace("National Rail - ", "", $row[name]);
-		if ($row['color']){
-?>
-					<tr>
-						<td width="40"><a href="stations.php?line=<?=$row[id]?>" style="text-decoration: none;"><span style="background-color: <?=$row[color]?>;"><img src="images/space.gif" width="40" height="4" border="0" alt="<?=$row[name]?>"></span></a></td>
-						<td width="4">&nbsp;</td>
-						<td><a href="stations.php?line=<?=$row[id]?>"><?=$row[name]?></a></td>
-					</tr>
-<?
-		}else{
-?>
-					<tr>
-						<td colspan="3"><b>&bull;</b> <a href="stations.php?line=<?=$row[id]?>"><?=$row[name]?></a></td>
-					</tr>
-<?
-		}
-	}
-
+<?php
 	######################################################################
 
 	function get_stations_within($x, $y, $range){

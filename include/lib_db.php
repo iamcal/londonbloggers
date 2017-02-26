@@ -1,8 +1,4 @@
-<?
-	#
-	# $Id$
-	#
-
+<?php
 	$GLOBALS['db_conns'] = array();
 
 	$GLOBALS['timings']['db_conns_count']	= 0;

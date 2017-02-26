@@ -1,8 +1,4 @@
-<?
-	#
-	# $Id$
-	#
-
+<?php
 	function utf8_headers($mimetype = 'text/html'){
 
 		header("Content-Type: $mimetype; charset=utf-8");
@@ -41,4 +37,3 @@
 
 	$GLOBALS['smarty']->register_compiler_function('utf8_headers', 'utf8_headers_smarty_comp');
 
-?>

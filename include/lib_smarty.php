@@ -1,4 +1,4 @@
-<?
+<?php
 	$GLOBALS['timings']['smarty_comp_count']	= 0;
 	$GLOBALS['timings']['smarty_comp_time']	= 0;
 
