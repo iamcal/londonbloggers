@@ -1,12 +1,8 @@
 <?
-	#
-	# $Id$
-	#
-
 	$GLOBALS['timings']['smarty_comp_count']	= 0;
 	$GLOBALS['timings']['smarty_comp_time']	= 0;
 
-	define('SMARTY_DIR', INCLUDE_DIR.'/smarty_2.6.26/');
+	define('SMARTY_DIR', INCLUDE_DIR.'/smarty-2.6.30/');
 
 	require(SMARTY_DIR . 'Smarty.class.php');
 
@@ -62,7 +58,7 @@
 
 	function versionify($path){
 
-		$full_path = $GLOBALS['cfg']['abs_root_path'].$path;
+		$full_path = $GLOBALS['cfg']['abs_root_path'].'/www'.$path;
 		$stat = @stat($full_path);
 
 		$bits = explode('.', $path);

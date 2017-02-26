@@ -1,6 +1,6 @@
-/templates_c
-/base_image
-/tiles
-/images/Thumbs.db
-/data/full*
-/include/config.php
+secrets/mysql_password
+secrets/session_crypto_key
+secrets/duo_app_key
+secrets/duo_secret_key
+templates_c/*.php
+
