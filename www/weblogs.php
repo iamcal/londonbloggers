@@ -43,7 +43,7 @@
 	# data series
 	#
 
-	#array_shift($series); # hide first (huge) value
+	array_shift($series); # hide first (huge) value
 	$max = max($series);
 	$chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
