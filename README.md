@@ -18,17 +18,6 @@ Once it's finished, it'll be live at
 
 ## Installation
 
-    cd /var/www/html
-    git clone --recursive git@github.com:iamcal/londonbloggers.git londonbloggers.iamcal.com
-    cd londonbloggers.iamcal.com
-    (< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32};echo) > secrets/session_crypto_key
-    (< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-40};echo) > secrets/duo_app_key
-    (< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32};echo) > secrets/crumb_secret
-    ln -s /var/www/html/londonbloggers.iamcal.com/site.conf /etc/apache2/sites-available/londonbloggers.iamcal.com.conf
-    a2ensite londonbloggers.iamcal.com
-    service apache2 reload
-    chgrp www-data templates_c
-    chmod g+w templates_c
-    cd db
-    ./init_db.sh
+    ./install.php https://github.com/iamcal/londonbloggers
 
+You'll also need to put the duo secret into `secrets/duo_secret_key`
