@@ -13,12 +13,10 @@
 
 	$GLOBALS['cfg']['http_timeout'] = 3;
 
-	$GLOBALS['cfg']['db_main'] = array(
-		'host'	=> 'localhost',
-		'user'	=> 'londonbloggers',
-		'name'	=> 'londonbloggers',
-		'pass'	=> trim(file_get_contents($cfg['abs_root_path'].'/secrets/mysql_password')),
-	);
+	$GLOBALS['cfg']['db_host'] = 'localhost';
+	$GLOBALS['cfg']['db_user'] = 'londonbloggers';
+	$GLOBALS['cfg']['db_name'] = 'londonbloggers';
+	$GLOBALS['cfg']['db_pass'] = trim(file_get_contents($cfg['abs_root_path'].'/secrets/mysql_password'));
 
 	$GLOBALS['cfg']['rewrite_static_urls'] = array(
 		'/map.php' => '/',
