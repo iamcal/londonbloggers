@@ -2,10 +2,6 @@
 	$GLOBALS['timings']['smarty_comp_count']	= 0;
 	$GLOBALS['timings']['smarty_comp_time']	= 0;
 
-	define('SMARTY_DIR', INCLUDE_DIR.'/smarty-2.6.30/');
-
-	require(SMARTY_DIR . 'Smarty.class.php');
-
 	$GLOBALS['smarty'] = new Smarty();
 
 	$GLOBALS['smarty']->template_dir = INCLUDE_DIR.'/../templates/';
