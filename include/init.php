@@ -15,6 +15,8 @@
 
 	mb_internal_encoding('UTF-8');
 
+	include(__DIR__.'/../vendor/autoload.php');
+
 
 	#
 	# the module loading code.
