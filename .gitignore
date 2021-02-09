@@ -4,4 +4,4 @@ secrets/duo_app_key
 secrets/duo_secret_key
 secrets/crumb_secret
 templates_c/*.php
-
+/vendor
