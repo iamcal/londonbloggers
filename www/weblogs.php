@@ -9,7 +9,7 @@
 	$years = array();
 	$series = array();
 
-	$ret = db_fetch("SELECT month_create, COUNT(*) AS num FROM tube_weblogs GROUP BY month_create ASC");
+	$ret = db_fetch("SELECT month_create, COUNT(*) AS num FROM tube_weblogs GROUP BY 1 ORDER BY 1 ASC");
 	foreach ($ret['rows'] as $row){
 
 		$series[] = $row['num'];
