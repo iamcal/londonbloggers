@@ -15,5 +15,8 @@ service apache2 reload
 chgrp www-data templates_c
 chmod g+w templates_c
 
+composer install
+
 cd db
 ./init_db.sh
+
