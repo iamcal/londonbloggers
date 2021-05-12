@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+
+# the original script
+# https://github.com/iamcal/londonbloggers/blob/10ce91c201bab133b8bd7624be54418dfadad60b/cut.pl
+
 use warnings;
 use strict;
 use Data::Dumper;
