@@ -4,7 +4,7 @@
 //
 
 var g_map_data = {
-	'path' : '/tiles/s1',
+	'path' : 'tile_3_010_002.jpg',
 	'zooms' : {
 		4 : [2, 2, 9, 62],
 		3 : [4, 4, 19, 123],

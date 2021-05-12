@@ -1,6 +1,6 @@
 var map_config = {
-	path		: '/tiles/s2b/',
-	fileExt		: 'png',
+	path		: '/images/t1/',
+	fileExt		: 'jpg',
 	tileSize	: 256,
 	defaultZoom	: 3,
 	maxZoom		: 3,
@@ -17,7 +17,7 @@ var g_marker_image = null;
 //
 
 function LBMapProjection(){}
-  
+
 LBMapProjection.prototype.fromLatLngToPoint = function(latLng){
 	var x = latLng.lng() * map_config.tileSize;
 	var y = latLng.lat() * map_config.tileSize;
@@ -77,7 +77,7 @@ var LBMapOptions = {
 	minZoom:  0,
 	isPng:    false
 };
-  
+
 var LBMapType = new google.maps.ImageMapType(LBMapOptions);
 LBMapType.name = "LB Map";
 LBMapType.alt = "London Bloggers Map";
@@ -90,11 +90,11 @@ LBMapType.projection = new LBMapProjection();
 
 function CoordMapType(){
 }
-  
+
 function CoordMapType(tileSize){
 	this.tileSize = tileSize;
 }
-  
+
 CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
 	var div = ownerDocument.createElement('DIV');
 	div.innerHTML = "(" + coord.x + ", " + coord.y + ", " + zoom + ")";
@@ -113,11 +113,11 @@ CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
 //
 // startup code
 //
-  
+
 var map;
 var info_window;
 var markers = [];
-    
+
 function initialize() {
 	var mapOptions = {
 		backgroundColor: '#eee',
