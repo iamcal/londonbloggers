@@ -1,5 +1,5 @@
 {
     "require": {
-        "smarty/smarty": "2.6.31"
+        "smarty/smarty": "3.1.43"
     }
 }
