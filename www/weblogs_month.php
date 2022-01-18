@@ -24,7 +24,7 @@
 
 	$ret = db_fetch("SELECT * FROM tube_weblogs WHERE month_create='$d' ORDER BY blog_name ASC");
 
-	$smarty->assign_by_ref('blogs', $ret['rows']);
+	$smarty->assign('blogs', $ret['rows']);
 
 
 	#

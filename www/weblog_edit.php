@@ -31,7 +31,7 @@
 	#
 
 	$edit = $weblog;
-	$smarty->assign_by_ref('edit', $edit);
+	$smarty->assign('edit', $edit);
 
 	if ($_POST['done']){
 
