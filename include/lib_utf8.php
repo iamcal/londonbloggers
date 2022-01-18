@@ -35,5 +35,5 @@
 		}
 	}
 
-	$GLOBALS['smarty']->register_compiler_function('utf8_headers', 'utf8_headers_smarty_comp');
+	$GLOBALS['smarty']->registerPlugin('compiler', 'utf8_headers', 'utf8_headers_smarty_comp');
 

@@ -61,7 +61,7 @@
 		#
 
 		$message = trim($GLOBALS['smarty']->fetch($args['template']));
-		$subject = trim($GLOBALS['smarty']->get_template_vars('email_subject'));
+		$subject = trim($GLOBALS['smarty']->getTemplateVars('email_subject'));
 
 		$message = email_format_body($message);
 		$subject = email_quoted_printable($subject);

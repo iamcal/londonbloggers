@@ -9,7 +9,7 @@
 	$GLOBALS['smarty']->compile_check = $GLOBALS['cfg']['smarty_compile'];;
 	$GLOBALS['smarty']->force_compile = $GLOBALS['cfg']['smarty_compile'];;
 
-	$GLOBALS['smarty']->assign_by_ref('cfg', $GLOBALS['cfg']);
+	$GLOBALS['smarty']->assign('cfg', $GLOBALS['cfg']);
 
 
 	#######################################################################################
@@ -48,7 +48,7 @@
 		echo "</table>";
 	}
 
-	$GLOBALS['smarty']->register_function('timings', 'smarty_timings');
+	$GLOBALS['smarty']->registerPlugin('function', 'timings', 'smarty_timings');
 
 	#######################################################################################
 
@@ -98,4 +98,4 @@
 	}
 
 	#######################################################################################
-?>
+

@@ -15,7 +15,7 @@
 
 	$station['tag'] = preg_replace("![^a-z]!", "", StrToLower($station['name']));
 
-	$smarty->assign_by_ref('station', $station);
+	$smarty->assign('station', $station);
 
 
 	#
