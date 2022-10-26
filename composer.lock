@@ -77,6 +77,5 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": []
 }
