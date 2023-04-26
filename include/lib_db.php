@@ -12,6 +12,8 @@
 
 		$dbh = db_connect();
 
+		if (isset($_GET['debug'])) echo HtmlSpecialChars($sql)."<br>\n";
+
 		$stmt = $dbh->prepare($sql);
 		if (!$stmt){
 			$info = $dbh->errorInfo();
