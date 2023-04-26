@@ -18,28 +18,28 @@ RewriteEngine on
 RewriteRule	^api/$			/api.php		[L]
 
 RewriteRule	^stations/$		/stations.php		[L]
-RewriteRule	^stations/(\d+)/$	/station.php?id=$1	[L,QSA]
-RewriteRule	^stations/(\d+)/all/$	/station_all.php?id=$1	[L,QSA]
-RewriteRule	^stations/(\d+)/add/$	/station_add.php?id=$1	[L,QSA]
+RewriteRule	^stations/(\d+)/$	/station.php?id=$1	[L,B,QSA]
+RewriteRule	^stations/(\d+)/all/$	/station_all.php?id=$1	[L,B,QSA]
+RewriteRule	^stations/(\d+)/add/$	/station_add.php?id=$1	[L,B,QSA]
 
 RewriteRule	^edit/$			/edit.php		[L]
-RewriteRule	^reset/(\d+)/([^/]+)/$	/reset.php?id=$1&sig=$2	[L]
+RewriteRule	^reset/(\d+)/([^/]+)/$	/reset.php?id=$1&sig=$2	[L,B,QSA]
 
 RewriteRule	^weblogs/$			/weblogs.php			[L]
-RewriteRule	^weblogs/(\d\d\d\d)-(\d\d)/$	/weblogs_month.php?y=$1&m=$2	[L,QSA]
-RewriteRule	^weblogs/(\d+)/$		/weblog.php?id=$1		[L,QSA]
-RewriteRule	^weblogs/(\d+)/edit/([^/]+)/$	/weblog_edit.php?id=$1&sig=$2	[L,QSA]
-RewriteRule	^weblogs/(\d+)/delete/([^/]+)/$	/weblog_delete.php?id=$1&sig=$2	[L,QSA]
-RewriteRule	^weblogs/(\d+)/report/$		/weblog_report.php?id=$1	[L,QSA]
+RewriteRule	^weblogs/(\d\d\d\d)-(\d\d)/$	/weblogs_month.php?y=$1&m=$2	[L,B,QSA]
+RewriteRule	^weblogs/(\d+)/$		/weblog.php?id=$1		[L,B,QSA]
+RewriteRule	^weblogs/(\d+)/edit/([^/]+)/$	/weblog_edit.php?id=$1&sig=$2	[L,B,QSA]
+RewriteRule	^weblogs/(\d+)/delete/([^/]+)/$	/weblog_delete.php?id=$1&sig=$2	[L,B,QSA]
+RewriteRule	^weblogs/(\d+)/report/$		/weblog_report.php?id=$1	[L,B,QSA]
 
 RewriteRule	^lines/$		/lines.php		[L]
-RewriteRule	^lines/([a-z-_]+)/$	/line.php?id=$1		[L,QSA]
-RewriteRule	^lines/([a-z-_]+)/all/$	/line_all.php?id=$1	[L,QSA]
+RewriteRule	^lines/([a-z-_]+)/$	/line.php?id=$1		[L,B,QSA]
+RewriteRule	^lines/([a-z-_]+)/all/$	/line_all.php?id=$1	[L,B,QSA]
 
 RewriteRule	^widget/$		/widget.php		[L]
 RewriteRule	^widget/demo/$		/widget_demo.php	[L]
 RewriteRule	^browser.php$		/widget.php		[L]
 
-RewriteRule	^photos/([a-z]+)/$	/photos.php?tag=$1	[L,QSA]
+RewriteRule	^photos/([a-z]+)/$	/photos.php?tag=$1	[L,B,QSA]
 
 RewriteRule ^(.*\.)v[0-9.]+\.(css|js|gif|png|jpg)$	/$1$2	[L]
