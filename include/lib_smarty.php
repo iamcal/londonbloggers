@@ -11,6 +11,10 @@
 
 	$GLOBALS['smarty']->assign('cfg', $GLOBALS['cfg']);
 
+	$GLOBALS['smarty']->registerPlugin('modifier', 'header', 'header');
+	$GLOBALS['smarty']->registerPlugin('modifier', 'date', 'date');
+	$GLOBALS['smarty']->registerPlugin('modifier', 'str_replace', 'str_replace');
+	$GLOBALS['smarty']->registerPlugin('modifier', 'array_slice', 'array_slice');
 
 	#######################################################################################
 
@@ -66,6 +70,8 @@
 		return implode('.', $bits);
 	}
 
+	$GLOBALS['smarty']->registerPlugin('modifier', 'versionify', 'versionify');
+
 	#######################################################################################
 
 	function station_list($id, $trim=2){
@@ -80,13 +86,15 @@
 
 		if ($trim){
 			if (count($out) > $trim+1){
-				$out = array_slice($out, 0, $trim);		
+				$out = array_slice($out, 0, $trim);
 				$out[] = '...';
 			}
 		}
 
 		return implode(", ",$out);
 	}
+
+	$GLOBALS['smarty']->registerPlugin('modifier', 'station_list', 'station_list');
 
 	#######################################################################################
 
@@ -96,6 +104,8 @@
 
 		return array_slice($data, ($col-1)*$num, $num, true);
 	}
+
+	$GLOBALS['smarty']->registerPlugin('modifier', 'slice', 'slice');
 
 	#######################################################################################
 
