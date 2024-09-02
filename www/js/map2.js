@@ -1,6 +1,6 @@
 var map_config = {
-	path		: '/images/t1/',
-	fileExt		: 'jpg',
+	path		: '/images/t2/',
+	fileExt		: 'png',
 	tileSize	: 256,
 	defaultZoom	: 3,
 	maxZoom		: 3,
@@ -69,7 +69,7 @@ var LBMapOptions = {
 		while (tx.length < 3) tx = "0"+tx;
 		while (ty.length < 3) ty = "0"+ty;
 
-		var url = map_config.path+"tile_"+zoom+"_"+tx+"_"+ty+".jpg";
+		var url = map_config.path+"tile_"+zoom+"_"+tx+"_"+ty+"."+map_config.fileExt;
 		return url;
 	},
 	tileSize: new google.maps.Size(map_config.tileSize, map_config.tileSize),
