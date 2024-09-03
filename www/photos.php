@@ -6,8 +6,8 @@
 	# get data
 	#
 
-	$tag_enc = AddSlashes($_GET['tag']);
-	$tag_row = db_single(db_fetch("SELECT * FROM tube_photocache WHERE tag='$tag_enc'"));
+	#$tag_enc = AddSlashes($_GET['tag']);
+	#$tag_row = db_single(db_fetch("SELECT * FROM tube_photocache WHERE tag='$tag_enc'"));
 
 	$refresh = 1;
 	$cache_age = 60 * 60; # 1 hour in seconds
@@ -29,16 +29,16 @@
 		$feed = implode('', file($url));
 
 		if ($tag_row['id']){
-			db_update('tube_photocache', array(
-				'date_update'	=> time(),
-				'data'		=> AddSlashes($feed),
-			), "tag='$tag_enc'");
+		#	db_update('tube_photocache', array(
+		#		'date_update'	=> time(),
+		#		'data'		=> AddSlashes($feed),
+		#	), "tag='$tag_enc'");
 		}else{
-			db_insert('tube_photocache', array(
-				'tag'		=> $tag_enc,
-				'date_update'	=> time(),
-				'data'		=> AddSlashes($feed),
-			));
+		#	db_insert('tube_photocache', array(
+		#		'tag'		=> $tag_enc,
+		#		'date_update'	=> time(),
+		#		'data'		=> AddSlashes($feed),
+		#	));
 		}
 	}else{
 		$feed = $tag_row['data'];
@@ -83,6 +83,10 @@
 		$smarty->display('inc_photos_html.txt');
 		exit;
 	}
+
+
+
+	$smarty->registerPlugin('modifier', 'trim', 'trim');
 
 
 	#
