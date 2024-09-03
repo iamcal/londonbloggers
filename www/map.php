@@ -40,7 +40,7 @@ window.onload = function(){
 
 	for (var i in stations){
 		var s = stations[i];
-		console.log(s);
+		//console.log(s);
 
 		var lbl = document.createElement('DIV');
 		lbl.style.position = 'absolute';
@@ -49,6 +49,8 @@ window.onload = function(){
 		lbl.style.width = (s.location.label.r - s.location.label.l) + 'px';
 		lbl.style.height = (s.location.label.b - s.location.label.t) + 'px';
 		lbl.style.backgroundColor = 'rgba(100,100,255,0.5)';
+		lbl.style.fontFamily = 'Arial';
+		lbl.appendChild(document.createTextNode(s.name));
 
 		d.appendChild(lbl);
 
@@ -77,7 +79,7 @@ window.onload = function(){
 <body>
 
 <div id="wrapper" style="position: relative">
-	<img src="images/t2/big.gif"/>
+	<img src="images/src/bigger.png"/>
 </div>
 
 </body>
