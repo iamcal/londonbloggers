@@ -15,6 +15,7 @@
 	$GLOBALS['smarty']->registerPlugin('modifier', 'date', 'date');
 	$GLOBALS['smarty']->registerPlugin('modifier', 'str_replace', 'str_replace');
 	$GLOBALS['smarty']->registerPlugin('modifier', 'array_slice', 'array_slice');
+	$GLOBALS['smarty']->registerPlugin('modifier', 'trim', 'trim');
 
 	#######################################################################################
 
