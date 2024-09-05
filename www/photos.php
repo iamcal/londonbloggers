@@ -85,10 +85,6 @@
 	}
 
 
-
-	$smarty->registerPlugin('modifier', 'trim', 'trim');
-
-
 	#
 	# output
 	#
