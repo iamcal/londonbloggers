@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>{if $title}{$title} | {/if}London Bloggers</title>
+	<title>{if isset($title)}{$title} | {/if}London Bloggers</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 
 	<link rel="stylesheet" href="{'/css/main.css'|versionify}" media="all">
