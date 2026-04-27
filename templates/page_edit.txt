@@ -14,12 +14,12 @@
 			station for your weblog.<br />
 			<br />
 
-{if $error_missingfields}
+{if isset($error_missingfields)}
 			<p class="error">
 				Enter your email address and password, silly.
 			</p>
 {/if}
-{if $error_badlogin}
+{if isset($error_badlogin)}
 			<p class="error">
 				The login details you entered were not recognised.
 				Try using the form on the right if you have forgotten your password.
@@ -28,16 +28,16 @@
 
 			<form action="/edit/" method="post">
 			<input type="hidden" name="login" value="1">
-			<input type="hidden" name="add" value="{$smarty.request.add|escape}">
+			<input type="hidden" name="add" value="{($smarty.request.add ?? '')|escape}">
 
 			<table cellspacing="8">
 				<tr>
 					<td>Email:</td>
-					<td><input type="text" name="email" value="{$smarty.post.email|escape}"></td>
+					<td><input type="text" name="email" value="{($smarty.post.email ?? '')|escape}"></td>
 				</tr>
 				<tr>
 					<td>Password:</td>
-					<td><input type="password" name="password" value="{$smarty.post.password|escape}"></td>
+					<td><input type="password" name="password" value="{($smarty.post.password ?? '')|escape}"></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -56,7 +56,7 @@
 			<a name="password"></a>
 			<h2 style="margin-top: 0">Forgotten your password?</h2>
 
-{if $error_remind_notfound}
+{if isset($error_remind_notfound)}
 			<p class="error">
 				The email address you entered is not registered.
 				Try a different address, or <a href="http://www.iamcal.com/help/contact/">contact me</a>.
@@ -69,7 +69,7 @@
 			<table cellspacing="8">
 				<tr>
 					<td>Email:</td>
-					<td><input type="text" name="remind_email" value="{$smarty.post.remind_email|escape}"></td>
+					<td><input type="text" name="remind_email" value="{($smarty.post.remind_email ?? '')|escape}"></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>

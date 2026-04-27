@@ -8,7 +8,7 @@
 	<div class="col">
 		<div class="section">
 
-{if $done}
+{if isset($done)}
 			<div style="background-color: #cfc; border: 1px solid #9c9; padding: 0 1em">
 				<p>Thanks for reporting this entry.</p>
 				<p>You can <a href="/">head back home</a> to continue browsing.</p>
@@ -22,11 +22,11 @@
 
 			<p>If you have any extra notes, add them here (optional):</p>
 
-			<p><textarea style="width: 100%; height: 100px;" wrap="virtual" name="extra">{$smarty.post.extra|escape}</textarea></p>
+			<p><textarea style="width: 100%; height: 100px;" wrap="virtual" name="extra">{($smarty.post.extra ?? '')|escape}</textarea></p>
 
 			<p>
 				Prove you're human - enter the answer to 3+4:<br />
-				<input type="text" name="prove" style="width: 100%;{if $error_prove} background-color: red; color: white;{/if}" value="{$smarty.post.prove|escape}">
+				<input type="text" name="prove" style="width: 100%;{if isset($error_prove)} background-color: red; color: white;{/if}" value="{($smarty.post.prove ?? '')|escape}">
 			</p>
 
 			<p><input type="submit" value="Report this Entry"></p>

@@ -5,7 +5,7 @@
 
 		<p>Almost done - just pick a new password.</p>
 
-		<form action="/reset/{$weblog.id}/{$smarty.get.sig|escape}/" method="post">
+		<form action="/reset/{$weblog.id}/{($smarty.get.sig ?? '')|escape}/" method="post">
 		<input type="hidden" name="done" value="1">
 
 		<table cellspacing="8">
