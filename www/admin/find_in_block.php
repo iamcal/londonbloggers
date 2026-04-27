@@ -16,7 +16,7 @@
 		#
 
 		$location = unserialize($row['location']);
-		if (!is_array($location['centers'])) continue;
+		if (!is_array($location['centers'] ?? null)) continue;
 
 
 		#

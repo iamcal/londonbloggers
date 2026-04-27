@@ -6,9 +6,9 @@
 	# fetch line details
 	#
 
-	$slug_enc = AddSlashes($_GET['id']);
+	$slug_enc = AddSlashes($_GET['id'] ?? '');
 	$line = db_single(db_fetch("SELECT * FROM tube_lines WHERE slug='$slug_enc'"));
-	if (!$line['id']) error_404();
+	if (!($line['id'] ?? null)) error_404();
 
 	$smarty->assign('line', $line);
 

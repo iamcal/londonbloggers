@@ -18,8 +18,8 @@
 
 		$data[$row['id']] = $row;
 
-		$max_x = max($max_x, $row['location']['label']['r']);
-		$max_y = max($max_x, $row['location']['label']['b']);
+		$max_x = max($max_x, $row['location']['label']['r'] ?? 0);
+		$max_y = max($max_x, $row['location']['label']['b'] ?? 0);
 	}
 ?>
 <html>

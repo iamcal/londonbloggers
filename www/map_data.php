@@ -7,6 +7,7 @@
 	#
 
 	$click_boxes = array();
+	$data = array();
 	$box_size = 25;
 	$half_box = $box_size / 2;
 
@@ -22,7 +23,7 @@
 		# offset, because these positions were set with our old map
 		#
 
-		if (is_array($location['centers'])){
+		if (is_array($location['centers'] ?? null)){
 
 			foreach (array_keys($location['centers']) as $k){
 				$location['centers'][$k][0] -= 76;
@@ -37,7 +38,7 @@
 			}
 		}
 
-		if (is_array($location['label'])){
+		if (is_array($location['label'] ?? null)){
 
 			$l = $location['label'];
 			$click_boxes[] = array($l['l'], $l['t'], $l['r'], $l['b'], $row['id']);
@@ -50,8 +51,8 @@
 
 		sort($xs);
 		sort($ys);
-		$x = ($xs[0] + array_pop($xs))/2;
-		$y = ($ys[0] + array_pop($ys))/2;
+		$x = (($xs[0] ?? 0) + array_pop($xs))/2;
+		$y = (($ys[0] ?? 0) + array_pop($ys))/2;
 
 
 		#

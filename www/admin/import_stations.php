@@ -46,7 +46,7 @@
 			$name = $m[1];
 		}
 
-		if ($static_map[$name]) $name = $static_map[$name];
+		if ($static_map[$name] ?? null) $name = $static_map[$name];
 
 
 		#
@@ -57,7 +57,7 @@
 
 		$temp = db_single(db_fetch("SELECT * FROM tube_stations WHERE name='$name_enc'"));
 
-		if (!$temp['id']){
+		if (!($temp['id'] ?? null)){
 			echo "no match on $name<br />\n";
 		}
 

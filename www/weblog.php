@@ -8,8 +8,8 @@
 	# old style url?
 	#
 
-	if (!$_SERVER['REDIRECT_URL']){
-		header("location: /weblogs/$_GET[id]/");
+	if (!isset($_SERVER['REDIRECT_URL'])){
+		header("location: /weblogs/".($_GET['id'] ?? '')."/");
 		exit;
 	}
 
@@ -18,9 +18,9 @@
 	# grab blog
 	#
 
-	$weblog = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE id=".intval($_GET['id'])));
+	$weblog = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE id=".intval($_GET['id'] ?? 0)));
 
-	if (!$weblog['id']) error_404();
+	if (!($weblog['id'] ?? null)) error_404();
 
 	$smarty->assign('weblog', $weblog);
 
@@ -29,13 +29,13 @@
 	# just added?
 	#
 
-	if ($_GET['added'] == blog_signature($weblog['id'])){
+	if (($_GET['added'] ?? null) == blog_signature($weblog['id'])){
 
 		$smarty->assign('sig', $_GET['added']);
 		$smarty->assign('added', 1);
 	}
 
-	if ($_GET['updated'] == blog_signature($weblog['id'])){
+	if (($_GET['updated'] ?? null) == blog_signature($weblog['id'])){
 
 		$smarty->assign('sig', $_GET['updated']);
 		$smarty->assign('updated', 1);

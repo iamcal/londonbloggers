@@ -6,7 +6,7 @@
 	# approve a batch?
 	#
 
-	if ($_POST['ids']){
+	if ($_POST['ids'] ?? null){
 
 		$ids = explode(',', $_POST['ids']);
 
@@ -14,11 +14,11 @@
 
 			$id = intval($id);
 
-			if ($_POST["ok$id"] == 'ok'){
+			if (($_POST["ok$id"] ?? null) == 'ok'){
 				db_write("UPDATE tube_weblogs SET approved=1 WHERE id=$id");
 			}
 
-			if ($_POST["ok$id"] == 'spam'){
+			if (($_POST["ok$id"] ?? null) == 'spam'){
 				db_write("DELETE FROM tube_weblog_stations WHERE weblog_id=$id");
 				db_write("DELETE FROM tube_weblogs WHERE id=$id");
 			}

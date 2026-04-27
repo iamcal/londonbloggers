@@ -5,7 +5,7 @@
 
 		$headers = array();
 
-		if (is_array($args['headers'])){
+		if (is_array($args['headers'] ?? null)){
 
 			$headers = $args['headers'];
 		}
@@ -15,17 +15,17 @@
 		# set up the from address
 		#
 
-		if ($args['from_name'] && $args['from_email']){
+		if (($args['from_name'] ?? null) && ($args['from_email'] ?? null)){
 
 			$from_email = $args['from_email'];
 			$from_name = $args['from_name'];
 
-		}else if ($args['from_email']){
+		}else if ($args['from_email'] ?? null){
 
 			$from_email = $args[from_email];
 			$from_name = $args[from_email];
 
-		}else if ($args['from_name']){
+		}else if ($args['from_name'] ?? null){
 
 			$from_email = $GLOBALS['cfg']['email_from_email'];
 			$from_name = $args['from_name'];
@@ -42,15 +42,15 @@
 		# other headers
 		#
 
-		if (!$headers['To']){
+		if (!isset($headers['To'])){
 			$headers['To'] = $args['to_email'];
 		}
 
-		if (!$headers['Reply-To']){
+		if (!isset($headers['Reply-To'])){
 			$headers['Reply-To'] = $from_email;
 		}
 
-		if (!$headers['Content-Type']){
+		if (!isset($headers['Content-Type'])){
 
 			$headers['Content-Type'] = 'text/plain; charset=utf-8';
 		}

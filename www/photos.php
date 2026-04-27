@@ -12,7 +12,7 @@
 	$refresh = 1;
 	$cache_age = 60 * 60; # 1 hour in seconds
 
-	if ($tag_row['id']){
+	if ($tag_row['id'] ?? null){
 		if ($tag_row['date_update'] + $cache_age > time()){
 			$refresh = 0;
 		}
@@ -25,10 +25,10 @@
 
 	if ($refresh){
 
-		$url = "http://www.flickr.com/services/feeds/photos_public.gne?tags=".urlencode($_GET['tag'])."&format=rss_200";
+		$url = "http://www.flickr.com/services/feeds/photos_public.gne?tags=".urlencode($_GET['tag'] ?? '')."&format=rss_200";
 		$feed = implode('', file($url));
 
-		if ($tag_row['id']){
+		if ($tag_row['id'] ?? null){
 		#	db_update('tube_photocache', array(
 		#		'date_update'	=> time(),
 		#		'data'		=> AddSlashes($feed),
@@ -72,14 +72,14 @@
 	}
 
 	$smarty->assign('photos', $photos);
-	$smarty->assign('tag', $_GET['tag']);
+	$smarty->assign('tag', $_GET['tag'] ?? '');
 
 
 	#
 	# test mode just returns the html. easier for seeing the raw html
 	#
 
-	if ($_GET['test']){
+	if ($_GET['test'] ?? null){
 		$smarty->display('inc_photos_html.txt');
 		exit;
 	}

@@ -38,7 +38,7 @@
 
 	function loadlib($name){
 
-		if ($GLOBALS['loaded_libs'][$name]) return;
+		if (isset($GLOBALS['loaded_libs'][$name])) return;
 		$GLOBALS['loaded_libs'][$name] = 1;
 
 		include(INCLUDE_DIR."/lib_$name.php");
@@ -46,7 +46,7 @@
 
 	function loadpear($name){
 
-		if ($GLOBALS['loaded_libs']['PEAR:'.$name]) return;
+		if (isset($GLOBALS['loaded_libs']['PEAR:'.$name])) return;
 		$GLOBALS['loaded_libs']['PEAR:'.$name] = 1;
 
 		include(INCLUDE_DIR."/pear/$name.php");
@@ -83,9 +83,9 @@
 	# figure out some global flags
 	#
 
-	$this_is_apache		= strlen($_SERVER['REQUEST_URI']) ? 1 : 0;
-	$this_is_shell		= $_SERVER['SHELL'] ? 1 : 0;
-	$this_is_webpage	= $this_is_apache && !$this_is_api ? 1 : 0;
+	$this_is_apache		= strlen($_SERVER['REQUEST_URI'] ?? null) ? 1 : 0;
+	$this_is_shell		= ($_SERVER['SHELL'] ?? null) ? 1 : 0;
+	$this_is_webpage	= $this_is_apache && !($this_is_api ?? null) ? 1 : 0;
 
 
 	#
@@ -124,7 +124,7 @@
 	# disable precaching
 	#
 
-	if (StrToLower($_SERVER['HTTP_X_MOZ']) == 'prefetch'){
+	if (StrToLower($_SERVER['HTTP_X_MOZ'] ?? '') == 'prefetch'){
 
 		if (!$allow_precache){
 

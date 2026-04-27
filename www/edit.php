@@ -8,7 +8,7 @@
 	# old style url?
 	#
 
-	if (!$_SERVER['REDIRECT_URL']){
+	if (!isset($_SERVER['REDIRECT_URL'])){
 		header("location: /edit/");
 		exit;
 	}
@@ -18,11 +18,11 @@
 	# login?
 	#
 
-	if ($_POST['login']){
+	if ($_POST['login'] ?? null){
 
 		$ok = 1;
-		$email_enc = AddSlashes(trim(StrToLower($_POST['email'])));
-		$password = trim($_POST['password']);
+		$email_enc = AddSlashes(trim(StrToLower($_POST['email'] ?? '')));
+		$password = trim($_POST['password'] ?? '');
 
 		if (!strlen($email_enc) || !strlen($password)){
 
@@ -33,13 +33,13 @@
 		if ($ok){
 			$weblog = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE email='$email_enc'"));
 
-			if (!$weblog['id']){
+			if (!($weblog['id'] ?? null)){
 
 				$ok = 0;
 				$smarty->assign('error_badlogin', 1);
 			}
 
-			if (!blog_check_password($weblog['password_hash'], $password)){
+			if (!blog_check_password($weblog['password_hash'] ?? '', $password)){
 
 				$ok = 0;
 				$smarty->assign('error_badlogin', 1);
@@ -59,10 +59,10 @@
 	# send password reminder?
 	#
 
-	if ($_POST['remind']){
+	if ($_POST['remind'] ?? null){
 
 		$ok = 1;
-		$email_enc = AddSlashes(StrToLower($_POST['remind_email']));
+		$email_enc = AddSlashes(StrToLower($_POST['remind_email'] ?? ''));
 
 		if (!strlen($email_enc)){
 			$ok = 0;
@@ -72,7 +72,7 @@
 		if ($ok){
 			$weblog = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE email='$email_enc'"));
 
-			if (!$weblog['id']){
+			if (!($weblog['id'] ?? null)){
 
 				$ok = 0;
 				$smarty->assign('error_remind_notfound', 1);

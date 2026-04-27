@@ -34,8 +34,8 @@
 		$GLOBALS['timing_keys']['smarty_comp'] = 'Templates Compiled';
 
 		foreach ($GLOBALS['timing_keys'] as $k => $v){
-			$c = intval($GLOBALS['timings']["{$k}_count"]);
-			$t = intval($GLOBALS['timings']["{$k}_time"]);
+			$c = intval($GLOBALS['timings']["{$k}_count"] ?? 0);
+			$t = intval($GLOBALS['timings']["{$k}_time"] ?? 0);
 			echo "<tr><td>$v</td><td>$c</td><td>$t ms</td></tr>\n";
 		}
 
@@ -65,7 +65,7 @@
 		$bits = explode('.', $path);
 
 		$ext = array_pop($bits);
-		$bits[] = "v$stat[9]";
+		$bits[] = "v".($stat[9] ?? 0);
 		$bits[] = $ext;
 
 		return implode('.', $bits);

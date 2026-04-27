@@ -8,8 +8,8 @@
 	# old style url?
 	#
 
-	if (!$_SERVER['REDIRECT_URL']){
-		header("location: /stations/$_GET[id]/");
+	if (!isset($_SERVER['REDIRECT_URL'])){
+		header("location: /stations/".($_GET['id'] ?? '')."/");
 		exit;
 	}
 
@@ -18,10 +18,10 @@
 	# grab station
 	#
 
-	$id = intval($_GET['id']);
+	$id = intval($_GET['id'] ?? 0);
 
 	$station = db_single(db_fetch("SELECT * FROM tube_stations WHERE id=$id"));
-	if (!$station['id']) error_404();
+	if (!($station['id'] ?? null)) error_404();
 
 	$station['tag'] = preg_replace("![^a-z]!", "", StrToLower($station['name']));
 
