@@ -54,7 +54,7 @@
 
 	function _log_dispatch($level, $msg, $more = array()){
 
-		if ($GLOBALS['log_handlers'][$level]){
+		if ($GLOBALS['log_handlers'][$level] ?? null){
 
 			foreach ($GLOBALS['log_handlers'][$level] as $handler){
 
@@ -71,9 +71,9 @@
 	#
 
 	function _log_handler_error_log($level, $msg, $more = array()){
-		$page = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'];
+		$page = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'] ?? '';
 
-		if ($more['type']){
+		if ($more['type'] ?? null){
 			$msg = "[$more[type]] $msg";
 		}
 
@@ -90,12 +90,12 @@
 	function _log_handler_html($level, $msg, $more = array()){
 
 		# only shows notices if we asked to see them
-		if ($level == 'notice' && !$_GET['debug']) return;
+		if ($level == 'notice' && !($_GET['debug'] ?? null)) return;
 
-		$type = $more['type'] ? $more['type'] : '';
+		$type = $more['type'] ?? '';
 
-		$colors = $GLOBALS['log_html_colors']['_'.$level];
-		if (!$colors) $colors = $GLOBALS['log_html_colors'][$type];
+		$colors = $GLOBALS['log_html_colors']['_'.$level] ?? null;
+		if (!$colors) $colors = $GLOBALS['log_html_colors'][$type] ?? null;
 		if (!$colors) $colors = '#eee,#000';
 
 		list($bgcolor, $color) = explode(',', $colors);
@@ -106,7 +106,7 @@
 
 		echo HtmlSpecialChars($msg);
 
-		if ($more['time'] > -1) echo " ($more[time] ms)";
+		if (($more['time'] ?? -1) > -1) echo " ($more[time] ms)";
 
 		echo "</div>\n";
 	}

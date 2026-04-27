@@ -10,8 +10,8 @@
 
 	function error_404($msg=null){
 
-		$url  = $_SERVER['REQUEST_URI'];
-		$orig = $_SERVER['REDIRECT_URL'];
+		$url  = $_SERVER['REQUEST_URI'] ?? '';
+		$orig = $_SERVER['REDIRECT_URL'] ?? '';
 
 
 		#
@@ -35,7 +35,7 @@
 		# static redirect map. add things here if you know you moved them.
 		#
 
-		if ($redir = $GLOBALS['cfg']['rewrite_static_urls'][$url]){
+		if ($redir = $GLOBALS['cfg']['rewrite_static_urls'][$url] ?? null){
 			header("location: {$redir}");
 			exit;
 		}
@@ -48,7 +48,7 @@
 		if (preg_match('!^/stations\.php\?line=(\d+)$!', $url, $m)){
 			$id = intval($m[1]);
 			$row = db_single(db_fetch("SELECT * FROM tube_lines WHERE id=$id"));
-			if ($row['slug']){
+			if ($row['slug'] ?? null){
 				header("location: /lines/$row[slug]/");
 				exit;
 			}
@@ -79,8 +79,8 @@
 
 		$debug_block .= "Args:\n";
 		$args = array(
-			'SERVER_REQUEST_URI'	=> $_SERVER['REQUEST_URI'],
-			'SERVER_REDIRECT_URL'	=> $_SERVER['REDIRECT_URL'],
+			'SERVER_REQUEST_URI'	=> $_SERVER['REQUEST_URI'] ?? '',
+			'SERVER_REDIRECT_URL'	=> $_SERVER['REDIRECT_URL'] ?? '',
 		);
 		$debug_block .= error_format_hash($args)."\n\n";
 
@@ -117,8 +117,8 @@
 
 		$debug_block .= "Args:\n";
 		$args = array(
-			'SERVER_REQUEST_URI'	=> $_SERVER['REQUEST_URI'],
-			'SERVER_REDIRECT_URL'	=> $_SERVER['REDIRECT_URL'],
+			'SERVER_REQUEST_URI'	=> $_SERVER['REQUEST_URI'] ?? '',
+			'SERVER_REDIRECT_URL'	=> $_SERVER['REDIRECT_URL'] ?? '',
 		);
 		$debug_block .= error_format_hash($args)."\n\n";
 
@@ -155,10 +155,10 @@
 			}
 
 
-			$file = str_replace($root_path, '', $item['file']);
+			$file = str_replace($root_path, '', $item['file'] ?? '');
 
 			$args = array();
-			foreach ($item['args'] as $arg){
+			foreach (($item['args'] ?? array()) as $arg){
 				if (is_object($arg)){
 					$args[] = "Object()";
 				}else{
@@ -169,7 +169,7 @@
 
 			$pairs[] = array(
 				$function,
-				"$file:$item[line]",
+				"$file:".($item['line'] ?? ''),
 			);
 		}
 
@@ -207,7 +207,7 @@
 		$lengths = array();
 		foreach ($pairs as $pair){
 			foreach ($pair as $k => $str){
-				$lengths[$k] = max(intval($lengths[$k]), strlen($str));
+				$lengths[$k] = max(intval($lengths[$k] ?? 0), strlen($str));
 			}
 		}
 

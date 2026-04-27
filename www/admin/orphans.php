@@ -37,12 +37,12 @@
 	$ret = db_fetch("SELECT * FROM tube_weblog_stations");
 	foreach ($ret['rows'] as $row){
 
-		if (!$blogs[$row['weblog_id']]){
+		if (!isset($blogs[$row['weblog_id']])){
 			$links_to_dead_weblogs[] = $row['id'];
 			continue;
 		}
 
-		if (!$stations[$row['station_id']]){
+		if (!isset($stations[$row['station_id']])){
 			$links_to_dead_stations[] = $row['id'];
 			continue;
 		}

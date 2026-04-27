@@ -8,8 +8,8 @@
 	# get blogs
 	#
 
-	$y = intval($_GET['y']);
-	$m = intval($_GET['m']);
+	$y = intval($_GET['y'] ?? 0);
+	$m = intval($_GET['m'] ?? 0);
 
 	if ($m < 1 || $m > 12) error_404();
 

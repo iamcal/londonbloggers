@@ -19,7 +19,7 @@
 		$y = intval($y);
 		$m = intval($m);
 
-		if (!$years[$y]){
+		if (!isset($years[$y])){
 			$years[$y] = array(
 				'total' => 0,
 				'months' => array(),

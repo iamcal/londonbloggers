@@ -8,10 +8,10 @@
 	# grab station
 	#
 
-	$id = intval($_GET['id']);
+	$id = intval($_GET['id'] ?? 0);
 
 	$station = db_single(db_fetch("SELECT * FROM tube_stations WHERE id=$id"));
-	if (!$station['id']) error_404();
+	if (!($station['id'] ?? null)) error_404();
 
 	$station['tag'] = preg_replace("![^a-z]!", "", StrToLower($station['name']));
 
@@ -22,7 +22,7 @@
 	# submit!
 	#
 
-	if ($_POST['done']){
+	if ($_POST['done'] ?? null){
 
 
 		#
@@ -30,12 +30,12 @@
 		#
 
 		$hash = array(
-			'blog_name'	=> AddSlashes(trim($_POST['blog_name'])),
-			'blog_url'	=> AddSlashes(trim($_POST['blog_url'])),
-			'name'		=> AddSlashes(trim($_POST['name'])),
-			'email'		=> AddSlashes(trim(StrToLower($_POST['email']))),
-			'about'		=> AddSlashes(trim($_POST['about'])),
-			'password'	=> trim($_POST['password']),
+			'blog_name'	=> AddSlashes(trim($_POST['blog_name'] ?? '')),
+			'blog_url'	=> AddSlashes(trim($_POST['blog_url'] ?? '')),
+			'name'		=> AddSlashes(trim($_POST['name'] ?? '')),
+			'email'		=> AddSlashes(trim(StrToLower($_POST['email'] ?? ''))),
+			'about'		=> AddSlashes(trim($_POST['about'] ?? '')),
+			'password'	=> trim($_POST['password'] ?? ''),
 		);
 
 		$ok = 1;
@@ -70,8 +70,8 @@
 		# set up the other fields
 		#
 
-		$hash['email_public']	= $_POST['email_public'] ? 1 : 0;
-		$hash['email_spam']	= $_POST['email_spam'] ? 1 : 0;
+		$hash['email_public']	= ($_POST['email_public'] ?? null) ? 1 : 0;
+		$hash['email_spam']	= ($_POST['email_spam'] ?? null) ? 1 : 0;
 		$hash['date_create']	= time();
 		$hash['month_create']	= date('Y-m-01');
 
@@ -83,7 +83,7 @@
 		if ($ok){
 
 			$temp = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE email='$hash[email]'"));
-			if ($temp['id']){
+			if ($temp['id'] ?? null){
 
 				$ok = 0;
 				$smarty->assign('error_email_taken', 1);
@@ -96,7 +96,7 @@
 		#
 
 		if ($ok){
-			if (trim($_POST['prove']) != '7'){
+			if (trim($_POST['prove'] ?? '') != '7'){
 
 				$ok = 0;
 				$smarty->assign('error_prove', 1);

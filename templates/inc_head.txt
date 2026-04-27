@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="{'/js/map2.js'|versionify}"></script>
 	<script type="text/javascript" src="/map_data.php?v={$cfg.data_rev}"></script>
 
-{if $head_js}
+{if isset($head_js)}
 <script type="text/javascript">
 {$head_js}
 </script>
@@ -38,7 +38,7 @@ _gaq.push(['_trackPageview']);
 		but old logins are all broken. If you need to edit your details, please <a href="http://www.iamcal.com/help/contact/">get in touch</a>.
 	</div>
 	<div id="header">
-{if !$hide_nav}
+{if !isset($hide_nav)}
 		<div id="nav">
 			<br />
 			Browse by:<br />

@@ -8,9 +8,9 @@
 	# grab blog
 	#
 
-	$weblog = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE id=".intval($_GET['id'])));
+	$weblog = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE id=".intval($_GET['id'] ?? 0)));
 
-	if (!$weblog['id']) error_404();
+	if (!($weblog['id'] ?? null)) error_404();
 
 	$smarty->assign('weblog', $weblog);
 
@@ -19,7 +19,7 @@
 	# crumb
 	#
 
-	$report_slug = blog_ip_crumb($weblogs['id']);
+	$report_slug = blog_ip_crumb($weblogs['id'] ?? null);
 	$smarty->assign('report_slug', $report_slug);
 
 
@@ -27,11 +27,11 @@
 	# submitted?
 	#
 
-	if ($_POST['done'] == $report_slug){
+	if (($_POST['done'] ?? null) == $report_slug){
 
 		$ok = 1;
 
-		if (trim($_POST['prove']) != '7'){
+		if (trim($_POST['prove'] ?? '') != '7'){
 
 			$ok = 0;
 			$smarty->assign('error_prove', 1);

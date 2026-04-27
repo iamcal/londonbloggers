@@ -6,7 +6,7 @@
 	# old style url?
 	#
 
-	if (!$_SERVER['REDIRECT_URL']){
+	if (!isset($_SERVER['REDIRECT_URL'])){
 		header("location: /stations/");
 		exit;
 	}
@@ -27,7 +27,7 @@
 
 	$ret = db_fetch("SELECT station_id, COUNT(id) AS num FROM tube_weblog_stations GROUP BY station_id");
 	foreach ($ret['rows'] as $row){
-		if ($stations[$row['station_id']]){
+		if (isset($stations[$row['station_id']])){
 			$stations[$row['station_id']]['count'] = $row['num'];
 		}
 	}

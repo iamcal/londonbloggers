@@ -8,12 +8,12 @@
 
 	$stations = array();
 
-	$ids = explode(',', $_GET['ids']);
+	$ids = explode(',', $_GET['ids'] ?? '');
 	foreach ($ids as $id){
 		$id = intval($id);
 
 		$station = db_single(db_fetch("SELECT * FROM tube_stations WHERE id=$id"));
-		if (!$station['id']) continue;
+		if (!($station['id'] ?? null)) continue;
 
 
 		#
@@ -48,7 +48,7 @@
 	# the menu open - just easier for seeing the raw html
 	#
 
-	if ($_GET['test']){
+	if ($_GET['test'] ?? null){
 		$smarty->display('inc_widget_html.txt');
 		exit;
 	}

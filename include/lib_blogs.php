@@ -26,8 +26,8 @@
 
 	function blog_signature($id){
 
-		$ip = $_SERVER['REMOTE_ADDR'];
-		$ua = $_SERVER['HTTP_USER_AGENT'];
+		$ip = $_SERVER['REMOTE_ADDR'] ?? '';
+		$ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
 		return hash_hmac('sha256', $id.$ip.$ua, $GLOBALS['cfg']['crumb_secret']);
 	}
@@ -36,8 +36,8 @@
 
 	function blog_ip_crumb($id){
 
-		$ip = $_SERVER['REMOTE_ADDR'];
-		$ua = $_SERVER['HTTP_USER_AGENT'];
+		$ip = $_SERVER['REMOTE_ADDR'] ?? '';
+		$ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
 		return hash_hmac('sha256', $ip.$id.$ua, $GLOBALS['cfg']['crumb_secret']);
 	}

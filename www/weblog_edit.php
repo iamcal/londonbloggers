@@ -8,9 +8,9 @@
 	# grab blog
 	#
 
-	$weblog = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE id=".intval($_GET['id'])));
+	$weblog = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE id=".intval($_GET['id'] ?? 0)));
 
-	if (!$weblog['id']) error_404();
+	if (!($weblog['id'] ?? null)) error_404();
 
 	$smarty->assign('weblog', $weblog);
 
@@ -19,7 +19,7 @@
 	# check auth
 	#
 
-	if ($_GET['sig'] != blog_signature($weblog['id'])){
+	if (($_GET['sig'] ?? null) != blog_signature($weblog['id'])){
 
 		error_404();
 	}
@@ -33,7 +33,7 @@
 	$edit = $weblog;
 	$smarty->assign('edit', $edit);
 
-	if ($_POST['done']){
+	if ($_POST['done'] ?? null){
 
 		$ok = 1;
 
@@ -43,13 +43,13 @@
 		# edit form again.
 		#
 
-		$edit['blog_name']	= $_POST['blog_name'];
-		$edit['blog_url']	= $_POST['blog_url'];
-		$edit['name']		= $_POST['name'];
-		$edit['email']		= $_POST['email'];
-		$edit['about']		= $_POST['about'];
-		$edit['email_public']	= $_POST['email_public'] ? 1 : 0;
-		$edit['email_spam']	= $_POST['email_spam'] ? 1 : 0;
+		$edit['blog_name']	= $_POST['blog_name'] ?? '';
+		$edit['blog_url']	= $_POST['blog_url'] ?? '';
+		$edit['name']		= $_POST['name'] ?? '';
+		$edit['email']		= $_POST['email'] ?? '';
+		$edit['about']		= $_POST['about'] ?? '';
+		$edit['email_public']	= ($_POST['email_public'] ?? null) ? 1 : 0;
+		$edit['email_spam']	= ($_POST['email_spam'] ?? null) ? 1 : 0;
 
 
 		#
@@ -57,11 +57,11 @@
 		#
 
 		$hash = array(
-			'blog_name'	=> AddSlashes(trim($_POST['blog_name'])),
-			'blog_url'	=> AddSlashes(trim($_POST['blog_url'])),
-			'name'		=> AddSlashes(trim($_POST['name'])),
-			'email'		=> AddSlashes(trim(StrToLower($_POST['email']))),
-			'about'		=> AddSlashes(trim($_POST['about'])),
+			'blog_name'	=> AddSlashes(trim($_POST['blog_name'] ?? '')),
+			'blog_url'	=> AddSlashes(trim($_POST['blog_url'] ?? '')),
+			'name'		=> AddSlashes(trim($_POST['name'] ?? '')),
+			'email'		=> AddSlashes(trim(StrToLower($_POST['email'] ?? ''))),
+			'about'		=> AddSlashes(trim($_POST['about'] ?? '')),
 		);
 
 		$ok = 1;
@@ -87,8 +87,8 @@
 		# set up the other fields
 		#
 
-		$hash['email_public']	= $_POST['email_public'] ? 1 : 0;
-		$hash['email_spam']	= $_POST['email_spam'] ? 1 : 0;
+		$hash['email_public']	= ($_POST['email_public'] ?? null) ? 1 : 0;
+		$hash['email_spam']	= ($_POST['email_spam'] ?? null) ? 1 : 0;
 		$hash['date_update']	= time();
 
 
@@ -99,7 +99,7 @@
 		if ($ok){
 
 			$temp = db_single(db_fetch("SELECT * FROM tube_weblogs WHERE email='$hash[email]' AND id!=$weblog[id]"));
-			if ($temp['id']){
+			if ($temp['id'] ?? null){
 
 				$ok = 0;
 				$smarty->assign('error_email_taken', 1);
@@ -113,12 +113,12 @@
 
 		if ($ok){
 
-			$hash[approved] = 0;
+			$hash['approved'] = 0;
 			db_update('tube_weblogs', $hash, "id=$weblog[id]");
 
-			$sig = blog_signature($weblog[id]);
+			$sig = blog_signature($weblog['id']);
 
-			header("location: /weblogs/{$weblog[id]}/?updated=".$sig);
+			header("location: /weblogs/{$weblog['id']}/?updated=".$sig);
 			exit;
 		}
 	}
@@ -128,17 +128,17 @@
 	# add a station?
 	#
 
-	if ($_POST['done_add']){
+	if ($_POST['done_add'] ?? null){
 
 		#
 		# check the station exists and hasn't already been added
 		#
 
-		$id = intval($_POST['station']);
+		$id = intval($_POST['station'] ?? 0);
 		$temp1 = db_single(db_fetch("SELECT * FROM tube_stations WHERE id=$id"));
 		$temp2 = db_single(db_fetch("SELECT * FROM tube_weblog_stations WHERE weblog_id=$weblog[id] AND station_id=$id"));
 
-		if ($temp1['id'] && !$temp2['id']){
+		if (($temp1['id'] ?? null) && !($temp2['id'] ?? null)){
 
 			db_insert('tube_weblog_stations', array(
 				'weblog_id'	=> $weblog['id'],
@@ -154,7 +154,7 @@
 	# remove a station?
 	#
 
-	if ($_GET['remove']){
+	if ($_GET['remove'] ?? null){
 
 		$id = intval($_GET['remove']);
 

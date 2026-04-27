@@ -17,6 +17,7 @@
 
 		$key = $row['has_line'] ? 'national' : 'tfl';
 
+		if (!isset($lines[$key])) $lines[$key] = array();
 		$lines[$key][] = $row;
 	}
 

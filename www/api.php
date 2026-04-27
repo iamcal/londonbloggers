@@ -2,9 +2,9 @@
 	include('../include/init.php');
 
 
-	if ($_REQUEST['method'] == 'weblog_count'){
+	if (($_REQUEST['method'] ?? null) == 'weblog_count'){
 
-		$id = intval($_REQUEST['station']);
+		$id = intval($_REQUEST['station'] ?? 0);
 
 		list($num) = db_list(db_fetch("SELECT COUNT(w.id) FROM tube_weblogs AS w, tube_weblog_stations AS s WHERE w.id=s.weblog_id AND s.station_id=$id"));
 
@@ -15,7 +15,7 @@
 		));
 	}
 
-	api_error("Method \"$_REQUEST[method]\" not found");
+	api_error("Method \"".($_REQUEST['method'] ?? '')."\" not found");
 
 
 	############################################################

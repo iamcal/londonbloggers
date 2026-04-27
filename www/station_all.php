@@ -8,10 +8,10 @@
 	# grab station
 	#
 
-	$id = intval($_GET['id']);
+	$id = intval($_GET['id'] ?? 0);
 
 	$station = db_single(db_fetch("SELECT * FROM tube_stations WHERE id=$id"));
-	if (!$station['id']) error_404();
+	if (!($station['id'] ?? null)) error_404();
 
 	$smarty->assign('station', $station);
 
