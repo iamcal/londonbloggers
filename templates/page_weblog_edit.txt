@@ -3,7 +3,7 @@
 	<div class="section">
 		<h1>Edit Your Details</h1>
 
-{if $smarty.get.newpass}
+{if isset($smarty.get.newpass)}
 		<div style="background-color: #cfc; border: 1px solid #9c9; margin-top: 20px; padding: 1em;">
 
 			We've saved your new password.
@@ -16,18 +16,18 @@
 		<div class="section">
 
 
-{if $error_fields}
+{if isset($error_fields)}
 			<p class="error">Please fill out all the fields</p>
 {/if}
-{if $error_email_taken}
+{if isset($error_email_taken)}
 			<p class="error">We already have a different weblog registered using that email address.</p>
 {/if}
-{if $error_url_http}
+{if isset($error_url_http)}
 			<p class="error">Your URL must start with <tt>http://</tt>.</p>
 {/if}
 
 
-			<form action="/weblogs/{$weblog.id}/edit/{$smarty.get.sig|escape}/" method="post">
+			<form action="/weblogs/{$weblog.id}/edit/{($smarty.get.sig ?? '')|escape}/" method="post">
 			<input type="hidden" name="done" value="1">
 
 			<table cellspacing="8">
@@ -74,7 +74,7 @@
 
 			<h2 style="margin-top: 0">Your Stations</h1>
 
-			<form action="/weblogs/{$weblog.id}/edit/{$smarty.get.sig|escape}/" method="post">
+			<form action="/weblogs/{$weblog.id}/edit/{($smarty.get.sig ?? '')|escape}/" method="post">
 			<input type="hidden" name="done_add" value="1">
 
 {if !$stations|@count}
@@ -84,9 +84,9 @@
 
 			<table cellspacing="0" cellpadding="5">
 {foreach from=$stations item='row'}
-				<tr{if $row.id==$added_station} class="added"{/if}>
+				<tr{if $row.id==($added_station ?? null)} class="added"{/if}>
 					<td><b>{$row.name|escape}</b></td>
-					<td><a href="/weblogs/{$weblog.id}/edit/{$smarty.get.sig|escape}/?remove={$row.id}">remove</a></td>
+					<td><a href="/weblogs/{$weblog.id}/edit/{($smarty.get.sig ?? '')|escape}/?remove={$row.id}">remove</a></td>
 				</tr>
 {/foreach}
 				<tr>
@@ -105,7 +105,7 @@
 
 			<p style="margin-top: 3em">Done editing? You can <a href="/weblogs/{$weblog.id}/">view your listing</a> instead.</p>
 
-			<p style="margin-top: 3em">Weblog doesn't exist any more? You can <a href="/weblogs/{$weblog.id}/delete/{$smarty.get.sig|escape}/" style="color: red">delete it from the directory</a>.</p>
+			<p style="margin-top: 3em">Weblog doesn't exist any more? You can <a href="/weblogs/{$weblog.id}/delete/{($smarty.get.sig ?? '')|escape}/" style="color: red">delete it from the directory</a>.</p>
 
 		</div>
 	</div>

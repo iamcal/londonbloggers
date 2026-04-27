@@ -3,7 +3,7 @@
 URL: {$cfg.abs_root_url}weblogs/{$weblog.id}/
 Extra:
 
-{$smarty.post.extra|trim}
+{($smarty.post.extra ?? '')|trim}
 
 ------------------------------------------------------------------
 {$cfg.abs_root_url}

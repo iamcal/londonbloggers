@@ -11,7 +11,7 @@
 		<div class="section">
 
 <table border="0" cellpadding="10">
-{foreach from=$lines.tfl item='row'}
+{foreach from=($lines.tfl ?? []) item='row'}
 	<tr>
 		<td>
 			<div style="height: 16px; width: 100px; background-color: {$row.color}"></div>
@@ -27,7 +27,7 @@
 		<div class="section">
 
 <table border="0" cellpadding="10">
-{foreach from=$lines.national item='row'}
+{foreach from=($lines.national ?? []) item='row'}
 	<tr>
 		<td>
 			<div style="height: 6px; width: 100px; background-color: {$row.color}"></div>

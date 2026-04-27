@@ -9,16 +9,16 @@
 		add this station to it, <a href="/edit/?add={$station.id}">click here</a>.<br />
 		<br />
 
-{if $error_fields}
+{if isset($error_fields)}
 		<p class="error">Please fill out all the fields</p>
 {/if}
-{if $error_email_taken}
+{if isset($error_email_taken)}
 		<p class="error">
 			We already have a weblog registered using that email address.
 			Perhaps you'd like to <a href="/edit/?add={$station.id}">add this station</a> instead?
 		</p>
 {/if}
-{if $error_url_http}
+{if isset($error_url_http)}
 			<p class="error">Your URL must start with <tt>http://</tt>.</p>
 {/if}
 
@@ -32,20 +32,20 @@
 			</tr>
 			<tr valign="top">
 				<td><b>The name of your weblog:</b></td>
-				<td><input type="text" name="blog_name" style="width: 300px;" value="{$smarty.post.blog_name|escape}"></td>
+				<td><input type="text" name="blog_name" style="width: 300px;" value="{($smarty.post.blog_name ?? '')|escape}"></td>
 			</tr>
 			<tr valign="top">
 				<td><b>The URL to your weblog:</b></td>
-				<td><input type="text" name="blog_url" style="width: 300px;" value="{$smarty.post.blog_url|escape|default:'http://'}"></td>
+				<td><input type="text" name="blog_url" style="width: 300px;" value="{($smarty.post.blog_url ?? '')|escape|default:'http://'}"></td>
 			</tr>
 			<tr valign="top">
 				<td><b>Your name:</b></td>
-				<td><input type="text" name="name" style="width: 300px;" value="{$smarty.post.name|escape}"></td>
+				<td><input type="text" name="name" style="width: 300px;" value="{($smarty.post.name ?? '')|escape}"></td>
 			</tr>
 			<tr valign="top">
 				<td><b>Your email address:</b></td>
 				<td>
-					<input type="text" name="email" style="width: 300px;" value="{$smarty.post.email|escape}"><br />
+					<input type="text" name="email" style="width: 300px;" value="{($smarty.post.email ?? '')|escape}"><br />
 					<input type="checkbox" name="email_public" id="emailpublic" checked> <label for="emailpublic">Display your email address on this site.</label><br />
 					<input type="checkbox" name="email_spam" id="emailspam" checked> <label for="emailspam">Allow us to send you exciting non-spam emails about this site.</label><br />
 				</td>
@@ -53,21 +53,21 @@
 			<tr valign="top">
 				<td><b>A little bit about your site:</b></td>
 				<td>
-					<textarea name="about" style="width: 300px; height: 100px;" wrap="virtual">{$smarty.post.about|escape}</textarea><br />
+					<textarea name="about" style="width: 300px; height: 100px;" wrap="virtual">{($smarty.post.about ?? '')|escape}</textarea><br />
 					(HTML will not work - just plain text please!)
 				</td>
 			</tr>
 			<tr valign="top">
 				<td><b>Choose a password:</b></td>
 				<td>
-					<input type="password" name="password" style="width: 300px;" value="{$smarty.post.password|escape}"><br />
+					<input type="password" name="password" style="width: 300px;" value="{($smarty.post.password ?? '')|escape}"><br />
 					(You will need to remember this if you want to edit your details in future.)
 				</td>
 			</tr>
 			<tr valign="top">
 				<td><b>Prove you're human:</b></td>
 				<td>
-					<input type="text" name="prove" style="width: 300px;{if $error_prove} background-color: red; color: white;{/if}" value="{$smarty.post.prove|escape}"><br />
+					<input type="text" name="prove" style="width: 300px;{if isset($error_prove)} background-color: red; color: white;{/if}" value="{($smarty.post.prove ?? '')|escape}"><br />
 					Enter the answer to 3+4
 				</td>
 			</tr>
