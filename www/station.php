@@ -36,7 +36,6 @@
 	#
 
 	$lines = array();
-	$smarty->assignByRef('lines', $lines);
 
 	$ret = db_fetch("SELECT * FROM tube_connections WHERE (station_id_1=$id OR station_id_2=$id) GROUP BY line_id");
 	foreach ($ret['rows'] as $row){
@@ -44,6 +43,8 @@
 		$line = db_single(db_fetch("SELECT * FROM tube_lines WHERE id=$row[line_id]"));
 		$lines[] = $line;
 	}
+
+	$smarty->assign('lines', $lines);
 
 
 	#

@@ -7,7 +7,6 @@
 	#
 
 	$lines = array();
-	$smarty->assignByRef('lines', $lines);
 
 	$ret = db_fetch("SELECT * FROM tube_lines");
 	foreach ($ret['rows'] as $row){
@@ -20,6 +19,8 @@
 		if (!isset($lines[$key])) $lines[$key] = array();
 		$lines[$key][] = $row;
 	}
+
+	$smarty->assign('lines', $lines);
 
 
 	#
