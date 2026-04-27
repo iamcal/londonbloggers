@@ -1,4 +1,4 @@
-{if $smarty.get.mini}
+{if ($smarty.get.mini ?? null)}
 	{assign var='w' value=80}
 	{assign var='h' value=15}
 	{assign var='src' value='browser_mini.gif'}

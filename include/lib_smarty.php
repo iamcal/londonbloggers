@@ -2,10 +2,10 @@
 	$GLOBALS['timings']['smarty_comp_count']	= 0;
 	$GLOBALS['timings']['smarty_comp_time']	= 0;
 
-	$GLOBALS['smarty'] = new Smarty();
+	$GLOBALS['smarty'] = new Smarty\Smarty();
 
-	$GLOBALS['smarty']->template_dir = INCLUDE_DIR.'/../templates/';
-	$GLOBALS['smarty']->compile_dir  = INCLUDE_DIR.'/../templates_c/';
+	$GLOBALS['smarty']->setTemplateDir(INCLUDE_DIR.'/../templates/');
+	$GLOBALS['smarty']->setCompileDir(INCLUDE_DIR.'/../templates_c/');
 	$GLOBALS['smarty']->compile_check = $GLOBALS['cfg']['smarty_compile'];;
 	$GLOBALS['smarty']->force_compile = $GLOBALS['cfg']['smarty_compile'];;
 
