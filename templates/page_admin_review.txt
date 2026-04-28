@@ -25,7 +25,7 @@ function highlight(name, col){
 			Blog Name: {$row.blog_name|escape}<br />
 			Blog URL: <a href="{$row.blog_url|escape}">{$row.blog_url|escape}</a><br />
 			Author: {$row.name|escape}<br />
-			Stations: {','|implode:$row.stations}
+			Stations: {$row.stations|join:','}
 		</td>
 		<td width="300">{$row.about|truncate:200:'...'|escape|default:'&nbsp;'}</td>
 		<td>
