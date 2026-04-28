@@ -147,7 +147,7 @@
 
 		foreach ($trace as $item){
 
-			$function = "$item[function]($args)";
+			$function = "{$item['function']}()";
 
 			if (preg_match('!^error_!', $item['function'])){
 				$pairs = array();
