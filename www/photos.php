@@ -54,14 +54,22 @@
 	$photos = array();
 
 	foreach ($matches[0] as $match){
-		preg_match('!<link>(.*?)</link>!', $match, $m);
-		$link = $m[1];
 
-		preg_match('!<title>(.*?)</title>!', $match, $m);
-		$title = $m[1];
+		$link = '';
+		$title = '';
+		$src = '';
 
-		preg_match('!http://farm(.*?)_m\.jpg!', $match, $m);
-		$src = "http://farm$m[1]_s.jpg";
+		if (preg_match('!<link>(.*?)</link>!', $match, $m)){
+			$link = $m[1];
+		}
+
+		if (preg_match('!<title>(.*?)</title>!', $match, $m)){
+			$title = $m[1];
+		}
+
+		if (preg_match('!http://farm(.*?)_m\.jpg!', $match, $m)){
+			$src = "http://farm{$m[1]}_s.jpg";
+		}
 
 		$photos[] = array(
 			"title"	=> $title,
