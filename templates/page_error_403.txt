@@ -6,7 +6,7 @@
 
 	<p>Sorry, you do not have permission to view this page.</p>
 
-{if $cfg.is_admin}
+{if $cfg.is_admin ?? null}
 	<div class="admin-section">
 		<pre class="admin-debug">{$debug_block}</pre>
 	</div>
