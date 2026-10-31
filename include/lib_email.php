@@ -22,8 +22,8 @@
 
 		}else if ($args['from_email'] ?? null){
 
-			$from_email = $args[from_email];
-			$from_name = $args[from_email];
+			$from_email = $args['from_email'];
+			$from_name = $args['from_email'];
 
 		}else if ($args['from_name'] ?? null){
 
