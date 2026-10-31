@@ -70,7 +70,7 @@
 
 	if ($cfg['check_notices']){
 		set_error_handler('handle_error_notices', E_NOTICE);
-		error_reporting(E_ALL | E_STRICT);
+		error_reporting(E_ALL);
 	}
 
 	function handle_error_notices($errno, $errstr){

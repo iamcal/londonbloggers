@@ -29,7 +29,6 @@
 
 		$end = microtime_ms();
 
-		curl_close($ch);
 
 		$GLOBALS['timings']['http_count']++;
 		$GLOBALS['timings']['http_time'] += $end-$start;
