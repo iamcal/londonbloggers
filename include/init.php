@@ -69,11 +69,17 @@
 	#
 
 	if ($cfg['check_notices']){
-		set_error_handler('handle_error_notices', E_NOTICE);
+		# deprecations are passed on to the handler this replaces, if there is one: neuron7
+		# logs them (/mnt/neuron-base/neuron7_php_deprecations.php)
+		$GLOBALS['previous_error_handler'] = set_error_handler('handle_error_notices', E_NOTICE | E_DEPRECATED | E_USER_DEPRECATED);
 		error_reporting(E_ALL);
 	}
 
-	function handle_error_notices($errno, $errstr){
+	function handle_error_notices($errno, $errstr, $errfile = '', $errline = 0){
+		if ($errno & (E_DEPRECATED | E_USER_DEPRECATED)){
+			$previous = $GLOBALS['previous_error_handler'] ?? null;
+			return $previous ? call_user_func($previous, $errno, $errstr, $errfile, $errline) : false;
+		}
 		if (preg_match('!^Use of undefined constant!', $errstr)) return false;
 		return true;
 	}
