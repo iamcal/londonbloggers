@@ -14,25 +14,25 @@
 	while($row = mysql_fetch_array($result)){
 ?>
 	<tube:weblog>
-		<rdf:Description rdf:about="<?=htmlentities($row[blog_url])?>"/>
-		<rdfs:seeAlso rdf:resource="<?=htmlentities($row[blog_url])?>"/>
+		<rdf:Description rdf:about="<?=htmlentities($row['blog_url'])?>"/>
+		<rdfs:seeAlso rdf:resource="<?=htmlentities($row['blog_url'])?>"/>
 
-		<tube:dateadded><?=$row[date_create]?></tube:dateadded>
-		<weblog:name><?=htmlentities($row[blog_name])?></weblog:name>
-		<weblog:url><?=htmlentities($row[blog_url])?></weblog:url>
-		<weblog:authorname><?=htmlentities($row[name])?></weblog:authorname>
-<?php if ($row[email_public]){ ?>
-		<weblog:authoremail><?=str_replace('@',' AT ',htmlentities($row[email]))?></weblog:authoremail>
+		<tube:dateadded><?=$row['date_create']?></tube:dateadded>
+		<weblog:name><?=htmlentities($row['blog_name'])?></weblog:name>
+		<weblog:url><?=htmlentities($row['blog_url'])?></weblog:url>
+		<weblog:authorname><?=htmlentities($row['name'])?></weblog:authorname>
+<?php if ($row['email_public']){ ?>
+		<weblog:authoremail><?=str_replace('@',' AT ',htmlentities($row['email']))?></weblog:authoremail>
 <?php } ?>
-		<weblog:about><?=htmlentities($row[about])?></weblog:about>
+		<weblog:about><?=htmlentities($row['about'])?></weblog:about>
 
 <?php
 		$subresult = mysql_query("SELECT * FROM tube_weblog_stations WHERE weblog_id=$row[id]", $db);
 		while($subrow = mysql_fetch_array($subresult)){
 ?>
 		<tube:near>
-			<tube:stationid><?=$subrow[station_id]?></tube:stationid>
-			<tube:relationship><?=htmlentities($subrow[relation])?></tube:relationship>
+			<tube:stationid><?=$subrow['station_id']?></tube:stationid>
+			<tube:relationship><?=htmlentities($subrow['relation'])?></tube:relationship>
 		</tube:near>
 
 <?php

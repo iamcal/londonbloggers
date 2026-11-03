@@ -1,4 +1,4 @@
-<?
+<?php
 	include("includes/init.txt");
 
 	include("includes/head.txt");
@@ -18,6 +18,6 @@
 			</div>
 		</td>
 
-<?
+<?php
 	include("includes/foot.txt");
 ?>

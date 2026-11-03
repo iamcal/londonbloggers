@@ -12,7 +12,7 @@
 				<b>Browse By Line</b><br>
 				<br>
 				<table border="0" cellpadding="0" cellspacng="0" width="144">
-<?
+<?php
 	$result = mysql_query("SELECT * FROM tube_lines ORDER BY id ASC", $db);
 	while($row = mysql_fetch_array($result)){
 		insert_line_row($row);
@@ -22,7 +22,7 @@
 			</div>
 			<div class="padded">
 				<center>
-					There are currently <a href="weblogs.php"><?=$cfg[total_count]?></a> registered London weblogs.
+					There are currently <a href="weblogs.php"><?=$cfg['total_count']?></a> registered London weblogs.
 				</center>
 			</div>
 			<div class="padded">

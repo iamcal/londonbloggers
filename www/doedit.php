@@ -1,4 +1,4 @@
-<?
+<?php
 	include("includes/init.txt");
 
 	$password = base64_decode($pw);
@@ -60,40 +60,40 @@
 
 <h1>Edit Your Details</h1>
 <br />
-<? if ($done){ ?>
+<?php if ($done){ ?>
 <img src="images/warning.gif" width="14" height="11"> <span style="color: #cc0000; font-weight: bold;">Please fill out all the fields!</span><br />
 <br />
-<? } ?>
+<?php } ?>
 <form action="doedit.php" method="post">
 <input type="hidden" name="done" value="1">
 <input type="hidden" name="id" value="<?=$id?>">
 <input type="hidden" name="pw" value="<?=$pw?>">
 
 	<b>The name of your weblog:</b><br />
-	<input type="text" name="blog_name" value="<?=htmlentities($weblog_row[blog_name])?>"><br />
+	<input type="text" name="blog_name" value="<?=htmlentities($weblog_row['blog_name'])?>"><br />
 	<br />
 
 	<b>The URL to your weblog:</b><br />
-	<input type="text" name="blog_url" value="<?=htmlentities($weblog_row[blog_url])?>"><br />
+	<input type="text" name="blog_url" value="<?=htmlentities($weblog_row['blog_url'])?>"><br />
 	<br />
 
 	<b>Your name:</b><br />
-	<input type="text" name="name" value="<?=htmlentities($weblog_row[name])?>"><br />
+	<input type="text" name="name" value="<?=htmlentities($weblog_row['name'])?>"><br />
 	<br />
 
 	<b>Your email address:</b><br />
-	<input type="text" name="email" value="<?=htmlentities($weblog_row[email])?>"><br />
-	<input type="checkbox" name="email_public"<?=($weblog_row[email_public])?' checked':''?>> Display your email address on this site<br />
-	<input type="checkbox" name="email_spam"<?=($weblog_row[email_spam])?' checked':''?>> Allow us to send you exciting non-spam emails about this site<br />
+	<input type="text" name="email" value="<?=htmlentities($weblog_row['email'])?>"><br />
+	<input type="checkbox" name="email_public"<?=($weblog_row['email_public'])?' checked':''?>> Display your email address on this site<br />
+	<input type="checkbox" name="email_spam"<?=($weblog_row['email_spam'])?' checked':''?>> Allow us to send you exciting non-spam emails about this site<br />
 	<br />
 
 	<b>A little bit about your site:</b><br />
-	<textarea name="about" style="width: 300px; height: 100px;" wrap="virtual"><?=htmlentities($weblog_row[about])?></textarea><br />
+	<textarea name="about" style="width: 300px; height: 100px;" wrap="virtual"><?=htmlentities($weblog_row['about'])?></textarea><br />
 	(HTML will not work - just plain text please!)<br />
 	<br />
 
 	<b>Your password</b><br />
-	<input type="password" name="password" value="<?=htmlentities($weblog_row[password])?>"><br />
+	<input type="password" name="password" value="<?=htmlentities($weblog_row['password'])?>"><br />
 	<br />
 
 	<input type="submit" value="Update Your Details" style="background-color: #ccccff;">
@@ -112,10 +112,10 @@
 	<b>Existing Stations</b><br/>
 	(To delete an existing station, set the relationship to blank and click update)<br />
 	<br />
-<?
+<?php
 	$result = mysql_query("SELECT * FROM tube_weblog_stations WHERE weblog_id=$id",$db);
 	while($row = mysql_fetch_array($result)){
-		insert_station_row($row[id],$row[station_id],$row[relation]);
+		insert_station_row($row['id'],$row['station_id'],$row['relation']);
 	}
 	echo "<br />\n";
 	if ($station){
@@ -137,7 +137,7 @@
 		echo "Station:<br/><select name=\"station_$id\">\n";
 		$result = mysql_query("SELECT * FROM tube_stations ORDER BY name ASC",$db);
 		while($row = mysql_fetch_array($result)){
-			$s = ($row[id] == $station_sel)?' selected':'';
+			$s = ($row['id'] == $station_sel)?' selected':'';
 			echo "<option value=\"$row[id]\"$s>$row[name]</option>\n";
 		}
 		echo "</select><br />\n";
@@ -152,6 +152,6 @@
 			</div>
 		</td>
 
-<?
+<?php
 	include("includes/foot.txt");
 ?>

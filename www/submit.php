@@ -1,4 +1,4 @@
-<?
+<?php
 	include("includes/init.txt");
 
 	$station_row = mysql_fetch_array(mysql_query("SELECT * FROM tube_stations WHERE id=$station",$db));
@@ -46,16 +46,16 @@ If you would rather not do this yet, <a href="./">click here</a> to return to th
 If you have already added your weblog, but would like to add this station to it, <a href="edit.php?station=<?=$station?>">click here</a>.<br />
 <br />
 <br />
-<? if ($done){ ?>
+<?php if ($done){ ?>
 <img src="images/warning.gif" width="14" height="11"> <span style="color: #cc0000; font-weight: bold;"><?=$error?></span><br />
 <br />
-<? } ?>
+<?php } ?>
 <form action="submit.php" method="post">
 <input type="hidden" name="done" value="1">
 <input type="hidden" name="station" value="<?=$station?>">
 
 	<b>Your nearest station:</b><br />
-	<i><?=$station_row[name]?></i><br />
+	<i><?=$station_row['name']?></i><br />
 	<br />
 
 	<b>Relationship of this station to you:</b><br />
@@ -97,6 +97,6 @@ If you have already added your weblog, but would like to add this station to it,
 			</div>
 		</td>
 
-<?
+<?php
 	include("includes/foot.txt");
 ?>

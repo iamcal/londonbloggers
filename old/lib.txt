@@ -1,4 +1,4 @@
-<?
+<?php
 	function getmicrotime(){ 
 		list($usec, $sec) = explode(" ",microtime()); 
 		return ((float)$usec + (float)$sec); 
@@ -21,25 +21,25 @@
 			while($sub_row = mysql_fetch_array($sub_result)){
 				$tree["$sub_row[id]_$row[id]"] = array();
 
-				if (!$stations[$sub_row[id]]){
-					$stations[$sub_row[id]] = array();
+				if (!$stations[$sub_row['id']]){
+					$stations[$sub_row['id']] = array();
 				}
-				$stations[$sub_row[id]][] = $row[id];
+				$stations[$sub_row['id']][] = $row['id'];
 			}
 		}
 
 		#load normal egdes
 		$result = mysql_query("SELECT * FROM tube_connections",$db);
 		while($row = mysql_fetch_array($result)){
-			$distance = (intval($row[distance]))?intval($row[distance]):$default_edge;
+			$distance = (intval($row['distance']))?intval($row['distance']):$default_edge;
 			$tree["$row[station_id_1]_$row[line_id]"]["$row[station_id_2]_$row[line_id]"] = $distance;
 
-			$stations[$row[station_id_1]][] = $row[line_id];
+			$stations[$row['station_id_1']][] = $row['line_id'];
 
-			if (!$row[one_way]){
+			if (!$row['one_way']){
 				$tree["$row[station_id_2]_$row[line_id]"]["$row[station_id_1]_$row[line_id]"] = $distance;
 
-				$stations[$row[station_id_2]][] = $row[line_id];
+				$stations[$row['station_id_2']][] = $row['line_id'];
 			}
 		}
 
@@ -76,7 +76,7 @@
 		$out = array();
 		$result = mysql_query("SELECT * FROM tube_connections WHERE (station_id_1=$id OR station_id_2=$id) GROUP BY line_id",$db);
 		while($row = mysql_fetch_array($result)){
-			$out[] = $row[line_id];
+			$out[] = $row['line_id'];
 		}
 		return $out;
 	}
@@ -199,9 +199,9 @@
 		$fresh_paths = array();
 		foreach($start_nodes as $node){
 			$path = array();
-			$path[to] = $node;
-			$path[distance] = 0;
-			$path[steps] = array($node);
+			$path['to'] = $node;
+			$path['distance'] = 0;
+			$path['steps'] = array($node);
 
 			$fresh_paths[] = $path;
 		}
@@ -211,34 +211,34 @@
 			$fresh_paths = array();
 			foreach($old_fresh_paths as $path){
 				#extend this path in every direction
-				foreach(array_keys($tree[$path[to]]) as $node){
+				foreach(array_keys($tree[$path['to']]) as $node){
 
 					$new_path = $path;
-					$new_path[steps][] = $node;
-					$new_path[to] = $node;
-					$new_path[distance] += $tree[$path[to]][$node];
+					$new_path['steps'][] = $node;
+					$new_path['to'] = $node;
+					$new_path['distance'] += $tree[$path['to']][$node];
 
-					if ($new_path[distance] <= $best_dist){
+					if ($new_path['distance'] <= $best_dist){
 
 						if (!$paths[$node]){
 							$paths[$node] = array();
-							$paths[$node][best] = $new_path[distance];
-							$paths[$node][paths] = array();
-							$paths[$node][paths][] = $new_path;
+							$paths[$node]['best'] = $new_path['distance'];
+							$paths[$node]['paths'] = array();
+							$paths[$node]['paths'][] = $new_path;
 							$fresh_paths[] = $new_path;
-							if (in_array($node,$end_nodes) && ($best_dist > $new_path[distance])) $best_dist = $new_path[distance];
+							if (in_array($node,$end_nodes) && ($best_dist > $new_path['distance'])) $best_dist = $new_path['distance'];
 						}else{
 							#is it an improvement?
-							if ($new_path[distance] < $paths[$node][best]){
-								$paths[$node][best] = $new_path[distance];
-								$paths[$node][paths] = array();
-								$paths[$node][paths][] = $new_path;
+							if ($new_path['distance'] < $paths[$node]['best']){
+								$paths[$node]['best'] = $new_path['distance'];
+								$paths[$node]['paths'] = array();
+								$paths[$node]['paths'][] = $new_path;
 								$fresh_paths[] = $new_path;
-								if (in_array($node,$end_nodes) && ($best_dist > $new_path[distance])) $best_dist = $new_path[distance];
+								if (in_array($node,$end_nodes) && ($best_dist > $new_path['distance'])) $best_dist = $new_path['distance'];
 							}
 							#is it an alternative?
-							if ($new_path[distance] == $paths[$node][best]){
-								$paths[$node][paths][] = $new_path;
+							if ($new_path['distance'] == $paths[$node]['best']){
+								$paths[$node]['paths'][] = $new_path;
 								$fresh_paths[] = $new_path;
 							}
 						}
@@ -249,9 +249,9 @@
 
 		$all_paths = array();
 		foreach($end_nodes as $node){
-			if ($paths[$node][paths]){
-				foreach($paths[$node][paths] as $path){
-					if ($path[distance] == $best_dist){
+			if ($paths[$node]['paths']){
+				foreach($paths[$node]['paths'] as $path){
+					if ($path['distance'] == $best_dist){
 						$all_paths[] = $path;
 					}
 				}

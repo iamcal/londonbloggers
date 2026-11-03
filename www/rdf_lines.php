@@ -14,11 +14,11 @@
 	while($row = mysql_fetch_array($result)){
 ?>
 	<tube:line>
-		<rdf:Description rdf:about="http://www.iamcal.com/misc/londonbloggers/stations.php?line=<?=$row[id]?>"/>
-		<rdfs:seeAlso rdf:resource="http://www.iamcal.com/misc/londonbloggers/stations.php?line=<?=$row[id]?>"/>
+		<rdf:Description rdf:about="http://www.iamcal.com/misc/londonbloggers/stations.php?line=<?=$row['id']?>"/>
+		<rdfs:seeAlso rdf:resource="http://www.iamcal.com/misc/londonbloggers/stations.php?line=<?=$row['id']?>"/>
 
-		<tube:lineid><?=$row[id]?></tube:lineid>
-		<tube:linename><?=$row[name]?></tube:linename>
+		<tube:lineid><?=$row['id']?></tube:lineid>
+		<tube:linename><?=$row['name']?></tube:linename>
 	</tube:line>
 
 <?php

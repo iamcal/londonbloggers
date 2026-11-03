@@ -1,4 +1,4 @@
-<?
+<?php
 	include("includes/init.txt");
 	include("lib.txt");
 
@@ -21,7 +21,7 @@
 <form action="paths.php" method="post">
 
 Using <select name="set">
-<?
+<?php
 	foreach(array_keys($set_labels) as $k){
 		$s = ($k == $set)?' selected':'';
 		echo "<option value=\"$k\"$s>$set_labels[$k]</option>";
@@ -30,18 +30,18 @@ Using <select name="set">
 </select>,<br>
 <br>
 find the path between <select name="from">
-<?
+<?php
 	$result = mysql_query("SELECT * FROM tube_stations ORDER BY name ASC",$db);
 	while($row = mysql_fetch_array($result)){
-		$s = ($row[id] == $from)?' selected':'';
+		$s = ($row['id'] == $from)?' selected':'';
 		echo "<option value=\"$row[id]\"$s>$row[name]</option>\n";
 	}
 ?>
 </select> and <select name="to">
-<?
+<?php
 	$result = mysql_query("SELECT * FROM tube_stations ORDER BY name ASC",$db);
 	while($row = mysql_fetch_array($result)){
-		$s = ($row[id] == $to)?' selected':'';
+		$s = ($row['id'] == $to)?' selected':'';
 		echo "<option value=\"$row[id]\"$s>$row[name]</option>\n";
 	}
 ?>
@@ -50,7 +50,7 @@ find the path between <select name="from">
 <br>
 <br>
 
-<?
+<?php
 
 	if ($from && $to){
 
@@ -65,7 +65,7 @@ find the path between <select name="from">
 		echo "<b>Found $count routes from $from to $to:</b><br><br>";
 
 		foreach($paths as $path){
-			foreach($path[steps] as $step){
+			foreach($path['steps'] as $step){
 				list($station,$line) = explode('_',$step);
 				$station = tree_GetNodeName($station);
 				$line = tree_GetLineName($line);

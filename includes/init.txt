@@ -1,33 +1,33 @@
-<?
+<?php
 	include("../includes/network.txt");
 
 	mysql_select_db('cal_london');
 
 
 	$cfg = array();
-	$cfg[base_url] = 'http://www.londonbloggers.co.uk/';
-	$cfg[base_url] = 'http://londonbloggers.iamcal.com/';
+	$cfg['base_url'] = 'http://www.londonbloggers.co.uk/';
+	$cfg['base_url'] = 'http://londonbloggers.iamcal.com/';
 
-	list($cfg[total_count]) = mysql_fetch_array(mysql_query("SELECT COUNT(*) FROM tube_weblogs",$db));
+	list($cfg['total_count']) = mysql_fetch_array(mysql_query("SELECT COUNT(*) FROM tube_weblogs",$db));
 
 	#####################################################################################
 
 	function insert_line_row($row){
-		$row[name] = str_replace("National Rail - ", "", $row[name]);
-		if ($row[color]){
+		$row['name'] = str_replace("National Rail - ", "", $row['name']);
+		if ($row['color']){
 ?>
 					<tr>
-						<td width="40"><a href="stations.php?line=<?=$row[id]?>" style="text-decoration: none;"><span style="background-color: <?=$row[color]?>;"><img src="images/space.gif" width="40" height="4" border="0" alt="<?=$row[name]?>"></span></a></td>
+						<td width="40"><a href="stations.php?line=<?=$row['id']?>" style="text-decoration: none;"><span style="background-color: <?=$row['color']?>;"><img src="images/space.gif" width="40" height="4" border="0" alt="<?=$row['name']?>"></span></a></td>
 						<td width="4">&nbsp;</td>
-						<td><a href="stations.php?line=<?=$row[id]?>"><?=$row[name]?></a></td>
+						<td><a href="stations.php?line=<?=$row['id']?>"><?=$row['name']?></a></td>
 					</tr>
-<?
+<?php
 		}else{
 ?>
 					<tr>
-						<td colspan="3"><b>&bull;</b> <a href="stations.php?line=<?=$row[id]?>"><?=$row[name]?></a></td>
+						<td colspan="3"><b>&bull;</b> <a href="stations.php?line=<?=$row['id']?>"><?=$row['name']?></a></td>
 					</tr>
-<?
+<?php
 		}
 	}
 
@@ -35,19 +35,19 @@
 
 	function output_blog_info($row){
 		#fix url
-		if (!preg_match("/^http\:\/\//i",$row[blog_url])){
-			$row[blog_url] = "http://$row[blog_url]";
+		if (!preg_match("/^http\:\/\//i",$row['blog_url'])){
+			$row['blog_url'] = "http://$row[blog_url]";
 		}
 
-		echo "<b style=\"font-size: 13px;\"><a href=\"$row[blog_url]\" target=\"_blank\">".htmlentities($row[blog_name])."</a></b> ";
-		if ($row[email_public]){
-			echo "by <a href=\"mailto:$row[email]\">".htmlentities($row[name])."</a><br />\n";
+		echo "<b style=\"font-size: 13px;\"><a href=\"$row[blog_url]\" target=\"_blank\">".htmlentities($row['blog_name'])."</a></b> ";
+		if ($row['email_public']){
+			echo "by <a href=\"mailto:$row[email]\">".htmlentities($row['name'])."</a><br />\n";
 		}else{
-			echo "by ".htmlentities($row[name])."<br />\n";
+			echo "by ".htmlentities($row['name'])."<br />\n";
 		}
-		$station_list = get_StationList($row[id]);
+		$station_list = get_StationList($row['id']);
 		echo "Stations: $station_list<br />\n";
-		echo "<i>&quot;".htmlentities($row[about])."&quot;</i><br />\n";
+		echo "<i>&quot;".htmlentities($row['about'])."&quot;</i><br />\n";
 		echo "<br />\n";
 	}
 
@@ -71,8 +71,8 @@
 		$rows = array();
 		$result = mysql_query("SELECT * FROM tube_stations WHERE real_x>=$x-$range AND real_x<=$x+$range AND real_y>=$y-$range AND real_y<=$y+$range", $db);
 		while($row = mysql_fetch_array($result)){
-			$dif_x = abs($x - $row[real_x]);
-			$dif_y = abs($y - $row[real_y]);
+			$dif_x = abs($x - $row['real_x']);
+			$dif_y = abs($y - $row['real_y']);
 			if ($dif_x && $dif_y){
 				$dist = ($dif_x * $dif_x) + ($dif_y * $dif_y);
 				if ($dist <= $range_sq){
@@ -91,7 +91,7 @@
 		$stations = array();
 		$result = mysql_query("SELECT * FROM tube_weblog_stations WHERE weblog_id=$id", $db);
 		while($row = mysql_fetch_array($result)){
-			$stations[] = $row[station_id];
+			$stations[] = $row['station_id'];
 		}
 		$ids = implode(',', $stations);
 

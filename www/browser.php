@@ -13,9 +13,9 @@ if (document.all && navigator.appVersion.toLowerCase().indexOf("mac") == -1) gb 
 if (navigator.userAgent.indexOf('Gecko') != -1) gb = true;
 
 <? if ($mini){ ?>
-var html = '<div id="TubeNode<?=$id?>" style="position: relative; width: 80px;"><div style="position: relative;"><a target="_blank" href="<?=$cfg[base_url]?>" onclick="return ToggleTubeMenu();"><img border="0" src="<?=$cfg[base_url]?>images/browser_mini.gif" width="80" height="15"></a></div></div>';
+var html = '<div id="TubeNode<?=$id?>" style="position: relative; width: 80px;"><div style="position: relative;"><a target="_blank" href="<?=$cfg['base_url']?>" onclick="return ToggleTubeMenu();"><img border="0" src="<?=$cfg['base_url']?>images/browser_mini.gif" width="80" height="15"></a></div></div>';
 <? }else{ ?>
-var html = '<div id="TubeNode<?=$id?>" style="position: relative; width: 143px;"><div style="position: relative;"><a target="_blank" href="<?=$cfg[base_url]?>" onclick="return ToggleTubeMenu();"><img border="0" src="<?=$cfg[base_url]?>images/browser.gif" width="143" height="54"></a></div></div>';
+var html = '<div id="TubeNode<?=$id?>" style="position: relative; width: 143px;"><div style="position: relative;"><a target="_blank" href="<?=$cfg['base_url']?>" onclick="return ToggleTubeMenu();"><img border="0" src="<?=$cfg['base_url']?>images/browser.gif" width="143" height="54"></a></div></div>';
 <? } ?>
 
 if (gb) {
@@ -56,7 +56,7 @@ function create_menu(){
 ?>
 
 	var b = appendBold(InnerNode, "Weblogs at ");
-	appendLink(b, "<?=$station_row[name]?>", "<?=$cfg[base_url]?>station.php?id=<?=$station?>");
+	appendLink(b, "<?=$station_row['name']?>", "<?=$cfg['base_url']?>station.php?id=<?=$station?>");
 	appendText(b, ":");
 	appendBreak(InnerNode);
 	appendBreak(InnerNode);
@@ -70,7 +70,7 @@ function create_menu(){
 			}
 ?>
 	appendText(InnerNode, "• ");
-	appendLink(InnerNode, "<?=AddSlashes($row[blog_name])?>", "<?=$row[blog_url]?>");
+	appendLink(InnerNode, "<?=AddSlashes($row['blog_name'])?>", "<?=$row['blog_url']?>");
 	appendBreak(InnerNode);
 <?
 		}
@@ -82,7 +82,7 @@ function create_menu(){
 ?>
 
 	var b = appendBold(InnerNode);
-	appendLink(b, "Are you a London Blogger?", "<?=$cfg[base_url]?>");
+	appendLink(b, "Are you a London Blogger?", "<?=$cfg['base_url']?>");
 
 	// append menu
 	document.getElementById('TubeNode<?=$id?>').appendChild(MenuNode);

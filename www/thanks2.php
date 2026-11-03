@@ -1,4 +1,4 @@
-<?
+<?php
 	include("includes/init.txt");
 
 	include("includes/head.txt");
@@ -18,11 +18,11 @@
 				<br />
 				<br />
 
-<? insert_user_browse_code($id); ?>
+<?php insert_user_browse_code($id); ?>
 
 			</div>
 		</td>
 
-<?
+<?php
 	include("includes/foot.txt");
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 	include("includes/init.txt");
 
 	$sx = 400*($x-1);
@@ -41,16 +41,16 @@
 		<tr valign="middle">
 			<td><?=$left_link?></td>
 			<td><div style="position: relative;">
-				<div style="position: relative; top: 0px; left: 0px; z-index: 1;"><img src="images/<?=sprintf('%02d',$x)?>_<?=sprintf('%02d',$y)?>.gif" border="0" usemap="#mainmap" width="<?=$segment_row[w]?>" height="<?=$segment_row[h]?>" style="border: 2px solid #000000;" alt="" /></div>
-<?
+				<div style="position: relative; top: 0px; left: 0px; z-index: 1;"><img src="images/<?=sprintf('%02d',$x)?>_<?=sprintf('%02d',$y)?>.gif" border="0" usemap="#mainmap" width="<?=$segment_row['w']?>" height="<?=$segment_row['h']?>" style="border: 2px solid #000000;" alt="" /></div>
+<?php
 	if ($highlight){
 		$row = mysql_fetch_array(mysql_query("SELECT * FROM tube_stations WHERE id='$highlight'",$db));
 		$row = get_row_coords($row);
-		$w = $row[x_2] - $row[x];
-		$h = $row[y_2] - $row[y];
+		$w = $row['x_2'] - $row['x'];
+		$h = $row['y_2'] - $row['y'];
 ?>
-				<div style="position: absolute; left: <?=$row[x]?>px; top: <?=$row[y]?>px; width: <?=$w?>px; height: <?=$h?>px; z-index: 2; border: 1px solid #0000ff;"><a href="station.php?id=<?=$row[id]?>"><img src="images/space.gif" width="<?=$w?>" height="<?=$h?>" border="0" alt="" /></a></div>
-<?
+				<div style="position: absolute; left: <?=$row['x']?>px; top: <?=$row['y']?>px; width: <?=$w?>px; height: <?=$h?>px; z-index: 2; border: 1px solid #0000ff;"><a href="station.php?id=<?=$row['id']?>"><img src="images/space.gif" width="<?=$w?>" height="<?=$h?>" border="0" alt="" /></a></div>
+<?php
 	}
 ?>
 			</div></td>
@@ -69,27 +69,27 @@
 		</td>
 
 <map name="mainmap" id="mainmap">
-<?
+<?php
 	$result = mysql_query("SELECT * FROM tube_stations WHERE main_x+main_w>$sx AND main_x<=$sx+$segment_row[w] AND main_y+main_h>$sy AND main_y<=$sy+$segment_row[h]",$db);
 	while($row = mysql_fetch_array($result)){
 
 		#set
-		$row[x] = $row[main_x] - $sx;
-		$row[y] = $row[main_y] - $sy;
-		$row[x_2] = $row[x] + $row[main_w];
-		$row[y_2] = $row[y] + $row[main_h];
+		$row['x'] = $row['main_x'] - $sx;
+		$row['y'] = $row['main_y'] - $sy;
+		$row['x_2'] = $row['x'] + $row['main_w'];
+		$row['y_2'] = $row['y'] + $row['main_h'];
 
 		#expand
-		$row[x]-=$bdr;
-		$row[y]-=$bdr;
-		$row[x_2]+=$bdr;
-		$row[y_2]+=$bdr;
+		$row['x']-=$bdr;
+		$row['y']-=$bdr;
+		$row['x_2']+=$bdr;
+		$row['y_2']+=$bdr;
 
 		#restrict
-		if ($row[x] < 0){$row[x] = 0;}
-		if ($row[y] < 0){$row[y] = 0;}
-		if ($row[x_2] > $segment_row[w]){$row[x_2] = $segment_row[w];}
-		if ($row[y_2] > $segment_row[h]){$row[y_2] = $segment_row[h];}
+		if ($row['x'] < 0){$row['x'] = 0;}
+		if ($row['y'] < 0){$row['y'] = 0;}
+		if ($row['x_2'] > $segment_row['w']){$row['x_2'] = $segment_row['w'];}
+		if ($row['y_2'] > $segment_row['h']){$row['y_2'] = $segment_row['h'];}
 
 		list($count) = mysql_fetch_array(mysql_query("SELECT COUNT(w.id) FROM tube_weblogs AS w, tube_weblog_stations AS s WHERE w.id=s.weblog_id AND s.station_id=$row[id]",$db));
 		$s = ($count==1)?'':'s';
@@ -103,28 +103,28 @@
 		global $sx, $sy, $bdr, $segment_row;
 
 		#set
-		$row[x] = $row[main_x] - $sx;
-		$row[y] = $row[main_y] - $sy;
-		$row[x_2] = $row[x] + $row[main_w];
-		$row[y_2] = $row[y] + $row[main_h];
+		$row['x'] = $row['main_x'] - $sx;
+		$row['y'] = $row['main_y'] - $sy;
+		$row['x_2'] = $row['x'] + $row['main_w'];
+		$row['y_2'] = $row['y'] + $row['main_h'];
 
 		#expand
-		$row[x]-=$bdr;
-		$row[y]-=$bdr;
-		$row[x_2]+=$bdr;
-		$row[y_2]+=$bdr;
+		$row['x']-=$bdr;
+		$row['y']-=$bdr;
+		$row['x_2']+=$bdr;
+		$row['y_2']+=$bdr;
 
 		#restrict
-		if ($row[x] < 0){$row[x] = 0;}
-		if ($row[y] < 0){$row[y] = 0;}
-		if ($row[x_2] > $segment_row[w]){$row[x_2] = $segment_row[w];}
-		if ($row[y_2] > $segment_row[h]){$row[y_2] = $segment_row[h];}
+		if ($row['x'] < 0){$row['x'] = 0;}
+		if ($row['y'] < 0){$row['y'] = 0;}
+		if ($row['x_2'] > $segment_row['w']){$row['x_2'] = $segment_row['w'];}
+		if ($row['y_2'] > $segment_row['h']){$row['y_2'] = $segment_row['h'];}
 
 		return $row;
 	}
 ?>
 </map>
 
-<?
+<?php
 	include("includes/foot.txt");
 ?>
