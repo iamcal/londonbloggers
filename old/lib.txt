@@ -1,0 +1,272 @@
+<?
+	function getmicrotime(){ 
+		list($usec, $sec) = explode(" ",microtime()); 
+		return ((float)$usec + (float)$sec); 
+	}    
+
+	function tree_Load(){
+		global $db;
+
+		$time_start = getmicrotime();
+
+		$tree = array();
+		$stations = array();
+		$default_edge = 2;
+		$default_inter = 3;
+
+		#load verticies
+		$result = mysql_query("SELECT * FROM tube_lines",$db);
+		while($row = mysql_fetch_array($result)){
+			$sub_result = mysql_query("SELECT s.* FROM tube_stations AS s, tube_connections AS c WHERE (c.station_id_1=s.id OR c.station_id_2=s.id) AND c.line_id=$row[id] GROUP BY c.line_id",$db);
+			while($sub_row = mysql_fetch_array($sub_result)){
+				$tree["$sub_row[id]_$row[id]"] = array();
+
+				if (!$stations[$sub_row[id]]){
+					$stations[$sub_row[id]] = array();
+				}
+				$stations[$sub_row[id]][] = $row[id];
+			}
+		}
+
+		#load normal egdes
+		$result = mysql_query("SELECT * FROM tube_connections",$db);
+		while($row = mysql_fetch_array($result)){
+			$distance = (intval($row[distance]))?intval($row[distance]):$default_edge;
+			$tree["$row[station_id_1]_$row[line_id]"]["$row[station_id_2]_$row[line_id]"] = $distance;
+
+			$stations[$row[station_id_1]][] = $row[line_id];
+
+			if (!$row[one_way]){
+				$tree["$row[station_id_2]_$row[line_id]"]["$row[station_id_1]_$row[line_id]"] = $distance;
+
+				$stations[$row[station_id_2]][] = $row[line_id];
+			}
+		}
+
+		#load inter edges
+		foreach(array_keys($stations) as $station){
+			foreach($stations[$station] as $line){
+				foreach($stations[$station] as $line2){
+					if ($line != $line2){
+						$tree["${station}_${line}"]["${station}_${line2}"] = $default_inter;
+					}
+				}
+			}
+		}
+
+		$time_end = getmicrotime();
+		$time = $time_end - $time_start;
+		echo "<!-- loaded tree in $time seconds -->";
+
+		return $tree;
+	}
+
+	function tree_NodesAt($id){
+		global $db;
+		$out = array();
+		$result = mysql_query("SELECT * FROM tube_connections WHERE (station_id_1=$id OR station_id_2=$id) GROUP BY line_id",$db);
+		while($row = mysql_fetch_array($result)){
+			$out[] = "${id}_$row[line_id]";
+		}
+		return $out;
+	}
+
+	function tree_LinesAt($id){
+		global $db;
+		$out = array();
+		$result = mysql_query("SELECT * FROM tube_connections WHERE (station_id_1=$id OR station_id_2=$id) GROUP BY line_id",$db);
+		while($row = mysql_fetch_array($result)){
+			$out[] = $row[line_id];
+		}
+		return $out;
+	}
+
+	function tree_Reduce($nodes){
+		$out = array();
+		foreach($nodes as $node){
+			$bits = explode('_',$node);
+			$out[$bits[0]]++;
+		}
+		return $out;
+	}
+
+	function tree_GetNodesInDistance($tree,$start_nodes,$dist){
+		$nodes = array();
+		$fresh_nodes = array();
+
+		foreach($start_nodes as $node){
+			$nodes[$node] = 0;
+			$fresh_nodes[$node] = 1;
+		}
+
+		while($fresh_nodes){
+			$old_fresh_nodes = $fresh_nodes;
+			$fresh_nodes = array();
+
+			foreach(array_keys($old_fresh_nodes) as $node){
+
+				#traverse each fresh node and see if it takes us anywhere
+				foreach(array_keys($tree[$node]) as $target_node){
+
+					if ($nodes[$target_node]){
+						#already in the reachable node list. can we optimise?
+						if ($nodes[$target_node] > $old_fresh_nodes[$node]+$tree[$node][$target_node]){
+							$fresh_nodes[$target_node] = $old_fresh_nodes[$node]+$tree[$node][$target_node];
+							$nodes[$target_node] = $old_fresh_nodes[$node]+$tree[$node][$target_node];
+						}
+					}else{
+						#not in the reachable list (yet)
+						if ($old_fresh_nodes[$node]+$tree[$node][$target_node] <= $dist){
+							$fresh_nodes[$target_node] = $old_fresh_nodes[$node]+$tree[$node][$target_node];
+							$nodes[$target_node] = $old_fresh_nodes[$node]+$tree[$node][$target_node];
+						}
+					}
+				}
+			}
+		}
+
+		return $nodes;
+	}
+
+	function tree_ReduceShortest($nodes){
+		$out = array();
+
+		foreach(array_keys($nodes) as $node){
+			$bits = explode('_',$node);
+			if (!$out[$bits[0]]){
+				$out[$bits[0]] = $nodes[$node];
+			}else{
+				if ($out[$bits[0]] > $nodes[$node]){
+					$out[$bits[0]] = $nodes[$node];
+				}
+			}
+		}
+		return $out;
+	}
+
+	function tree_RemoveKeys($nodes,$remove){
+		foreach(array_keys($remove) as $key){
+			unset($nodes[$key]);
+		}
+		return $nodes;
+	}
+
+	function tree_StationSQL($nodes){
+		$elms = array();
+		foreach(array_keys($nodes) as $node){
+			$elms[] = "station_id=$node";
+		}
+		return "(".implode(' OR ',$elms).")";
+	}
+
+	$node_cache = array();
+	function tree_GetNodeName($id){
+		global $db, $node_cache;
+		if (!$node_cache[$id]){
+			list($node_cache[$id]) = mysql_fetch_array(mysql_query("SELECT name FROM tube_stations WHERE id=$id",$db));
+		}
+		return $node_cache[$id];
+	}
+
+	$line_cache = array();
+	function tree_GetLineName($id){
+		global $db, $line_cache;
+		if (!$line_cache[$id]){
+			list($line_cache[$id]) = mysql_fetch_array(mysql_query("SELECT name FROM tube_lines WHERE id=$id",$db));
+		}
+		return $line_cache[$id];
+	}
+
+	function tree_FormatLines($lines){
+		global $db;
+
+		$elms = array();
+		foreach($lines as $line){
+			list($name) = mysql_fetch_array(mysql_query("SELECT name FROM tube_lines WHERE id=$line",$db));
+			$elms[] = "<a href=\"stations.php?line=$line\">$name</a>";
+		}
+		return implode(", ",$elms);
+	}
+
+	function tree_ShortestPaths($tree, $start_nodes, $end_nodes){
+
+		$max_dist = 1000000;
+		$best_dist = $max_dist;
+
+		$paths = array();
+
+		#seed the fresh paths
+		$fresh_paths = array();
+		foreach($start_nodes as $node){
+			$path = array();
+			$path[to] = $node;
+			$path[distance] = 0;
+			$path[steps] = array($node);
+
+			$fresh_paths[] = $path;
+		}
+
+		while($fresh_paths){
+			$old_fresh_paths = $fresh_paths;
+			$fresh_paths = array();
+			foreach($old_fresh_paths as $path){
+				#extend this path in every direction
+				foreach(array_keys($tree[$path[to]]) as $node){
+
+					$new_path = $path;
+					$new_path[steps][] = $node;
+					$new_path[to] = $node;
+					$new_path[distance] += $tree[$path[to]][$node];
+
+					if ($new_path[distance] <= $best_dist){
+
+						if (!$paths[$node]){
+							$paths[$node] = array();
+							$paths[$node][best] = $new_path[distance];
+							$paths[$node][paths] = array();
+							$paths[$node][paths][] = $new_path;
+							$fresh_paths[] = $new_path;
+							if (in_array($node,$end_nodes) && ($best_dist > $new_path[distance])) $best_dist = $new_path[distance];
+						}else{
+							#is it an improvement?
+							if ($new_path[distance] < $paths[$node][best]){
+								$paths[$node][best] = $new_path[distance];
+								$paths[$node][paths] = array();
+								$paths[$node][paths][] = $new_path;
+								$fresh_paths[] = $new_path;
+								if (in_array($node,$end_nodes) && ($best_dist > $new_path[distance])) $best_dist = $new_path[distance];
+							}
+							#is it an alternative?
+							if ($new_path[distance] == $paths[$node][best]){
+								$paths[$node][paths][] = $new_path;
+								$fresh_paths[] = $new_path;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		$all_paths = array();
+		foreach($end_nodes as $node){
+			if ($paths[$node][paths]){
+				foreach($paths[$node][paths] as $path){
+					if ($path[distance] == $best_dist){
+						$all_paths[] = $path;
+					}
+				}
+			}
+		}
+
+		return $all_paths;
+
+	}
+
+	function debug_vars($var){
+		ob_start();
+		var_dump($var);
+		$data = ob_get_contents();
+		ob_end_clean();
+		echo "<pre>".chop(htmlentities($data))."</pre>";
+	}
+?>
