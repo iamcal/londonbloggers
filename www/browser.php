@@ -1,4 +1,4 @@
-<?
+<?php
 	include("includes/init.txt");
 	$id = time().rand(100,999);
 ?>
@@ -12,11 +12,11 @@ var MenuNode = null;
 if (document.all && navigator.appVersion.toLowerCase().indexOf("mac") == -1) gb = true;
 if (navigator.userAgent.indexOf('Gecko') != -1) gb = true;
 
-<? if ($mini){ ?>
+<?php if ($mini){ ?>
 var html = '<div id="TubeNode<?=$id?>" style="position: relative; width: 80px;"><div style="position: relative;"><a target="_blank" href="<?=$cfg['base_url']?>" onclick="return ToggleTubeMenu();"><img border="0" src="<?=$cfg['base_url']?>images/browser_mini.gif" width="80" height="15"></a></div></div>';
-<? }else{ ?>
+<?php }else{ ?>
 var html = '<div id="TubeNode<?=$id?>" style="position: relative; width: 143px;"><div style="position: relative;"><a target="_blank" href="<?=$cfg['base_url']?>" onclick="return ToggleTubeMenu();"><img border="0" src="<?=$cfg['base_url']?>images/browser.gif" width="143" height="54"></a></div></div>';
-<? } ?>
+<?php } ?>
 
 if (gb) {
 	document.write(html);
@@ -30,11 +30,11 @@ function create_menu(){
 
 	MenuNode = document.createElement('DIV');
 	MenuNode.style.position = 'absolute';
-<? if ($mini){ ?>
+<?php if ($mini){ ?>
 	MenuNode.style.top = '14px';
-<? }else{ ?>
+<?php }else{ ?>
 	MenuNode.style.top = '53px';
-<? } ?>
+<?php } ?>
 	MenuNode.style.zIndex = '10';
 	MenuNode.style.backgroundColor = '#ffffff';
 	MenuNode.style.width = '143px';
@@ -46,13 +46,13 @@ function create_menu(){
 	InnerNode.style.padding = '8px';
 
 	MenuNode.appendChild(InnerNode);
-<?
+<?php
 	if (!$ids){$ids = '1';}
 	$station_ids = explode(',', $ids);
 
 	foreach($station_ids as $station){
 		$station_row = mysql_fetch_array(mysql_query("SELECT * FROM tube_stations WHERE id='$station'", $db));
-		$station_row[name] = str_replace("&amp;", "&", $station_row[name]);
+		$station_row['name'] = str_replace("&amp;", "&", $station_row['name']);
 ?>
 
 	var b = appendBold(InnerNode, "Weblogs at ");
@@ -61,23 +61,23 @@ function create_menu(){
 	appendBreak(InnerNode);
 	appendBreak(InnerNode);
 
-<?
+<?php
 		$result = mysql_query("SELECT w.*,s.station_id FROM tube_weblogs AS w, tube_weblog_stations AS s WHERE w.id=s.weblog_id AND s.station_id='$station' ORDER BY w.blog_name ASC",$db);
 		while($row = mysql_fetch_array($result)){
 
-			if (!preg_match("/^http\:\/\//i",$row[blog_url])){
-				$row[blog_url] = "http://$row[blog_url]";
+			if (!preg_match("/^http\:\/\//i",$row['blog_url'])){
+				$row['blog_url'] = "http://$row[blog_url]";
 			}
 ?>
 	appendText(InnerNode, "• ");
 	appendLink(InnerNode, "<?=AddSlashes($row['blog_name'])?>", "<?=$row['blog_url']?>");
 	appendBreak(InnerNode);
-<?
+<?php
 		}
 ?>
 
 	appendBreak(InnerNode);
-<?
+<?php
 	}
 ?>
 
