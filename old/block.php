@@ -1,4 +1,4 @@
-<?
+<?php
 	include("includes/init.txt");
 
 
@@ -6,9 +6,9 @@
 	# count block matches?
 	#
 
-	if ($_POST[word]){
+	if ($_POST['word']){
 
-		$id_list = find_queue_matches(StripSlashes($_POST[word]), $_POST[all]);
+		$id_list = find_queue_matches(StripSlashes($_POST['word']), $_POST['all']);
 		$queue_matches = count($id_list);
 	}
 
@@ -17,9 +17,9 @@
 	# save a new block?
 	#
 
-	if ($_POST[word2]){
+	if ($_POST['word2']){
 
-		$id_list = find_queue_matches(StripSlashes($_POST[word2]), $_POST[all]);
+		$id_list = find_queue_matches(StripSlashes($_POST['word2']), $_POST['all']);
 
 		foreach ($id_list as $id){
 
@@ -38,7 +38,7 @@
 	# remove an old block?
 	#
 
-	if ($_GET[remove]){
+	if ($_GET['remove']){
 
 		mysql_query("DELETE FROM tube_blocks WHERE id='$_GET[remove]'");
 		
@@ -70,14 +70,14 @@
 		while ($row = mysql_fetch_array($result)){
 
 			if ($all){
-				$check = $row[blog_url].$row[blog_name].$row[name].$row[about];
+				$check = $row['blog_url'].$row['blog_name'].$row['name'].$row['about'];
 			}else{
-				$check = $row[blog_url];
+				$check = $row['blog_url'];
 			}
 
 			if (preg_match("!$word_rx!i", $check)){
 
-				$ids[] = $row[id];
+				$ids[] = $row['id'];
 			}
 		}
 
@@ -90,30 +90,30 @@
 </head>
 <body>
 
-<? if ($_POST[word]){ ?>
+<?php if ($_POST['word']){ ?>
 
 <p>
-<? if ($queue_matches){ ?>
+<?php if ($queue_matches){ ?>
 	There are currently <?=$queue_matches?> items in the review queue which will be auto-removed by this block.
-<? } ?>
+<?php } ?>
 	Are you sure you want to add this block?
 </p>
 
 <p>
-	<b>Phrase:</b> <?=HtmlSpecialChars(StripSlashes($_POST[word]))?><br />
-	<b>Scope:</b> <?=$_POST[all]?'All Fields':'URL'?><br />
+	<b>Phrase:</b> <?=HtmlSpecialChars(StripSlashes($_POST['word']))?><br />
+	<b>Scope:</b> <?=$_POST['all']?'All Fields':'URL'?><br />
 </p>
 
 <form action="block.php" method="post">
-<input type="hidden" name="word2" value="<?=HtmlSpecialChars(StripSlashes($_POST[word]))?>" />
-<input type="hidden" name="all" value="<?=HtmlSpecialChars($_POST[all])?>" />
+<input type="hidden" name="word2" value="<?=HtmlSpecialChars(StripSlashes($_POST['word']))?>" />
+<input type="hidden" name="all" value="<?=HtmlSpecialChars($_POST['all'])?>" />
 <p><input type="submit" value="Save" /> or <a href="block.php">cancel</a></p>
 </form>
 
-<? }else{ ?>
+<?php }else{ ?>
 
-<? if ($_GET[added]){ ?><p>Your new block was added.</p><? } ?>
-<? if ($_GET[removed]){ ?><p>Your block was removed.</p><? } ?>
+<?php if ($_GET['added']){ ?><p>Your new block was added.</p><?php } ?>
+<?php if ($_GET['removed']){ ?><p>Your block was removed.</p><?php } ?>
 
 
 <p>There are <?=count($blocks)?> blocks in effect.</p>
@@ -124,13 +124,13 @@
 		<th>Scope</th>
 		<th>Admin</th>
 	</tr>
-<? foreach ($blocks as $row){ ?>
+<?php foreach ($blocks as $row){ ?>
 	<tr>
-		<td><?=HtmlSpecialChars(StripSlashes($row[word]))?></td>
-		<td><?=$row[all]?'All Fields':'URL'?></td>
-		<td><a href="block.php?remove=<?=$row[id]?>">remove</a></td>
+		<td><?=HtmlSpecialChars(StripSlashes($row['word']))?></td>
+		<td><?=$row['all']?'All Fields':'URL'?></td>
+		<td><a href="block.php?remove=<?=$row['id']?>">remove</a></td>
 	</tr>
-<? } ?>
+<?php } ?>
 </table>
 
 <p>Add a new block...</p>
@@ -144,7 +144,7 @@
 
 <p>Blocks are case insensitive, but otherwise the exact phrase is matched for blocking. If the phrase occurs anywhere in the submission, it doesn't get saved.</p>
 
-<? } ?>
+<?php } ?>
 
 </body>
 </html>

@@ -1,13 +1,13 @@
-<?
+<?php
 	include("includes/init.txt");
 
 	#
 	# approve a batch?
 	#
 
-	if ($HTTP_POST_VARS[ids]){
+	if ($HTTP_POST_VARS['ids']){
 
-		$ids = explode(',', $HTTP_POST_VARS[ids]);
+		$ids = explode(',', $HTTP_POST_VARS['ids']);
 
 		foreach ($ids as $id){
 
@@ -37,16 +37,16 @@
 	$result = mysql_query("SELECT * FROM tube_weblogs WHERE approved=0 ORDER BY date_create ASC LIMIT 50");
 	while ($row = mysql_fetch_array($result)){
 
-		$row[stations] = array();
+		$row['stations'] = array();
 
 		$result2 = mysql_query("SELECT * FROM tube_weblog_stations WHERE weblog_id=$row[id]");
 		while ($row2 = mysql_fetch_array($result2)){
 
-			$row[stations][] = $row2[station_id];
+			$row['stations'][] = $row2['station_id'];
 		}
 
 		$rows[] = $row;
-		$ids[] = $row[id];
+		$ids[] = $row['id'];
 	}
 ?>
 <html>
@@ -70,19 +70,19 @@ function highlight(name, col){
 <input type="hidden" name="ids" value="<?=implode(',', $ids)?>" />
 
 <table border="1">
-<? foreach ($rows as $row){ ?>
-	<tr id="row<?=$row[id]?>">
-		<td><?=HtmlSpecialChars(StripSlashes($row[blog_name]))?></td>
-		<td><?=HtmlSpecialChars(StripSlashes($row[blog_url]))?></td>
-		<td><?=HtmlSpecialChars(StripSlashes($row[name]))?></td>
-		<td><?=implode(', ', $row[stations])?></td>
-		<td><?=HtmlSpecialChars(StripSlashes($row[about]))?></td>
+<?php foreach ($rows as $row){ ?>
+	<tr id="row<?=$row['id']?>">
+		<td><?=HtmlSpecialChars(StripSlashes($row['blog_name']))?></td>
+		<td><?=HtmlSpecialChars(StripSlashes($row['blog_url']))?></td>
+		<td><?=HtmlSpecialChars(StripSlashes($row['name']))?></td>
+		<td><?=implode(', ', $row['stations'])?></td>
+		<td><?=HtmlSpecialChars(StripSlashes($row['about']))?></td>
 		<td>
-			<input type="radio" name="ok<?=$row[id]?>" id="ok<?=$row[id]?>-1" value="1" onclick="highlight('row<?=$row[id]?>', '#fff')" checked /> <label for="ok<?=$row[id]?>-1" onclick="highlight('row<?=$row[id]?>', '#fff')">OK</label>
-			<input type="radio" name="ok<?=$row[id]?>" id="ok<?=$row[id]?>-0" value="0" onclick="highlight('row<?=$row[id]?>', '#f99')" /> <label for="ok<?=$row[id]?>-0" onclick="highlight('row<?=$row[id]?>', '#f99')">Spam</label>
+			<input type="radio" name="ok<?=$row['id']?>" id="ok<?=$row['id']?>-1" value="1" onclick="highlight('row<?=$row['id']?>', '#fff')" checked /> <label for="ok<?=$row['id']?>-1" onclick="highlight('row<?=$row['id']?>', '#fff')">OK</label>
+			<input type="radio" name="ok<?=$row['id']?>" id="ok<?=$row['id']?>-0" value="0" onclick="highlight('row<?=$row['id']?>', '#f99')" /> <label for="ok<?=$row['id']?>-0" onclick="highlight('row<?=$row['id']?>', '#f99')">Spam</label>
 		</td>
 	</tr>
-<? } ?>
+<?php } ?>
 	<tr>
 		<td colspan="3" align="left"><input type="submit" value="Next" /></td>
 		<td colspan="3" align="right"><input type="submit" value="Next" /></td>
