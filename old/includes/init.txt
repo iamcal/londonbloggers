@@ -1,0 +1,134 @@
+<?
+	include("../includes/network.txt");
+
+	mysql_select_db('cal_london');
+
+
+	$cfg = array();
+	$cfg[base_url] = 'http://www.londonbloggers.co.uk/';
+	$cfg[base_url] = 'http://londonbloggers.iamcal.com/';
+
+	list($cfg[total_count]) = mysql_fetch_array(mysql_query("SELECT COUNT(*) FROM tube_weblogs",$db));
+
+	#####################################################################################
+
+	function insert_line_row($row){
+		$row[name] = str_replace("National Rail - ", "", $row[name]);
+		if ($row[color]){
+?>
+					<tr>
+						<td width="40"><a href="stations.php?line=<?=$row[id]?>" style="text-decoration: none;"><span style="background-color: <?=$row[color]?>;"><img src="images/space.gif" width="40" height="4" border="0" alt="<?=$row[name]?>"></span></a></td>
+						<td width="4">&nbsp;</td>
+						<td><a href="stations.php?line=<?=$row[id]?>"><?=$row[name]?></a></td>
+					</tr>
+<?
+		}else{
+?>
+					<tr>
+						<td colspan="3"><b>&bull;</b> <a href="stations.php?line=<?=$row[id]?>"><?=$row[name]?></a></td>
+					</tr>
+<?
+		}
+	}
+
+	#####################################################################################
+
+	function output_blog_info($row){
+		#fix url
+		if (!preg_match("/^http\:\/\//i",$row[blog_url])){
+			$row[blog_url] = "http://$row[blog_url]";
+		}
+
+		echo "<b style=\"font-size: 13px;\"><a href=\"$row[blog_url]\" target=\"_blank\">".htmlentities(StripSlashes($row[blog_name]))."</a></b> ";
+		if ($row[email_public]){
+			echo "by <a href=\"mailto:$row[email]\">".htmlentities(StripSlashes($row[name]))."</a><br />\n";
+		}else{
+			echo "by ".htmlentities(StripSlashes($row[name]))."<br />\n";
+		}
+		$station_list = get_StationList($row[id]);
+		echo "Stations: $station_list<br />\n";
+		echo "<i>&quot;".htmlentities(StripSlashes($row[about]))."&quot;</i><br />\n";
+		echo "<br />\n";
+	}
+
+	#####################################################################################
+
+	function get_StationList($id){
+		global $db;
+		$out = array();
+		$result = mysql_query("SELECT s.* FROM tube_weblog_stations AS ws, tube_stations AS s WHERE ws.station_id=s.id AND ws.weblog_id=$id ORDER BY s.name ASC",$db);
+		while($row = mysql_fetch_array($result)){
+			$out[] = "<a href=\"station.php?id=$row[id]\">$row[name]</a>";
+		}
+		return implode(", ",$out);
+	}
+
+	#####################################################################################
+
+	function get_stations_within($x, $y, $range){
+		global $db;
+		$range_sq = $range * $range;
+		$rows = array();
+		$result = mysql_query("SELECT * FROM tube_stations WHERE real_x>=$x-$range AND real_x<=$x+$range AND real_y>=$y-$range AND real_y<=$y+$range", $db);
+		while($row = mysql_fetch_array($result)){
+			$dif_x = abs($x - $row[real_x]);
+			$dif_y = abs($y - $row[real_y]);
+			if ($dif_x && $dif_y){
+				$dist = ($dif_x * $dif_x) + ($dif_y * $dif_y);
+				if ($dist <= $range_sq){
+					$rows[] = $row;
+				}
+			}
+		}
+		return $rows;
+	}
+
+	#####################################################################################
+
+	function insert_user_browse_code($id){
+		global $db, $cfg;
+
+		$stations = array();
+		$result = mysql_query("SELECT * FROM tube_weblog_stations WHERE weblog_id=$id", $db);
+		while($row = mysql_fetch_array($result)){
+			$stations[] = $row[station_id];
+		}
+		$ids = implode(',', $stations);
+
+		echo "Your personal weblog browser code is below:<br><br>\n";
+		echo "<textarea style=\"width: 400px; height: 100px;\" wrap=\"none\">&lt;script src=\"$cfg[base_url]browser.php?ids=$ids\" type=\"text/javascript\"&gt;&lt;/script&gt;</textarea><br>";
+		echo "<br>Copy this code to use on your weblog. A preview of what it looks like is below:<br><br>\n";
+		echo "<script src=\"$cfg[base_url]browser.php?ids=$ids\" type=\"text/javascript\"></script>";
+	}
+
+	#####################################################################################
+
+	function filter_text($check_all, $check_url){
+
+		$url_blocks = array();
+		$all_blocks = array();
+
+		$result = mysql_query("SELECT * FROM tube_blocks ORDER BY id ASC");
+		while ($row = mysql_fetch_array($result)){
+
+			if ($row[all]){
+				$all_blocks[] = preg_quote($row[word], '!');
+			}else{
+				$url_blocks[] = preg_quote($row[word], '!');
+			}
+		}
+
+		if (count($all_blocks)){
+			$rx = implode('|', $all_blocks);
+			if (preg_match("!$rx!i", $check_all)){ exit; }
+		}
+
+		if (count($url_blocks)){
+			$rx = implode('|', $url_blocks);
+			if (preg_match("!$rx!", $check_url)){ exit; }
+		}
+	}
+
+	#####################################################################################
+
+?>
